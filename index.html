@@ -179,6 +179,7 @@
   .mcheck{background:var(--card);border:1px solid var(--line);border-radius:8px;
     padding:22px 24px;margin-top:18px;box-shadow:var(--shadow)}
   .mchead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .mcfit{margin-bottom:16px}
   .mcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
   @media(max-width:700px){.mcgrid{grid-template-columns:repeat(2,1fr)}}
   .mcgrid label{display:flex;flex-direction:column;gap:6px;font-size:10px;letter-spacing:.12em;
@@ -619,16 +620,21 @@ const isMeasuring = sec => /^measuring/i.test(String(sec).trim());
    It CANNOT detect a transposed width/drop - sqrt(w^2+d^2) is symmetric. Said so in the UI. */
 const MEASURE_TOL_MM = 3;
 function measureCheckHTML(){
-  return `<div class="mcheck">
+  return `<div class="mcheck" data-fit="reveal">
     <div class="mchead"><span class="label">Measure check</span>
       <span class="small muted">Tolerance ${MEASURE_TOL_MM}&nbsp;mm</span></div>
-    <p class="small muted" style="margin:8px 0 16px;max-width:72ch">Take the width, the drop and <b>both</b> diagonals of the
-      recess. This tells you two separate things: whether your numbers add up, and whether the window itself is square.</p>
+    <p class="small muted" style="margin:8px 0 14px;max-width:72ch">Measure the <b>opening</b> &mdash; width, drop and
+      <b>both</b> diagonals. This tells you two separate things: whether your numbers add up, and whether the window is square.</p>
+    <div class="mcfit chips" data-fit>
+      <button type="button" data-v="reveal" aria-pressed="true">Reveal fit</button>
+      <button type="button" data-v="face" aria-pressed="false">Face fit</button>
+    </div>
     <div class="mcgrid">
       <label>Width<input type="number" inputmode="decimal" class="mc-w" placeholder="mm"></label>
       <label>Drop<input type="number" inputmode="decimal" class="mc-d" placeholder="mm"></label>
       <label>Diagonal 1<input type="number" inputmode="decimal" class="mc-d1" placeholder="mm"></label>
       <label>Diagonal 2<input type="number" inputmode="decimal" class="mc-d2" placeholder="mm"></label>
+      <label class="mc-face-only" hidden>Overlap each side<input type="number" inputmode="decimal" class="mc-ol" placeholder="mm"></label>
     </div>
     <div class="mc-hint" hidden></div>
     <div class="mcactions">
@@ -663,6 +669,8 @@ function runMeasureCheck(box){
     res.innerHTML='<div class="mres warn">Enter the width, the drop and at least one diagonal.</div>';
     return;
   }
+  const face = box.dataset.fit==='face';
+  const ol = num('.mc-ol');
   const expected=Math.sqrt(w*w+d*d), out=[];
   if(d2){
     const dmean=(d1+d2)/2;
@@ -674,12 +682,32 @@ function runMeasureCheck(box){
       : `<div class="mres bad"><b>These don&rsquo;t add up &mdash; re-check the width and drop.</b> For ${w}&nbsp;&times;&nbsp;${d}
          the diagonal should be about ${expected.toFixed(0)}&nbsp;mm, but you measured ${dmean.toFixed(0)}&nbsp;mm &mdash;
          <b>${consistency.toFixed(0)}&nbsp;mm out</b>. Look for a dropped digit, or mm read as cm.</div>`);
-    out.push(racking<=MEASURE_TOL_MM
-      ? `<div class="mres ok"><b>Window is square.</b> The diagonals differ by ${Math.abs(d1-d2).toFixed(1)}&nbsp;mm
-         (${racking.toFixed(1)}&nbsp;mm out) &mdash; inside the ${MEASURE_TOL_MM}&nbsp;mm tolerance. Safe to reveal-fit.</div>`
-      : `<div class="mres warn"><b>Window is ${racking.toFixed(0)}&nbsp;mm out of square.</b> Say it to the customer now, not after
-         install: a roller is a rigid rectangle, so expect a light gap tapering to about <b>${racking.toFixed(0)}&nbsp;mm</b> down one
-         side. If that won&rsquo;t fly, face-fit it with a pelmet &mdash; that hides it completely.</div>`);
+
+    if(!face){
+      out.push(racking<=MEASURE_TOL_MM
+        ? `<div class="mres ok"><b>Window is square.</b> The diagonals differ by ${Math.abs(d1-d2).toFixed(1)}&nbsp;mm
+           (${racking.toFixed(1)}&nbsp;mm out) &mdash; inside the ${MEASURE_TOL_MM}&nbsp;mm tolerance. Safe to reveal-fit.</div>`
+        : `<div class="mres warn"><b>Window is ${racking.toFixed(0)}&nbsp;mm out of square.</b> Say it to the customer now, not after
+           install: the blind is a rigid rectangle, so expect a light gap tapering to about <b>${racking.toFixed(0)}&nbsp;mm</b> down one
+           side. If that won&rsquo;t fly, face-fit it with a pelmet &mdash; that hides it completely.</div>`);
+      out.push(`<div class="mres ok"><b>Reveal fit &mdash; don&rsquo;t deduct twice.</b> The factory takes the 2&nbsp;mm recess
+        deduction. Give them the true opening: <b>${w}&nbsp;&times;&nbsp;${d}&nbsp;mm</b>.</div>`);
+    } else {
+      // Face fit hides the LIGHT GAP, but not the VISUAL misalignment - the blind hangs level, the window doesn't.
+      out.push(racking<=MEASURE_TOL_MM
+        ? `<div class="mres ok"><b>Window is square</b> (${racking.toFixed(1)}&nbsp;mm out). Nothing to disguise.</div>`
+        : `<div class="mres warn"><b>Window is ${racking.toFixed(0)}&nbsp;mm out of square &mdash; but you&rsquo;re face-fitting, so the
+           light gap is not the problem.</b> The blind will hang level while the window doesn&rsquo;t, so it can look slightly out of
+           parallel with the architrave. More overlap, or a pelmet, hides it.</div>`);
+      if(ol){
+        out.push(`<div class="mres ok"><b>Order width &asymp; ${(w+2*ol).toFixed(0)}&nbsp;mm</b> &mdash; ${w} opening + ${ol}&nbsp;mm
+          overlap each side. Check there is clear, flat wall for the brackets at that width: no light switch, corner, adjacent
+          architrave or window winder in the way.</div>`);
+      }
+      out.push(`<div class="mres warn"><b>Face fit &mdash; check before you leave.</b> Is there headroom above the opening for the
+        bracket (cornice, bulkhead)? Is the mounting surface flat and plumb? And what are you fixing into &mdash; gyprock limits
+        where a screw can land.</div>`);
+    }
   } else {
     const gap=Math.abs(d1-expected);
     out.push(gap<=MEASURE_TOL_MM
@@ -1074,6 +1102,15 @@ function bindOnce(){
       lbState[group.dataset.lb]=chip.dataset.v;
       lbState.open=null;
       renderLeaderboard();
+      return;
+    }
+    const fit=e.target.closest('.mcfit button');
+    if(fit){
+      const b=fit.closest('.mcheck');
+      b.dataset.fit=fit.dataset.v;
+      b.querySelectorAll('.mcfit button').forEach(x=>x.setAttribute('aria-pressed',String(x===fit)));
+      b.querySelectorAll('.mc-face-only').forEach(x=>x.hidden = fit.dataset.v!=='face');
+      b.querySelector('.mc-result').innerHTML='';
       return;
     }
     const go=e.target.closest('.mc-go');
