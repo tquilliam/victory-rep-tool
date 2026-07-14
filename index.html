@@ -82,11 +82,21 @@
   .sectlead .rule{height:1px;background:var(--line);margin:12px 0 0}
 
   /* specs */
-  .sr{display:grid;grid-template-columns:1fr auto;gap:14px;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:13px}
+  .specs-cols{columns:2;column-gap:44px}
+  @media(max-width:860px){.specs-cols{columns:1}}
+  .sgroup{break-inside:avoid;page-break-inside:avoid;margin-bottom:4px}
+  .sgrp{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);font-weight:800;
+    margin:20px 0 8px;padding-top:14px;border-top:1px solid var(--line)}
+  .sgroup:first-child .sgrp{margin-top:0;padding-top:0;border-top:none}
+  .sr{display:grid;grid-template-columns:38% 1fr;gap:14px;padding:8px 0;
+    border-bottom:1px solid var(--line-soft);font-size:13px;align-items:start}
   .sr:last-child{border-bottom:none}
-  .sr .lab{color:var(--muted);font-weight:500}
-  .sr .val{text-align:right;font-weight:600}
+  .sr .lab{color:var(--muted);font-weight:500;line-height:1.4}
+  .sr .val{text-align:left;font-weight:600;line-height:1.45}
   .sr .val.on{color:var(--good);font-weight:700}
+  .chips-v{display:flex;flex-wrap:wrap;gap:5px}
+  .chips-v i{font-style:normal;font-size:11px;font-weight:600;background:var(--paper2);
+    border:1px solid var(--line);border-radius:999px;padding:3px 9px;color:var(--ink-soft);white-space:nowrap}
   .fill{color:var(--bronze-deep);font-weight:700;border-bottom:1.5px dotted var(--bronze);font-size:.92em;white-space:nowrap}
 
   /* cheat wins */
@@ -427,7 +437,46 @@ let PRODUCTS = {
   roller:{ label:"Roller", name:"Roller Blinds", idx:"The workhorse",
     pos:"The perfect combination of style and functionality. A single fabric on a tube that suits almost any room and any budget &mdash; and, with a dual roller, the answer for the customer who wants it all.",
     bestFor:["Any room","Clean & minimal","Budget to premium","Motorisation-ready"],
-    specs:[["Max width","3,000&nbsp;mm (single)"],["Max drop",FILL],["Fabric ranges","15 &middot; see grid"],["Light control","Blockout &middot; Translucent &middot; Sunscreen 5&ndash;10% &middot; Sheer"],["Style","Textured &middot; Plain"],["Dual / double roller",'<span class="on">Available</span>'],["Control life","10,000-cycle tested"],["Bottom rail","Square (bump-stop) &middot; Teardrop &middot; ~530g/m"],["Chain","Stainless steel (nylon option)"],["Operation","Chain &middot; Motorised"],["Motor options","Rechargeable (USB) &middot; Hardwired &middot; Smart"],["Motor name",'<span class="fill">&#x27E8;white-label &mdash; TBC&#x27E9;</span>'],["Child safety","Cordless / motor option"],["Mounting","Face &middot; Reveal fit"],["Warranty",'<span class="on">5 years</span>'],["Care","Damp cloth / baby wipe"]],
+    specs:[
+      ["Sizing","Max width","3,000&nbsp;mm (max opening width)"],
+      ["Sizing","Max drop","3,600&nbsp;mm"],
+      ["Sizing","Min drop","300&nbsp;mm"],
+      ["Sizing","Min width (by control)","Chain 250&nbsp;mm &middot; Rechargeable motor 575&nbsp;mm &middot; RTS motor 680&nbsp;mm"],
+      ["Sizing","Recess deduction","2&nbsp;mm taken from all recess applications"],
+      ["Sizing","Butt &amp; through","Single &minus;75&nbsp;mm &middot; Double &minus;95&nbsp;mm (from the butting blind)"],
+
+      ["Operation &amp; control","Operation","Manual chain &middot; Motorised"],
+      ["Operation &amp; control","Gear control (spring assist)",'<span class="on">Automatic over 2,050&nbsp;mm</span> &middot; optional below'],
+      ["Operation &amp; control","Control life","10,000-cycle tested"],
+      ["Operation &amp; control","Chain colours","White &middot; Ivory &middot; Beige &middot; Black &middot; Stainless steel"],
+      ["Operation &amp; control","Chain lengths","500 &middot; 750 &middot; 1000 &middot; 1250 &middot; 1500 &middot; 1750 &middot; 2000 &middot; 2500 &middot; 3000&nbsp;mm"],
+      ["Operation &amp; control","Custom chain","Not available"],
+      ["Operation &amp; control","Child safety","Clear device &middot; cordless / motor option"],
+
+      ["Hardware","Styles","Single &middot; Double &middot; Multi-link &middot; Independent link (split)"],
+      ["Hardware","Tube","40.4&nbsp;mm standard &middot; 48&nbsp;mm motorised (aluminium)"],
+      ["Hardware","Brackets","Standard &middot; Semi-reveal 75&nbsp;mm &middot; Extension 90&nbsp;mm &middot; Double"],
+      ["Hardware","Bracket fit","Face &middot; Reveal"],
+      ["Hardware","Component colours","White &middot; Black &middot; Birch White"],
+      ["Hardware","Bracket covers","White &middot; Black &middot; Birch White (face fit only)"],
+      ["Hardware","Bottom rail","Teardrop 31.5&times;16&nbsp;mm (no bumper) &middot; Flat 35&times;10&nbsp;mm (bumper spine)"],
+      ["Hardware","Rail colours","White &middot; Ivory &middot; Black &middot; Clear Anodised &middot; Beige (teardrop) &middot; Stone Beige (flat)"],
+      ["Hardware","Roll direction","Standard (back roll) &middot; Reverse (front roll)"],
+      ["Hardware","Double roller","Any control-side combo &middot; front reverse-roll blockout, back standard-roll screen"],
+
+      ["Motorisation","Motor name",'<span class="fill">&#x27E8;white-label &mdash; TBC&#x27E9;</span>'],
+      ["Motorisation","Rechargeable","RTS wirefree &middot; lithium battery &middot; 5&nbsp;m USB-C lead"],
+      ["Motorisation","Hardwired","RTS &middot; mains powered"],
+      ["Motorisation","Remotes","1-channel &middot; 15-channel &middot; 5-channel timer"],
+      ["Motorisation","Smart control","Alexa &middot; Google Home"],
+
+      ["Fabric","Fabric ranges","15 &middot; see grid below"],
+      ["Fabric","Light control","Blockout &middot; Translucent &middot; Sunscreen 5&ndash;10% &middot; Sheer"],
+      ["Fabric","Style","Textured &middot; Plain"],
+
+      ["Warranty &amp; care","Warranty",'<span class="on">5 years from installation</span>'],
+      ["Warranty &amp; care","Care","Damp cloth / baby wipe"]
+    ],
     wins:[["Let them feel the blockout","Hold the fabric to the window &mdash; the light-kill sells faster than any number."],["Offer the dual roller early","&ldquo;Most people don&rsquo;t want to choose between the view and a dark room &mdash; so we don&rsquo;t make them.&rdquo;"],["Plant motorisation","From $99 &mdash; mention it on big or high windows now; easiest add-on to close later."]],
     personas:[["Blockout","Deep sleepers & nurseries","Total darkness, full privacy day & night, extra insulation."],["Translucent","Daytime living","Softens light to a warm glow with daytime privacy; keeps the room bright."],["Sunscreen","View-lovers","Cuts glare & UV, keeps the outlook &mdash; see-through after dark, so pair with blockout."],["Dual roller","&ldquo;I want it all&rdquo;","Sunscreen by day, blockout by night on one bracket &mdash; the natural upgrade."]],
     faqs:[["How do I clean a roller blind?","Regular use keeps dust off. A damp cloth or a baby wipe brings most fabrics up like new. In kitchens and wet areas a plain/painted fabric wipes cleanest &mdash; flag textured and sunscreen fabrics that trap grease."],["What&rsquo;s the widest you can make one?","Up to 3,000&nbsp;mm in a single blind; wider spans split into multiple blinds in the opening. If a competitor quotes ~4m it&rsquo;s usually &lsquo;railroaded&rsquo; fabric &mdash; stand at the side and you&rsquo;ll see it bow and curl."],["Reveal fit or face fit?","Reveal (inside the recess) is neatest and most common, but always leaves small side light gaps. Face fit (on the architrave) cuts direct light &mdash; the choice for darkness; add a fabric-wrapped pelmet to hide the roll."],["How long will the mechanism last?","Controls are tested to 10,000 up/down cycles and we only fit smooth, quality controls. A broken chain is the most common service item &mdash; cheap, clunky controls strain the chain; ours are easy to swap."],["Blockout, translucent or sunscreen?","Blockout = full darkness + privacy. Translucent = soft light + daytime privacy (silhouette only). Sunscreen = keeps the view + cuts glare, but see-through at night &mdash; no night privacy on its own."],["Can I get day and night in one?","Yes &mdash; a dual roller runs a sunscreen and a blockout on one bracket. Sheer behind, blockout in front so the blockout hides the roll."]],
@@ -489,7 +538,30 @@ const AVAIL_LABEL = {roller:"Roller",roman:"Roman",panel:"Panel",vertical:"Verti
 
 /* ============ RENDER HELPERS ============ */
 function el(html){const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild;}
-function specRows(specs){return specs.map(([l,v])=>`<div class="sr"><span class="lab">${l}</span><span class="val">${v}</span></div>`).join('');}
+/* A spec row is [label, value] or [group, label, value]. Values holding " · "-separated
+   lists render as chips, which keeps long lists (chain colours, bracket types) readable. */
+function specGroups(specs){
+  const out=[];
+  specs.forEach(e=>{
+    const [g,l,v] = e.length>=3 ? e : ['', e[0], e[1]];
+    let grp=out.find(x=>x.g===g);
+    if(!grp){ grp={g,rows:[]}; out.push(grp); }
+    grp.rows.push([l,v]);
+  });
+  return out;
+}
+function specValue(v){
+  const parts=String(v).split(/\s*(?:&middot;|·)\s*/).filter(s=>s.trim());
+  if(parts.length<2) return `<span class="val">${v}</span>`;
+  return `<span class="val chips-v">${parts.map(p=>`<i>${p.trim()}</i>`).join('')}</span>`;
+}
+function specRows(specs){
+  return specGroups(specs).map(grp=>
+    `<div class="sgroup">${grp.g?`<div class="sgrp">${grp.g}</div>`:''}` +
+    grp.rows.map(([l,v])=>`<div class="sr"><span class="lab">${l}</span>${specValue(v)}</div>`).join('') +
+    `</div>`
+  ).join('');
+}
 function winRows(w){return w.map(([b,s])=>`<div class="w"><div><b>${b}</b><span>${s}</span></div></div>`).join('');}
 function personaRows(p){return p.map(([t,who,d])=>`<div class="persona"><div class="pt">${t}<span class="who">${who}</span></div><div class="pd">${d}</div></div>`).join('');}
 function faqRows(f){return f.map(([q,a])=>`<details><summary>${q}</summary><div class="a">${a}</div></details>`).join('');}
@@ -556,12 +628,17 @@ function buildProductPanel(id){
       <div class="pos">${p.pos}</div>
       <div class="bestfor">${p.bestFor.map(b=>`<b>${b}</b>`).join('')}</div>
     </div>
-    <div class="grid2">
-      <div class="card"><h4 class="mini">Specs</h4>${specRows(p.specs)}</div>
+    <div class="card" style="margin-top:26px">
+      <h4 class="mini">Specifications</h4>
+      <div class="specs-cols">${specRows(p.specs)}</div>
+    </div>
+    <div class="grid2" style="grid-template-columns:1fr 1fr">
       <div class="card">
         <h4 class="mini">Three things that win this sale</h4>
         <div class="win">${winRows(p.wins)}</div>
-        <h4 class="mini" style="margin-top:22px">Match the fabric to the person</h4>
+      </div>
+      <div class="card">
+        <h4 class="mini">Match the fabric to the person</h4>
         ${personaRows(p.personas)}
       </div>
     </div>
@@ -752,7 +829,8 @@ function applyData(sheets){
   if(sheets.Specs) grouped(asObjects(sheets.Specs),id=>PRODUCTS[id].specs=[],(id,o)=>{
     let v=g(o,'value'); const hl=g(o,'highlight').toUpperCase().startsWith('Y');
     if(/insyte|tbc|\u27E8/i.test(v)) v='<span class="fill">'+v+'</span>'; else if(hl) v='<span class="on">'+v+'</span>';
-    PRODUCTS[id].specs.push([g(o,'spec'),v]);});
+    const grp=g(o,'group');
+    PRODUCTS[id].specs.push(grp?[grp,g(o,'spec'),v]:[g(o,'spec'),v]);});
   if(sheets.FAQ) grouped(asObjects(sheets.FAQ),id=>PRODUCTS[id].faqs=[],(id,o)=>PRODUCTS[id].faqs.push([g(o,'question'),g(o,'answer')]));
   if(sheets.Wins) grouped(asObjects(sheets.Wins),id=>PRODUCTS[id].wins=[],(id,o)=>PRODUCTS[id].wins.push([g(o,'headline'),g(o,'detail')]));
   if(sheets.Personas) grouped(asObjects(sheets.Personas),id=>PRODUCTS[id].personas=[],(id,o)=>PRODUCTS[id].personas.push([g(o,'fabric'),g(o,'best for'),g(o,'description')]));
