@@ -175,6 +175,30 @@
   .faq summary:after{content:"+";color:var(--bronze);font-weight:400;font-size:20px;transition:transform .2s}
   .faq details[open] summary:after{transform:rotate(45deg)}
   .faq .a{padding:0 18px 16px;font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+  /* measure check */
+  .mcheck{background:var(--card);border:1px solid var(--line);border-radius:8px;
+    padding:22px 24px;margin-top:18px;box-shadow:var(--shadow)}
+  .mchead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .mcgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:700px){.mcgrid{grid-template-columns:repeat(2,1fr)}}
+  .mcgrid label{display:flex;flex-direction:column;gap:6px;font-size:10px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);font-weight:800}
+  /* 16px stops iOS zooming the page when a rep taps a field */
+  .mcgrid input{font-family:inherit;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;
+    padding:10px 12px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);
+    color:var(--ink);width:100%;-webkit-appearance:none;appearance:none;margin:0}
+  .mcgrid input:focus{outline:none;border-color:var(--bronze);box-shadow:0 0 0 3px var(--bronze-tint)}
+  .mcactions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .mc-result{display:grid;gap:10px;margin-top:18px}
+  .mres{border-radius:6px;padding:13px 16px;font-size:13.5px;line-height:1.6;border-left:3px solid}
+  .mres.ok{background:var(--sage-tint);border-color:var(--sage-deep);color:var(--ink)}
+  .mres.warn{background:var(--bronze-tint);border-color:var(--bronze);color:var(--ink)}
+  .mres.bad{background:var(--olive);border-color:var(--bronze);color:var(--olive-ink)}
+  .mres.bad b{color:#fff}
+  .mc-caveat{margin:16px 0 0;font-size:12px;color:var(--muted);line-height:1.55;
+    border-top:1px dashed var(--line);padding-top:12px}
+  .mc-caveat b{color:var(--ink)}
+
   /* measure it right */
   .measure-cols{columns:2;column-gap:44px;margin-top:20px}
   @media(max-width:860px){.measure-cols{columns:1}}
@@ -581,13 +605,80 @@ function objRows(o){return o.map(([q,a])=>`<div class="o"><div class="q">${q}</d
    but renders as its own always-visible module — a rep runs it at the window, so it
    must not be hidden behind an accordion. */
 const isMeasuring = sec => /^measuring/i.test(String(sec).trim());
+
+/* ---- Measure check ------------------------------------------------------
+   Two INDEPENDENT tests from width, drop and both diagonals:
+     numbers:  |avg(D1,D2) - sqrt(w^2+d^2)|   -> did the rep write the numbers down right?
+     window:   (D1^2 - D2^2) / (4w)           -> is the recess actually square?
+   Averaging the diagonals cancels the racking, so a crooked window never gets
+   misreported as a bad measurement (and vice versa).
+   It CANNOT detect a transposed width/drop - sqrt(w^2+d^2) is symmetric. Said so in the UI. */
+const MEASURE_TOL_MM = 3;
+function measureCheckHTML(){
+  return `<div class="mcheck">
+    <div class="mchead"><span class="label">Measure check</span>
+      <span class="small muted">Tolerance ${MEASURE_TOL_MM}&nbsp;mm</span></div>
+    <p class="small muted" style="margin:8px 0 16px;max-width:72ch">Take the width, the drop and <b>both</b> diagonals of the
+      recess. This tells you two separate things: whether your numbers add up, and whether the window itself is square.</p>
+    <div class="mcgrid">
+      <label>Width<input type="number" inputmode="decimal" class="mc-w" placeholder="1200"></label>
+      <label>Drop<input type="number" inputmode="decimal" class="mc-d" placeholder="1500"></label>
+      <label>Diagonal 1<input type="number" inputmode="decimal" class="mc-d1" placeholder="1921"></label>
+      <label>Diagonal 2<input type="number" inputmode="decimal" class="mc-d2" placeholder="1921"></label>
+    </div>
+    <div class="mcactions">
+      <button type="button" class="btn mc-go">Check it</button>
+      <button type="button" class="btn ghost mc-reset">Clear</button>
+    </div>
+    <div class="mc-result"></div>
+    <p class="mc-caveat"><b>This cannot catch a transposed width and drop</b> &mdash; the maths is identical either way round.
+      Always take width first, then drop.</p>
+  </div>`;
+}
+function runMeasureCheck(box){
+  const num=s=>{const v=parseFloat((box.querySelector(s)||{}).value);return isFinite(v)&&v>0?v:null;};
+  const w=num('.mc-w'), d=num('.mc-d'), d1=num('.mc-d1'), d2=num('.mc-d2');
+  const res=box.querySelector('.mc-result');
+  if(!w||!d||!d1){
+    res.innerHTML='<div class="mres warn">Enter the width, the drop and at least one diagonal.</div>';
+    return;
+  }
+  const expected=Math.sqrt(w*w+d*d), out=[];
+  if(d2){
+    const dmean=(d1+d2)/2;
+    const consistency=Math.abs(dmean-expected);
+    const racking=Math.abs((d1*d1-d2*d2)/(4*w));
+    out.push(consistency<=MEASURE_TOL_MM
+      ? `<div class="mres ok"><b>Numbers add up.</b> For ${w}&nbsp;&times;&nbsp;${d} the diagonal should be about
+         ${expected.toFixed(0)}&nbsp;mm &mdash; you measured ${dmean.toFixed(0)}&nbsp;mm on average, ${consistency.toFixed(1)}&nbsp;mm out.</div>`
+      : `<div class="mres bad"><b>These don&rsquo;t add up &mdash; re-check the width and drop.</b> For ${w}&nbsp;&times;&nbsp;${d}
+         the diagonal should be about ${expected.toFixed(0)}&nbsp;mm, but you measured ${dmean.toFixed(0)}&nbsp;mm &mdash;
+         <b>${consistency.toFixed(0)}&nbsp;mm out</b>. Look for a dropped digit, or mm read as cm.</div>`);
+    out.push(racking<=MEASURE_TOL_MM
+      ? `<div class="mres ok"><b>Window is square.</b> The diagonals differ by ${Math.abs(d1-d2).toFixed(1)}&nbsp;mm
+         (${racking.toFixed(1)}&nbsp;mm out) &mdash; inside the ${MEASURE_TOL_MM}&nbsp;mm tolerance. Safe to reveal-fit.</div>`
+      : `<div class="mres warn"><b>Window is ${racking.toFixed(0)}&nbsp;mm out of square.</b> Say it to the customer now, not after
+         install: a roller is a rigid rectangle, so expect a light gap tapering to about <b>${racking.toFixed(0)}&nbsp;mm</b> down one
+         side. If that won&rsquo;t fly, face-fit it with a pelmet &mdash; that hides it completely.</div>`);
+  } else {
+    const gap=Math.abs(d1-expected);
+    out.push(gap<=MEASURE_TOL_MM
+      ? `<div class="mres ok"><b>Numbers look right.</b> Expected ${expected.toFixed(0)}&nbsp;mm, you measured ${d1.toFixed(0)}&nbsp;mm.
+         Measure the second diagonal to also confirm the window is square.</div>`
+      : `<div class="mres warn"><b>${gap.toFixed(0)}&nbsp;mm out &mdash; but one diagonal can&rsquo;t tell you why.</b> Either the width
+         and drop are wrong, <i>or</i> the window isn&rsquo;t square. <b>Measure the second diagonal</b> and run it again &mdash; that
+         separates the two.</div>`);
+  }
+  res.innerHTML=out.join('');
+}
 function measuringFor(id){
   const head=`<div class="sectlead" style="margin-top:34px"><h3 class="display">Measure it right</h3><div class="rule"></div></div>`;
   const rows=KNOWLEDGE.filter(k=>k[0]===id && isMeasuring(k[1]));
   if(!rows.length){
-    return head+`<div class="measure-empty"><b>Not documented yet.</b> Measuring guidance for ${PRODUCTS[id].name}
-      needs its spec sheet before it goes in here &mdash; it has been left blank rather than guessed at, because a wrong
-      measuring rule causes the re-makes it is meant to prevent. Follow the official measuring process for now.</div>`;
+    return head+measureCheckHTML()+
+      `<div class="measure-empty"><b>Product-specific guidance not documented yet.</b> The deductions and size limits for
+      ${PRODUCTS[id].name} need its spec sheet before they go in here &mdash; left blank rather than guessed at, because a wrong
+      measuring rule causes the re-makes it is meant to prevent. The check above is pure geometry, so it works on any recess.</div>`;
   }
   const groups=[];
   rows.forEach(r=>{
@@ -600,8 +691,9 @@ function measuringFor(id){
     <div class="a"><ul class="kn">${grp.items.map(([k,d])=>`<li><b>${k}</b><span>${d}</span></li>`).join('')}</ul></div></details>`).join('');
   return head+
     `<p class="small muted" style="margin:12px 0 0;max-width:74ch">Run this at the window. Most measuring failures are
-      clerical, not technical &mdash; and a re-make costs the margin on the job and the customer&rsquo;s patience.</p>
-     <div class="faq" style="margin-top:16px">${blocks}</div>`;
+      clerical, not technical &mdash; and a re-make costs the margin on the job and the customer&rsquo;s patience.</p>`
+    + measureCheckHTML() +
+    `<div class="faq" style="margin-top:18px">${blocks}</div>`;
 }
 function knowledgeFor(id){
   const rows=KNOWLEDGE.filter(k=>k[0]===id && !isMeasuring(k[1]));
@@ -963,10 +1055,21 @@ function bindOnce(){
       renderLeaderboard();
       return;
     }
+    const go=e.target.closest('.mc-go');
+    if(go){ runMeasureCheck(go.closest('.mcheck')); return; }
+    const clr=e.target.closest('.mc-reset');
+    if(clr){ const b=clr.closest('.mcheck');
+      b.querySelectorAll('input').forEach(i=>i.value='');
+      b.querySelector('.mc-result').innerHTML=''; return; }
     const rrow=e.target.closest('.rrow');  if(rrow){ toggleRange(rrow); return; }
     const lbrow=e.target.closest('.lbrow'); if(lbrow){ toggleRep(lbrow); return; }
   });
   main.addEventListener('keydown',e=>{
+    // Enter inside the measure check runs it
+    if(e.key==='Enter'){
+      const mc=e.target.closest('.mcheck');
+      if(mc && e.target.tagName==='INPUT'){ e.preventDefault(); runMeasureCheck(mc); return; }
+    }
     if(e.key!=='Enter' && e.key!==' ') return;
     const rrow=e.target.closest('.rrow');
     if(rrow){ e.preventDefault(); toggleRange(rrow); return; }
