@@ -1,0 +1,854 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Victory Blinds &mdash; Rep Product Tool</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#8A7A52">
+<meta name="color-scheme" content="light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Victory">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23231F20'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='bold' fill='%238A7A52' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23231F20'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='bold' fill='%238A7A52' text-anchor='middle'%3EV%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<style>
+  :root{
+    --paper:#FBFAF7; --paper2:#F4F2EA; --card:#FFFFFF;
+    --ink:#231F20; --ink-soft:#48453E; --muted:#7C776E;
+    --bronze:#8A7A52; --bronze-deep:#6F6140; --bronze-tint:#F1ECDF;
+    --sage:#DEE1D5; --sage-mid:#C2CBB2; --sage-deep:#657153; --sage-tint:#EEF0E9;
+    --olive:#3B3829; --olive-ink:#F3EFE3;
+    --line:#E6E1D5; --line-soft:#F0ECE2; --good:#5E7350;
+    --shadow:0 1px 2px rgba(35,31,32,.04),0 10px 34px rgba(35,31,32,.06);
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,Helvetica,Arial,sans-serif;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  }
+  :root[data-theme="light"]{
+    --paper:#FBFAF7; --paper2:#F4F2EA; --card:#FFFFFF; --ink:#231F20; --ink-soft:#48453E; --muted:#7C776E;
+    --bronze:#8A7A52; --bronze-deep:#6F6140; --bronze-tint:#F1ECDF; --sage:#DEE1D5; --sage-mid:#C2CBB2;
+    --sage-deep:#657153; --sage-tint:#EEF0E9; --olive:#3B3829; --olive-ink:#F3EFE3;
+    --line:#E6E1D5; --line-soft:#F0ECE2; --good:#5E7350; --shadow:0 1px 2px rgba(35,31,32,.04),0 10px 34px rgba(35,31,32,.06);
+  }
+
+  :root{color-scheme:light}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.55;-webkit-font-smoothing:antialiased}
+  .num{font-variant-numeric:tabular-nums}
+  h1,h2,h3,h4{margin:0;font-weight:300;letter-spacing:-.01em;line-height:1.1;text-wrap:balance}
+  .display{font-weight:200;letter-spacing:-.02em}
+  .label{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze)}
+  .muted{color:var(--muted)} .small{font-size:13px}
+  a{color:var(--bronze-deep)}
+
+  /* top bar */
+  header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:saturate(120%) blur(8px);border-bottom:1px solid var(--line)}
+  .bar{max-width:1120px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .wordmark .name{font-family:var(--serif);font-size:19px;letter-spacing:.16em;font-weight:600;color:var(--ink)}
+  .wordmark .sub{font-size:8px;letter-spacing:.36em;color:var(--bronze);font-weight:700;display:block;margin-top:1px}
+  .repflag{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--bronze-deep);background:var(--bronze-tint);padding:5px 11px;border-radius:999px}
+  nav.tabs{max-width:1120px;margin:0 auto;padding:0 12px;display:flex;gap:2px;overflow-x:auto}
+  nav.tabs button{flex:none;appearance:none;border:none;background:none;font-family:inherit;cursor:pointer;
+    font-size:14px;font-weight:600;color:var(--muted);padding:13px 16px;border-bottom:2.5px solid transparent;
+    letter-spacing:.01em;white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--bronze)}
+  nav.tabs button.accent[aria-selected="true"]{border-bottom-color:var(--sage-deep)}
+  nav.tabs button:focus-visible{outline:2px solid var(--bronze);outline-offset:-4px;border-radius:4px}
+
+  main{max-width:1120px;margin:0 auto;padding:30px 20px 90px}
+  .panel{display:none;animation:fade .25s ease}
+  .panel.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  @media(prefers-reduced-motion:reduce){.panel,.panel.active{animation:none}}
+
+  /* generic blocks */
+  .phead .idx{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze)}
+  .phead h2{font-size:clamp(28px,5vw,40px);margin:6px 0 10px}
+  .phead .pos{font-size:15.5px;color:var(--ink-soft);max-width:66ch;line-height:1.6}
+  .bestfor{display:flex;flex-wrap:wrap;gap:18px;margin-top:14px}
+  .bestfor b{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-deep)}
+  .bestfor b:before{content:"\2014\00a0\00a0";color:var(--sage-mid)}
+
+  .grid2{display:grid;grid-template-columns:340px 1fr;gap:24px;margin-top:26px;align-items:start}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:6px;box-shadow:var(--shadow);padding:22px 24px}
+  h4.mini{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze);font-weight:700;margin:0 0 14px}
+  .sectlead{margin:38px 0 0}
+  .sectlead h3{font-size:20px}
+  .sectlead .rule{height:1px;background:var(--line);margin:12px 0 0}
+
+  /* specs */
+  .sr{display:grid;grid-template-columns:1fr auto;gap:14px;padding:9px 0;border-bottom:1px solid var(--line-soft);font-size:13px}
+  .sr:last-child{border-bottom:none}
+  .sr .lab{color:var(--muted);font-weight:500}
+  .sr .val{text-align:right;font-weight:600}
+  .sr .val.on{color:var(--good);font-weight:700}
+  .fill{color:var(--bronze-deep);font-weight:700;border-bottom:1.5px dotted var(--bronze);font-size:.92em;white-space:nowrap}
+
+  /* cheat wins */
+  .win{counter-reset:w;display:grid;gap:12px}
+  .win .w{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+  .win .w:before{counter-increment:w;content:counter(w);font-size:12px;width:24px;height:24px;border-radius:50%;
+    border:1.5px solid var(--bronze);color:var(--bronze-deep);display:grid;place-items:center;flex:none;font-variant-numeric:tabular-nums}
+  .win .w b{font-size:14px;font-weight:600}
+  .win .w span{display:block;font-size:13px;color:var(--ink-soft);margin-top:1px}
+  .persona{border-left:2px solid var(--sage-mid);padding:2px 0 2px 13px;margin-bottom:12px}
+  .persona .pt{font-weight:600;font-size:14px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+  .persona .who{color:var(--bronze);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;flex:none}
+  .persona .pd{font-size:13px;color:var(--ink-soft);margin-top:3px}
+
+  /* range table */
+  .table-scroll{overflow-x:auto;margin-top:6px}
+  table.matrix{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}
+  .matrix th,.matrix td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  .matrix thead th{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--bronze);font-weight:700;border-bottom:1.5px solid var(--bronze)}
+  .matrix td:first-child{font-weight:700}
+  .matrix td.c{text-align:center}
+  .matrix .grouprow td{background:var(--bronze-tint);color:var(--bronze-deep);font-weight:800;font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:7px 12px}
+  .matrix .styl{font-size:11px;color:var(--muted)}
+  .matrix .flag{color:var(--bronze-deep);font-weight:700}
+  /* range rows -> colour list */
+  .matrix .rrow{cursor:pointer}
+  .matrix .rrow:hover td{background:var(--bronze-tint)}
+  .matrix .rrow:focus-visible{outline:2px solid var(--bronze);outline-offset:-2px}
+  .matrix .rrow.open td{background:var(--bronze-tint);border-bottom-color:transparent}
+  .matrix .chev{color:var(--bronze);font-weight:700;font-size:15px;width:34px}
+  .matrix .colrow td{background:var(--paper2);border-bottom:1px solid var(--line);padding:14px 16px}
+  .swatches.empty{color:var(--muted);font-size:12.5px}
+  .swhead{display:block;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);
+    font-weight:800;margin-bottom:10px}
+  .swhead .offnote{color:var(--muted);font-weight:700}
+  .swlist{list-style:none;margin:0;padding:0;columns:4;column-gap:26px}
+  @media(max-width:900px){.swlist{columns:3}}
+  @media(max-width:640px){.swlist{columns:2}}
+  @media(max-width:460px){.swlist{columns:1}}
+
+  /* Phones: drop the min-width so the grid fits without sideways scrolling, and
+     hide the secondary columns so Range / Shades / the + toggle are always reachable. */
+  @media(max-width:640px){
+    table.matrix{min-width:0}
+    .matrix .opt{display:none}
+    .matrix th,.matrix td{padding:11px 8px}
+    .matrix .chev{width:26px}
+    .matrix .colrow td{padding:12px 10px}
+  }
+  .sw{display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+    font-size:11.5px;font-weight:600;color:var(--ink-soft);text-transform:capitalize;
+    padding:3px 0;break-inside:avoid;border-bottom:1px solid var(--line-soft)}
+  .sw.off{color:var(--muted)}
+  .sw.off span{text-decoration:line-through;text-decoration-color:var(--bronze);text-decoration-thickness:1px}
+  .sw em{flex:none;font-style:normal;font-size:8.5px;font-weight:800;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--bronze-deep);background:var(--bronze-tint);
+    border-radius:3px;padding:1px 5px}
+  /* unavailable range */
+  .matrix .rrow.off td:not(.chev){opacity:.6}
+  .rpill{margin-left:8px;font-size:8.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--bronze-deep);background:var(--bronze-tint);border-radius:3px;padding:2px 6px;
+    vertical-align:middle;text-transform:uppercase}
+
+  .avail{display:inline-flex;gap:5px;flex-wrap:wrap}
+  .avail span{font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--sage-deep);background:var(--sage-tint);
+    border:1px solid var(--sage-mid);border-radius:4px;padding:2px 6px}
+
+  /* faq accordion */
+  .faq{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--card)}
+  .faq details{border-bottom:1px solid var(--line)}
+  .faq details:last-child{border-bottom:none}
+  .faq summary{cursor:pointer;list-style:none;padding:14px 18px;font-weight:600;font-size:14.5px;display:flex;justify-content:space-between;gap:12px;align-items:center}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary:after{content:"+";color:var(--bronze);font-weight:400;font-size:20px;transition:transform .2s}
+  .faq details[open] summary:after{transform:rotate(45deg)}
+  .faq .a{padding:0 18px 16px;font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+  .kncount{font-size:10.5px;font-weight:700;color:var(--bronze-deep);background:var(--bronze-tint);
+    border-radius:999px;padding:2px 8px;margin-left:10px;font-variant-numeric:tabular-nums}
+  ul.kn{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+  ul.kn li{display:grid;gap:2px;padding-left:14px;border-left:2px solid var(--sage-mid)}
+  ul.kn li b{font-size:13.5px;font-weight:700;color:var(--ink)}
+  ul.kn li span{font-size:13.5px;color:var(--ink-soft);line-height:1.55}
+
+  /* sell */
+  .obj{display:grid;gap:12px}
+  .obj .o{border-left:2px solid var(--sage-mid);padding:2px 0 2px 13px}
+  .obj .q{font-weight:600;font-size:13.5px;font-style:italic}
+  .obj .q:before{content:"\201C"}.obj .q:after{content:"\201D"}
+  .obj .aa{font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .tip{background:var(--olive);color:var(--olive-ink);border-radius:5px;padding:15px 17px;font-size:13.5px;line-height:1.55;margin-top:16px}
+  .tip b{color:#fff}
+  .tip .th{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze);font-weight:700;margin-bottom:6px}
+  .xsell{margin-top:14px;font-size:13px;border-top:1px dashed var(--line);padding-top:12px}
+  .xsell b{color:var(--bronze-deep)}
+
+  /* recommend */
+  .reco-hero{max-width:70ch}
+  .qs{display:grid;grid-template-columns:1fr 1fr;gap:22px 30px;margin-top:26px}
+  @media(max-width:720px){.qs{grid-template-columns:1fr}}
+  .q .ql{font-size:14px;font-weight:600;margin-bottom:9px}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chips button{appearance:none;font-family:inherit;cursor:pointer;font-size:13px;font-weight:600;
+    padding:8px 13px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink-soft)}
+  .chips button:hover{border-color:var(--bronze-deep)}
+  .chips button[aria-pressed="true"]{background:var(--bronze);border-color:var(--bronze);color:#fff}
+  .chips button:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+  .reco-actions{display:flex;gap:12px;align-items:center;margin-top:28px;flex-wrap:wrap}
+  .btn{appearance:none;font-family:inherit;cursor:pointer;font-size:14px;font-weight:700;letter-spacing:.02em;
+    padding:12px 22px;border-radius:6px;border:none;background:var(--bronze);color:#fff}
+  .btn:hover{background:var(--bronze-deep)}
+  .btn.ghost{background:none;border:1.5px solid var(--line);color:var(--ink-soft)}
+  .btn:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+  #recoResult{margin-top:30px}
+  .result{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--bronze);border-radius:6px;box-shadow:var(--shadow);padding:26px 28px}
+  .result .rlabel{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--bronze);font-weight:700}
+  .result h3{font-size:26px;margin:6px 0 2px}
+  .result .fab{font-size:15px;color:var(--sage-deep);font-weight:700}
+  .result .why{margin:16px 0 0;padding:0;list-style:none;display:grid;gap:7px}
+  .result .why li{font-size:13.5px;color:var(--ink-soft);padding-left:20px;position:relative}
+  .result .why li:before{content:"\2713";position:absolute;left:0;color:var(--sage-deep);font-weight:800}
+  .rangepicks{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+  .rangepicks .rp{border:1px solid var(--line);border-radius:6px;padding:12px 15px;min-width:150px;background:var(--paper2)}
+  .rangepicks .rp .rn{font-weight:700;font-size:14px}
+  .rangepicks .rp .rd{font-size:12px;color:var(--muted);margin-top:2px}
+  .repnotes{background:var(--bronze-tint);border-radius:5px;padding:14px 16px;margin-top:18px;font-size:13px;color:var(--ink)}
+  .repnotes .th{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze-deep);font-weight:700;margin-bottom:7px}
+  .repnotes ul{margin:0;padding-left:18px}.repnotes li{margin:4px 0}
+  .jump{margin-top:16px;font-size:13px}
+
+  /* leaderboard */
+  .lbtotals{display:flex;flex-wrap:wrap;gap:34px;margin-bottom:24px}
+  .lbtotals div{display:flex;flex-direction:column;gap:2px}
+  .lbnum{font-size:32px;font-weight:200;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  .lblab{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);font-weight:700}
+  .lbtable{display:grid;gap:8px}
+  .lbrow{display:grid;grid-template-columns:32px 1.1fr 2fr auto;gap:16px;align-items:center;
+    background:var(--card);border:1px solid var(--line);border-radius:6px;padding:12px 16px}
+  .lbrow.top{border-color:var(--bronze)}
+  .lbrank{font-size:13px;font-weight:800;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+  .lbrow.top .lbrank{color:#fff;background:var(--bronze);border-radius:50%;width:24px;height:24px;display:grid;place-items:center;margin:0 auto}
+  .lbrep b{font-size:14.5px;font-weight:600;display:block}
+  .lbrep span{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+  .lbbar{background:var(--paper2);border-radius:999px;height:8px;overflow:hidden}
+  .lbbar i{display:block;height:100%;background:var(--sage-mid);border-radius:999px}
+  .lbrow.top .lbbar i{background:var(--bronze)}
+  .lbunits{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;min-width:38px;text-align:right}
+  .lbrow{cursor:pointer}
+  .lbrow:hover{border-color:var(--bronze-deep)}
+  .lbrow:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+  .lbrow.open{border-color:var(--bronze);border-bottom-left-radius:0;border-bottom-right-radius:0}
+  .lbchev{font-size:17px;color:var(--bronze);font-weight:400;width:16px;text-align:center}
+
+  /* prize standing */
+  .prize{margin-top:22px;background:var(--paper2);border:1px solid var(--line);border-radius:8px;padding:20px 22px}
+  .prizehead{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;margin-bottom:16px}
+  .podium{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:640px){.podium{grid-template-columns:1fr}}
+  .pz{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
+    border-radius:6px;padding:12px 14px}
+  .pz.win{border-color:var(--bronze);box-shadow:inset 3px 0 0 var(--bronze)}
+  .pzr{font-size:12px;font-weight:800;color:var(--muted);font-variant-numeric:tabular-nums}
+  .pz.win .pzr{color:var(--bronze-deep)}
+  .pzn{display:flex;flex-direction:column;flex:1;min-width:0}
+  .pzn b{font-size:14px;font-weight:600}
+  .pzn span{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+  .pzu{font-size:20px;font-weight:200;font-variant-numeric:tabular-nums;color:var(--ink)}
+
+  /* rep drill-down */
+  .lbdetail{display:grid;grid-template-columns:1fr 1fr;gap:24px 34px;background:var(--paper2);
+    border:1px solid var(--bronze);border-top:none;border-radius:0 0 6px 6px;padding:18px 20px;margin-top:-8px}
+  @media(max-width:640px){.lbdetail{grid-template-columns:1fr}}
+  .lbdetail h5{margin:0 0 10px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--bronze);font-weight:700}
+  .lbd{display:grid;grid-template-columns:1fr 90px auto;gap:12px;align-items:center;padding:5px 0;font-size:13px}
+  .lbd span{color:var(--ink-soft)}
+  .lbd b{font-variant-numeric:tabular-nums;font-weight:700;min-width:22px;text-align:right}
+  .lbbar.sm{height:6px}
+  @media(max-width:640px){.lbrow{grid-template-columns:28px 1fr auto auto}.lbbar:not(.sm){display:none}}
+
+  /* visualiser */
+  .viz-frame{width:100%;height:74vh;min-height:520px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
+  .viz-fallback{border:1px dashed var(--bronze);border-radius:8px;padding:40px;text-align:center;background:var(--paper2)}
+  .viz-fallback code{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:2px 7px;font-size:13px}
+
+  footer{max-width:1120px;margin:40px auto 0;padding:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+</style>
+
+<header class="top">
+  <div class="bar">
+    <div class="wordmark"><span class="name">VICTORY</span><span class="sub">CURTAINS AND BLINDS</span></div>
+    <span class="repflag">Rep tool &middot; internal</span>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Product tool"></nav>
+</header>
+
+<main id="main"></main>
+
+<footer>
+  Victory Curtains &amp; Blinds &mdash; internal rep product tool. <span class="fill" style="border:none">&#x27E8;Insyte&#x27E9;</span> = confirm against live data before relying on it.
+  Range data from the VCB fabric sheet; roller specs from the product-knowledge session.
+  <div id="dataStatus" style="margin-top:8px;font-weight:600"></div>
+</footer>
+
+<script>
+/* ============ CONFIG ============ */
+/* When the Room Visualiser is deployed, paste its URL here to embed it in the Visualiser tab. */
+const VISUALISER_URL = "https://victory-visualiser.onrender.com";
+
+/* Live product data. Paste the Google Sheet ID here (the long code in the sheet URL between /d/ and /edit).
+   The sheet must be shared "Anyone with the link - Viewer". Leave "" to use the built-in data below.
+   Tab names must stay: Products, Specs, FAQ, Wins, Personas, Objections, RollerFabrics, Honeycomb. */
+const SHEET_ID = "1k62s1ejq6KIgHn0YqMyq6B7-UPBfM0vn31fp3MtZ8V8";
+const SHEET_TABS = ["Products","Specs","FAQ","Wins","Personas","Objections","Knowledge","RollerFabrics","Honeycomb","Colours","Sales"];
+
+/* ============ DATA: roller-family fabric ranges (from the sheet) ============ */
+const FILL = '<span class="fill">&#x27E8;Insyte&#x27E9;</span>';
+let RANGES = [
+  {name:"Rationale",   type:"Blockout",               style:"Textured", roller:1,roman:1,panel:1,vertical:1, shades:11, light:["blockout"],            note:"Spans all four products"},
+  {name:"Eton",        type:"Blockout",               style:"Textured", roller:1,roman:1,panel:1,vertical:1, shades:8,  light:["blockout"],            note:"Spans all four products"},
+  {name:"Santorini",   type:"Blockout",               style:"Textured", roller:1,roman:1,panel:1,vertical:0, shades:8,  light:["blockout"],            note:"Textured blockout"},
+  {name:"Fleet",       type:"Blockout",               style:"Textured", roller:1,roman:0,panel:1,vertical:1, shades:8,  light:["blockout"],            note:"Adds vertical, no roman"},
+  {name:"Dover",       type:"Blockout",               style:"Textured", roller:1,roman:0,panel:1,vertical:0, shades:12, light:["blockout"],            note:"Roller & panel"},
+  {name:"Voyage",      type:"Blockout",               style:"Plain",    roller:1,roman:0,panel:1,vertical:1, shades:26, light:["blockout"],            note:"Largest palette (26)"},
+  {name:"Madison Two", type:"Blockout",               style:"Plain",    roller:1,roman:1,panel:1,vertical:0, shades:14, light:["blockout"],            note:"Grey-back options"},
+  {name:"Hamilton",    type:"Blockout",               style:"Plain",    roller:1,roman:-1,panel:-1,vertical:-1, shades:10, light:["blockout"],          note:"Availability TBC"},
+  {name:"Porto Rico",  type:"Blockout / Light-filter", style:"Plain",   roller:1,roman:1,panel:1,vertical:0, shades:19, light:["blockout","lightfilter"], note:"Blockout & translucent in one range"},
+  {name:"Finley",      type:"Blockout / Light-filter", style:"Textured",roller:1,roman:0,panel:1,vertical:0, shades:10,  light:["blockout","lightfilter"], note:"Matched B/O & L/F (&times;2 opacities)"},
+  {name:"Rica",        type:"Blockout / Light-filter", style:"Textured",roller:1,roman:0,panel:1,vertical:0, shades:12,  light:["blockout","lightfilter"], note:"Matched B/O & L/F (&times;2 opacities)"},
+  {name:"Costa",       type:"Blockout / Light-filter", style:"Textured",roller:1,roman:0,panel:1,vertical:0, shades:10,  light:["blockout","lightfilter"], note:"Matched B/O & L/F (&times;2 opacities)"},
+  {name:"Harlow",      type:"Light filtering",        style:"Plain",    roller:1,roman:0,panel:1,vertical:0, shades:6,  light:["lightfilter"],         note:"Soft daytime light"},
+  {name:"Altitude 5%", type:"Sunscreen",              style:"Screen",   roller:1,roman:1,panel:1,vertical:0, shades:16, light:["sunscreen"],           note:"5% openness &mdash; more privacy"},
+  {name:"Altitude 10%",type:"Sunscreen",              style:"Screen",   roller:1,roman:1,panel:1,vertical:0, shades:16, light:["sunscreen"],           note:"10% openness &mdash; more view"}
+];
+let HONEYCOMB = [
+  {tier:"Single cell",  name:"Core",                 size:"15mm", opacity:"Room-darkening / Transparent", shades:21, note:"Widest colour choice"},
+  {tier:"Single cell",  name:"Core Plus",            size:"20mm", opacity:"Room-darkening / Transparent", shades:10, note:"Larger 20mm cell"},
+  {tier:"Single cell",  name:"Studio",               size:"15mm", opacity:"Room-darkening / Transparent", shades:9,  note:"Deeper designer tones"},
+  {tier:"Single cell",  name:"Classic",              size:"20mm", opacity:"Room-darkening / Transparent", shades:5,  note:"Woodgrain textures"},
+  {tier:"Single cell",  name:"French Silk",          size:"20mm", opacity:"Room-darkening / Transparent", shades:6,  note:"Soft neutral palette"},
+  {tier:"Single cell",  name:"Lumi Linen",           size:"20mm", opacity:"Room-darkening / Transparent", shades:5,  note:"Linen-look texture"},
+  {tier:"Single cell",  name:"Sheer",                size:"15mm", opacity:"Sheer",                        shades:7,  note:"Most see-through, decorative"},
+  {tier:"Double cell",  name:"Core DC",              size:"15mm", opacity:"Room-darkening / Transparent", shades:10, note:"Two air pockets &mdash; the energy pick"},
+  {tier:"Cell-in-cell", name:"Core &mdash; Cell in Cell",  size:"20mm", opacity:"Room-darkening / Transparent", shades:8,  note:"Maximum insulation"},
+  {tier:"Cell-in-cell", name:"Studio &mdash; Cell in Cell",size:"20mm", opacity:"Room-darkening / Transparent", shades:2,  note:"Designer, top tier"}
+];
+
+/* ============ DATA: fabric colours (from the range sheet) ============ */
+let COLOURS = {
+  "Rationale": ["cool black", "Eucalypt", "pastel", "smokey", "gentle grey", "flagstone", "cashmere", "soft sable", "blanche almond", "natural white", "optic"],
+  "Santorini": ["spartan", "acropolis", "odyssey", "sphinx", "cosmo", "olympia", "electra", "aphrodite"],
+  "Porto Rico": ["quartz -B/O", "dusk - B/O", "summer storm -B/O", "iron- B/O", "thunder- B/O", "urban- B/O", "purpoise -B/O", "gull -B/O", "merino -B/O", "jasmine -B/O", "lyric -B/O", "quill -B/O", "ink - T", "steel -T", "monsoon -T", "horizon -T", "angora - T", "pearl - T", "melody - T"],
+  "Fleet": ["ice", "chalk", "linen", "taupe", "cloud", "concrete", "granite", "charcoal"],
+  "Eton": ["bright white", "alabaster", "calico", "pumice", "ammonite", "soft grey", "ironstone", "charcoal"],
+  "Finley": ["porcelain B/O", "seashell B/O", "cloud B/O", "nordic breeze B/O", "Dark Knight B/O", "porcelain L/F", "seashell L/F", "cloud L/F", "nordic breeze L/F", "dark knight L/F"],
+  "Harlow": ["Artic", "Ice", "White", "Stone", "Silver", "Charcoal"],
+  "Altitude 5%": ["ice", "white", "white linen", "white stone", "concrete", "platinum", "dune grey", "domino", "charcoal grey", "pewter", "charcoal denim", "gull", "wren", "charcoal bronze", "graphite", "charcoal"],
+  "Altitude 10%": ["ice", "white", "white linen", "white stone", "concrete", "platinum", "dune grey", "domino", "charcoal grey", "pewter", "charcoal denim", "gull", "wren", "charcoal bronze", "graphite", "charcoal"],
+  "Hamilton": ["alabaster", "ecru", "gardenia", "rattan", "morning", "spirit", "winter", "cadmium", "anthracite", "ink"],
+  "Dover": ["arctic", "seashell", "cirrus", "charm", "bondi", "blush", "mineral", "alpine", "soft jade", "silver", "hippo", "nightfall"],
+  "Madison Two": ["bright white", "bright white grey back", "ghost", "ghost grey back", "champagne", "champagne grey back", "alpaca", "concrete", "platinum", "bluestone", "knight", "knight grey back", "liquorice", "liquorice grey back"],
+  "Rica": ["whisper B/O", "chalk B/O", "snow B/O", "cloud B/O", "slate B/O", "basalt B/O", "whisper L/F", "chalk L/F", "snow L/F", "cloud L/F", "slate L/F", "basalt L/F"],
+  "Voyage": ["Loft", "Porcelain", "Linen", "Whisper", "Dune", "Bistro", "Chateau", "Stone", "Clay", "Odessey", "Orient", "Storm", "Coal", "Zircon", "Ice", "Pure", "Classic Cream", "Cloud", "Birch", "Limestone", "Terrace", "Mist", "Surf", "Nimbus", "Alloy", "Tundra"],
+  "Costa": ["absolute white B/O", "cotton B/O", "mascapone B/O", "harbour B/O", "ash B/O", "absolute white L/F", "cotton L/F", "mascapone L/F", "harbour L/F", "ash L/F"],
+  "Core Plus": ["Cotton", "White Dove", "Fawn", "Gray Sheen", "Gray Whisper", "Sticks &amp; Stones", "Fresh Brew", "In The Navy", "Stormy Sky", "Bottle of Bordeaux"],
+  "Core DC": ["Cotton", "Alabaster", "Fawn", "Pongee", "Cocoa", "Gray Sheen", "Anthracite", "Black", "Jean Blue", "Water Green"],
+  "Classic": ["Woodgrain Amazing Gray", "Woodgrain Gray Matters", "Woodgrain Tony Taupe", "Woodgrain Accessible Beige", "Woodgrain Gray Screen"],
+  "Core": ["Cotton", "White Dove", "Alabaster", "Fawn", "Pongee", "Terra Cotta", "Cocoa", "Gray Sheen", "Sticks &amp; Stones", "Dark Chocolate", "Antique Pewter", "Anthracite", "Cyberspace", "Black", "Federal Blue", "Jean Blue", "Water Green", "Crystal Pink", "Gray Ridge", "Bordeaux", "Aqua Glass"],
+  "French Silk": ["Cotton", "Chantilly Lace", "Cotswold", "Royal Gray A", "Hazy Skies", "Taos Taupe"],
+  "Lumi Linen": ["Blanched Almond A", "Dwan Gray", "Silver Gray", "Light Walnut", "Coral Black"],
+  "Sheer": ["Cotton", "Snow White", "Alabaster", "Cocoa", "Gray Sheen", "Black", "Anthracite"],
+  "Studio": ["Pongee", "Sticks &amp; Stones", "Avocado", "Antique Pewter", "Gray Sheen", "Royal Gray", "Jean Blue", "Dark Chocolate", "Dark Gray B"],
+  "Core &#x2014; Cell in Cell": ["Cotton", "Taupe B", "Beige B", "Ivory A", "Classic Gray", "Blue Wind", "Gray Storm", "Black"],
+  "Studio &#x2014; Cell in Cell": ["Sticks &amp; Stones", "Antique Pewter"],
+};
+
+/* Match a range name to its colour list, tolerant of dashes, entities, case and spacing. */
+function normName(s){
+  return String(s)
+    .replace(/&mdash;|&ndash;|&#x201[34];/gi,'-')
+    .replace(/&amp;/gi,'&')
+    .replace(/[^a-z0-9%&]+/gi,' ')
+    .replace(/\s+/g,' ').trim().toLowerCase();
+}
+let COLOUR_INDEX=null;
+function colourIndex(){
+  if(COLOUR_INDEX) return COLOUR_INDEX;
+  COLOUR_INDEX={};
+  for(const k in COLOURS) COLOUR_INDEX[normName(k)]=COLOURS[k];
+  return COLOUR_INDEX;
+}
+function coloursFor(range){ return colourIndex()[normName(range)] || []; }
+
+/* ============ DATA: product knowledge (from the product-knowledge sessions) ============ */
+let KNOWLEDGE = [
+ ["roller","Why ours costs more","Smooth = quality","A good mechanism runs smoothly and quietly. Clunky or loud operation means cheaper internal parts. Our controls are tested to 10,000 up/down cycles and we don&rsquo;t offer a cheap option &mdash; heavier blinds step up to a gear control."],
+ ["roller","Why ours costs more","Fabric is the real price driver","A stable, well-made fabric holds straight &mdash; it won&rsquo;t fray at the edges, bow or pucker. Cheap fabric damages easily and never sits right. A blockout backing also reflects heat back out, keeping the room cooler."],
+ ["roller","Why ours costs more","Bottom rail weight matters","Weight holds tension so the fabric sits flat and taut &mdash; ours runs about 530g/m. Any roller over about 2m naturally tries to bow in the middle; a light rail lets the fabric curl and the rail itself deflect over time."],
+ ["roller","Why ours costs more","Chains that don&rsquo;t rust","Our chains are stainless steel, so they won&rsquo;t rust &mdash; and the chain is tested to 10,000 loops, including the join between the end balls. The chain must match the control (bead thickness differs), and a cheap, clunky control puts more strain on it."],
+ ["roller","Why ours costs more","The line that lands","&ldquo;Day one, every roller looks the same. By year one to five, the quality shows&rdquo; &mdash; and we&rsquo;re a 35-year name that&rsquo;s still here to honour the warranty."],
+
+ ["roller","Fabric &amp; light types","Most light blocked to least","Blockout &rarr; Translucent (light-filtering) &rarr; Sunscreen &rarr; Sheer. Get the customer to name the job and the fabric picks itself."],
+ ["roller","Fabric &amp; light types","Translucent gives silhouette privacy","It diffuses light and gives privacy as a silhouette &mdash; people outside see a shadow only. Softer look, with more texture and design options."],
+ ["roller","Fabric &amp; light types","Sunscreen openness %","The % is the size of the holes in the weave. We offer 5% and 10% &mdash; a lower % means smaller holes: more privacy, less view. Plainer feel than a translucent."],
+ ["roller","Fabric &amp; light types","Sunscreen has no night privacy","You can see through it, and the darker the fabric the more you see through. At night with lights on inside it gives no privacy at all &mdash; always pair it with a blockout."],
+
+ ["roller","Choosing by room","Kitchen &amp; wet areas","Prefer a plain/painted fabric &mdash; it wipes grease off cleanest. Avoid textured fabrics (hard to clean) and standard sunscreen (dirt and oil catch in the mesh); if they want sunscreen, go to near-zero openness. Our chains are stainless so rust isn&rsquo;t a worry, and a nylon chain is also a good call in humid rooms."],
+ ["roller","Choosing by room","Bedrooms","The double roller is the go-to: sunscreen for the daytime view, blockout for night privacy. Fitting matters more here than anywhere else."],
+ ["roller","Choosing by room","Bay windows","Rollers are poor for true light and privacy control in a bay &mdash; close the corner gaps and you open the end gaps. Steer to a shutter, a curtain on a bent track, or honeycomb."],
+
+ ["roller","Fit for darkness","Reveal vs face fit","Reveal fit (inside the recess) is the default where there&rsquo;s room &mdash; neat, but it always leaves side light gaps. Face fit on the architrave cuts direct light: the choice when darkness is the goal."],
+ ["roller","Fit for darkness","Pelmet &amp; reverse roll","A fabric-wrapped pelmet hides the roll and lifts the look. A reverse roll (fabric over the front of the tube) sits closer to the glass &mdash; less light bleed, and it hides the roll too."],
+ ["roller","Fit for darkness","Double roller order","Sheer/sunscreen behind, blockout in front. With the sunscreen down and the blockout up, the blockout sits above and hides the roll &mdash; neater. Almost every order is this way round."],
+
+ ["roller","Double roller vs curtains","A double roller blocks more sun","A sunscreen roller cuts more sun than a sheer curtain, which sits on the face and is largely aesthetic."],
+ ["roller","Double roller vs curtains","Layering costs roughly double","Sheer curtain + blockout is a common alternative, but it runs to roughly twice the cost of a double roller."],
+ ["roller","Double roller vs curtains","Check the reveal depth","A double roller needs enough reveal depth &mdash; the brackets are bigger. Face-fitting one projects about 70&ndash;80mm into the room."],
+
+ ["roller","Sizing","3,000mm max in a single blind","Limited by fabric width. Wider spans split into multiple blinds across the opening."],
+ ["roller","Sizing","Beware a competitor&rsquo;s 4m claim","It&rsquo;s usually &lsquo;railroaded&rsquo; fabric &mdash; run sideways, against the weave. Stand at the side and you&rsquo;ll see the curve; it tends to curl."],
+
+ ["roller","Motorisation","The real hurdle is us","Cost is the stated barrier, but the biggest reason customers don&rsquo;t motorise is that consultants never raise it. Australia lags Europe and the US on attachment."],
+ ["roller","Motorisation","The reasons that sell it","Child safety &mdash; no chain at all. High ceilings, large or hard-to-reach windows, over stairways. Longevity &mdash; nothing touches the chain or fabric, so it lasts longer."],
+ ["roller","Motorisation","What we offer","Rechargeable (battery, charged by USB) or hardwired; a wand option; and smart control with Alexa and Google Home."],
+ ["roller","Motorisation","Be honest about battery life","Charge frequency depends on blind size, fabric weight and use &mdash; roughly once to four times a year. Competitors over-claim &ldquo;charge once a year&rdquo;. A 2.8m blockout depletes faster than a 1m blind. And don&rsquo;t leave it on charge overnight repeatedly &mdash; that shortens battery life."],
+
+ ["roller","Service &amp; measuring","Most common service item","A broken chain. Cheaper, clunkier controls strain the chain &mdash; ours are smooth, and a chain is easy to swap."],
+ ["roller","Service &amp; measuring","&ldquo;My motor isn&rsquo;t working&rdquo;","Usually an ageing lithium battery &mdash; they hold less charge after about 5&ndash;10 years &mdash; not a fault."],
+ ["roller","Service &amp; measuring","Measuring pitfalls","Sliding-door handles, protruding mullions, bulkheads above doors, skirting or tiles at the bottom, sloping floors and bowing reveals &mdash; plus the wall material you&rsquo;re fixing into (gyprock limits where screws can go). Over-doors are trickier than over-windows."],
+
+ ["roller","Trends","What&rsquo;s moving","Texture (plain fabric over a big window is boring). Cordless and motorised &mdash; ease of control makes a blind feel premium. Roller + sheer curtain combinations. Square, sharp-edged bottom rails over teardrop. Fabric-wrapped pelmets. And bulkheads in new builds &mdash; rollers roll up and disappear."]
+];
+
+/* ============ DATA: per-product content ============ */
+let PRODUCTS = {
+  roller:{ label:"Roller", name:"Roller Blinds", idx:"The workhorse",
+    pos:"The perfect combination of style and functionality. A single fabric on a tube that suits almost any room and any budget &mdash; and, with a dual roller, the answer for the customer who wants it all.",
+    bestFor:["Any room","Clean & minimal","Budget to premium","Motorisation-ready"],
+    specs:[["Max width","3,000&nbsp;mm (single)"],["Max drop",FILL],["Fabric ranges","15 &middot; see grid"],["Light control","Blockout &middot; Translucent &middot; Sunscreen 5&ndash;10% &middot; Sheer"],["Style","Textured &middot; Plain"],["Dual / double roller",'<span class="on">Available</span>'],["Control life","10,000-cycle tested"],["Bottom rail","Square (bump-stop) &middot; Teardrop &middot; ~530g/m"],["Chain","Stainless steel (nylon option)"],["Operation","Chain &middot; Motorised"],["Motor options","Rechargeable (USB) &middot; Hardwired &middot; Smart"],["Motor name",'<span class="fill">&#x27E8;white-label &mdash; TBC&#x27E9;</span>'],["Child safety","Cordless / motor option"],["Mounting","Face &middot; Reveal fit"],["Warranty",'<span class="on">5 years</span>'],["Care","Damp cloth / baby wipe"]],
+    wins:[["Let them feel the blockout","Hold the fabric to the window &mdash; the light-kill sells faster than any number."],["Offer the dual roller early","&ldquo;Most people don&rsquo;t want to choose between the view and a dark room &mdash; so we don&rsquo;t make them.&rdquo;"],["Plant motorisation","From $99 &mdash; mention it on big or high windows now; easiest add-on to close later."]],
+    personas:[["Blockout","Deep sleepers & nurseries","Total darkness, full privacy day & night, extra insulation."],["Translucent","Daytime living","Softens light to a warm glow with daytime privacy; keeps the room bright."],["Sunscreen","View-lovers","Cuts glare & UV, keeps the outlook &mdash; see-through after dark, so pair with blockout."],["Dual roller","&ldquo;I want it all&rdquo;","Sunscreen by day, blockout by night on one bracket &mdash; the natural upgrade."]],
+    faqs:[["How do I clean a roller blind?","Regular use keeps dust off. A damp cloth or a baby wipe brings most fabrics up like new. In kitchens and wet areas a plain/painted fabric wipes cleanest &mdash; flag textured and sunscreen fabrics that trap grease."],["What&rsquo;s the widest you can make one?","Up to 3,000&nbsp;mm in a single blind; wider spans split into multiple blinds in the opening. If a competitor quotes ~4m it&rsquo;s usually &lsquo;railroaded&rsquo; fabric &mdash; stand at the side and you&rsquo;ll see it bow and curl."],["Reveal fit or face fit?","Reveal (inside the recess) is neatest and most common, but always leaves small side light gaps. Face fit (on the architrave) cuts direct light &mdash; the choice for darkness; add a fabric-wrapped pelmet to hide the roll."],["How long will the mechanism last?","Controls are tested to 10,000 up/down cycles and we only fit smooth, quality controls. A broken chain is the most common service item &mdash; cheap, clunky controls strain the chain; ours are easy to swap."],["Blockout, translucent or sunscreen?","Blockout = full darkness + privacy. Translucent = soft light + daytime privacy (silhouette only). Sunscreen = keeps the view + cuts glare, but see-through at night &mdash; no night privacy on its own."],["Can I get day and night in one?","Yes &mdash; a dual roller runs a sunscreen and a blockout on one bracket. Sheer behind, blockout in front so the blockout hides the roll."]],
+    objections:[["I can get a roller online for half that.","Those are stock sizes. Day one every roller looks the same &mdash; by year one to five the quality shows: our controls are tested to 10,000 cycles, the fabric holds straight without fraying or bowing, and a weighted bottom rail keeps it flat. Measured, fitted, installed, 5-year guaranteed &mdash; and we&rsquo;re a 35-year name that&rsquo;s still here to honour it."],["Do I really need blockout in here?","In a bedroom, yes &mdash; it&rsquo;s the difference in your sleep. In living, a translucent is usually the smarter pick."]],
+    tip:"Layer a roller with a <b>sheer or blockout curtain</b> for warmth and privacy &mdash; the brochure&rsquo;s own styling cue, and an easy lift into curtains.",
+    xsell:"Sunscreen in living, blockout in the bedrooms, and a <b>panel glide</b> on the sliding door for one look across the home.",
+    rangeKey:"roller" },
+
+  roman:{ label:"Roman", name:"Roman Blinds", idx:"The soft one",
+    pos:"The warmth and texture of a curtain with the neatness of a blind. Soft fabric that folds into clean pleats &mdash; the design-led choice for a room that should feel finished, not just fitted.",
+    bestFor:["Bedrooms & living","Formal & heritage","Warmth & texture","Design-conscious"],
+    specs:[["Max width",FILL],["Max drop",FILL],["Fabric ranges","Shared roller fabrics &middot; see grid"],["Lining","Blockout &middot; Translucent &middot; Unlined"],["Fold style",FILL],["Operation","Chain &middot; Motorised"],["Child safety","Cordless / motor option"],["Mounting","Face &middot; Reveal fit"],["Warranty",'<span class="on">5 years</span>'],["Care","Light vacuum / pro clean"]],
+    wins:[["Sell the feeling","Talk warmth, texture and &lsquo;finished&rsquo; &mdash; the room, not the window."],["Lead with blockout lining","Removes the only real objection and lifts the price naturally."],["Tie it to the d&eacute;cor","Match the fabric to their furnishings &mdash; you&rsquo;re styling, not quoting."]],
+    personas:[["Blockout-lined","Restful bedrooms","Softness of a roman with true darkness behind it &mdash; the premium bedroom answer."],["Translucent / unlined","Warm living","Texture and a soft glow for lounges and dining."],["Heritage & formal","Period homes","The natural fit where a flat roller would look out of place."]],
+    faqs:[["Will a roman go fully dark?","With a blockout lining, yes &mdash; you get the soft look and full darkness together."],["Roman or roller?","A roman folds in soft pleats for a curtain-like, designer finish; a roller is flatter, simpler and rolls fully clear. Romans win where the room should feel warm and styled."],["Best rooms for romans?","Bedrooms, formal living and heritage homes &mdash; anywhere warmth and texture matter more than maximum function."],["How do I care for it?","A light vacuum keeps it fresh; a professional clean for a deeper refresh. Not one for greasy kitchens."]],
+    objections:[["Aren&rsquo;t these a lot dearer than a roller?","They&rsquo;re a step up &mdash; you&rsquo;re getting a soft-furnishing look, not just light control. In the rooms people relax in, that finish is the whole point."],["Will it actually go dark?","With a blockout lining, yes &mdash; the soft look and full darkness together."]],
+    tip:"A roman is an <b>emotional buy</b> &mdash; style it against their sofa or bedding and talk &lsquo;finished&rsquo;, not millimetres. Lead with a <b>blockout lining</b> and the darkness objection disappears.",
+    xsell:"Romans in bedrooms and formal living, <b>sunscreen rollers</b> in the everyday spaces &mdash; a mix that feels designed.",
+    rangeKey:"roman" },
+
+  panel:{ label:"Panel Glide", name:"Panel Glides", idx:"The wide-span specialist",
+    pos:"Clean, architectural style for wide glass spaces. Large fabric panels glide smoothly and stack neatly aside &mdash; perfect for sliding doors and oversized windows.",
+    bestFor:["Sliding & stacker doors","Large windows","Room dividers","Contemporary homes"],
+    specs:[["Max width",FILL],["Max drop",FILL],["Panels per track",FILL],["Fabric ranges","Shared roller fabrics &middot; see grid"],["Light control","Blockout &middot; Light-filter &middot; Sunscreen"],["Stacking","Left &middot; Right &middot; Split"],["Operation","Wand &middot; Cord &middot; Motorised"],["Child safety","Wand / motor = cordless"],["Mounting","Face &middot; Ceiling fit"],["Warranty",'<span class="on">5 years</span>'],["Care","Wipe / light vacuum"]],
+    wins:[["Own the sliding door","&ldquo;This is what a sliding door is made for&rdquo; &mdash; say it directly."],["Demo the glide","Slide a panel and show it stacking clear &mdash; the full-open reveal is the moment."],["Match it to the rollers","Same fabric family = one coherent look. That coherence closes."]],
+    personas:[["Sunscreen panels","Open-plan livers","Glare & UV control across the rear of the house while keeping the view."],["Blockout panels","Media & west-facing rooms","Kills afternoon sun and screen glare on a big window without heavy drapes."],["Room divider","Open-plan & studios","The same track zones a space &mdash; a second use most customers haven&rsquo;t thought of."]],
+    faqs:[["Will it block the doorway?","No &mdash; panels stack off to the side, or split both ways, so the door opens completely clear."],["How wide can it go?","Ideal for sliding/stacker doors and oversized windows &mdash; multiple panels run on one track."],["Panel glide or vertical?","Same idea, better execution &mdash; wide flat panels, not thin vanes. Cleaner, quieter, far more modern; vertical is the value alternative."],["What fabrics can I have?","Blockout, light-filter or sunscreen &mdash; the same families as your rollers, so it matches the rest of the home."]],
+    objections:[["Aren&rsquo;t these just fancy verticals?","Same idea, better execution &mdash; wide flat panels, not thin swaying vanes. Cleaner line, quieter, far more modern."],["Will it block the doorway?","No &mdash; it stacks right off to the side, or splits both ways, so the door opens completely clear."]],
+    tip:"Match the panel fabric to the <b>rollers</b> through the home &mdash; one seamless look closes the whole-house sale. Check there&rsquo;s <b>wall to stack onto</b>, or split the stack both ways.",
+    xsell:"Panel glide on the main slider, matching rollers through the home, honeycomb in the bedrooms for the energy story.",
+    rangeKey:"panel" },
+
+  vertical:{ label:"Vertical", name:"Vertical Blinds", idx:"The practical all-rounder",
+    pos:"Flexible day-to-day control for big windows and patio doors. Adjustable vanes fine-tune light, privacy and airflow &mdash; durable, understated and unbeatable value.",
+    bestFor:["Wide windows & doors","Angle light control","Best value","High-traffic & rentals"],
+    specs:[["Max width",FILL],["Max drop",FILL],["Vane widths",FILL],["Fabric ranges","Shared roller fabrics &middot; see grid"],["Light control","Blockout &middot; Translucent"],["Vane action","Rotate 180&deg; &middot; Draw aside"],["Operation","Wand & chain &middot; Motorised"],["Child safety","Wand / motor option"],["Mounting","Face &middot; Reveal fit"],["Warranty",'<span class="on">5 years</span>'],["Care","Wipe / spot clean"]],
+    wins:[["Demo the tilt","The &lsquo;light in, sun out&rsquo; trick is the one thing only verticals do this well."],["Lead with value","For a big window on a budget, name it as the smart-money choice &mdash; don&rsquo;t apologise for it."],["Modernise the image","Show a current fabric before they picture the old one."]],
+    personas:[["Angle control","Glare-sensitive rooms","Rotate the vanes to let light in without sun in your eyes or on the TV."],["Value & coverage","Budget, big windows","The most economical way to cover a wide span properly."],["Blockout vanes","Privacy-first","Strong privacy and light control across a large door &mdash; practical and hard-wearing."]],
+    faqs:[["Aren&rsquo;t verticals a bit dated?","The old ones were &mdash; today&rsquo;s fabrics and headrails look completely different. And nothing gives this much light-angle control for the price."],["Don&rsquo;t the vanes rattle or tangle?","Quality vanes with a chain-weighted base sit stable. In a really breezy doorway I&rsquo;d point you to a panel glide instead."],["What are they best for?","Wide windows and patio doors where you want to fine-tune light and privacy on a budget."],["What fabrics?","Blockout or translucent vanes &mdash; practical and durable."]],
+    objections:[["Aren&rsquo;t verticals a bit dated?","Today&rsquo;s fabrics and headrails look nothing like the old ones &mdash; and nothing gives you this much light-angle control for the price."],["Don&rsquo;t the vanes rattle?","Quality vanes with a chain-weighted base sit stable. For a really breezy doorway I&rsquo;d point you to a panel glide."]],
+    tip:"If they picture the rattly &rsquo;90s blind, get ahead of it &mdash; show a <b>current fabric first</b>. Perception is the whole objection. In a breezy doorway, offer a <b>panel glide</b> as the premium alternative.",
+    xsell:"Verticals on the big doors, rollers on bedrooms and wet areas &mdash; or step up to a panel glide for a premium finish.",
+    rangeKey:"vertical" },
+
+  honeycomb:{ label:"Honeycomb", name:"Honeycomb Blinds", idx:"The premium / energy hero",
+    pos:"An innovative cellular design that makes honeycomb blinds leaders in energy-efficient window solutions. The cells trap the outside conditions when closed, regulating the room&rsquo;s temperature and keeping cold or hot air out.",
+    bestFor:["Energy & comfort","Hot / cold rooms","Nurseries & bedrooms","Premium buyers"],
+    specs:[["Max width",FILL],["Max drop",FILL],["Cell type","Single &middot; Double &middot; Cell-in-cell"],["Fabric ranges","10 &middot; see grid"],["Light control","Light-filter &middot; Blockout"],["Top-down / bottom-up",'<span class="on">Available</span>'],["Operation","Cordless &middot; Chain &middot; Motorised"],["Child safety",'<span class="on">Cordless standard</span>'],["Mounting","Face &middot; Reveal fit"],["Warranty",'<span class="on">5 years</span>'],["Care","Light vacuum / dust"]],
+    wins:[["Sell comfort, not fabric","&ldquo;Keeps the room warm in winter and cool in summer.&rdquo; Lead with the outcome."],["Show the cell","The cross-section is your hero sample &mdash; the air pocket is visible proof."],["Frame it as an investment","Lower energy bills and everyday comfort &mdash; value that keeps paying back."]],
+    personas:[["Double cell","Energy-conscious","Two air pockets, maximum insulation &mdash; for the customer watching bills or fighting a too-hot/too-cold room."],["Blockout cell","Nurseries & bedrooms","Darkness + insulation + cordless child-safe operation as standard."],["Top-down / bottom-up","Privacy + light lovers","Light in at the top, privacy at the bottom &mdash; the feature that justifies the premium."]],
+    faqs:[["Why is honeycomb dearer than the others?","Because it does more &mdash; it insulates the window. You feel it in the room&rsquo;s comfort, and over time in your energy bills. It&rsquo;s the one blind that earns its keep."],["Single, double or cell-in-cell?","More cells = more insulation: single (everyday) &rarr; double (energy) &rarr; cell-in-cell (maximum). Match it to how hard the room is to keep comfortable."],["Is it child-safe?","Cordless operation is standard &mdash; the complete answer for nurseries and kids&rsquo; rooms."],["Room-darkening or transparent?","Same fabric, two light levels &mdash; room-darkening for bedrooms, transparent for living. Sheer where you want decorative light."],["Can I do top-down / bottom-up?","Yes &mdash; let light in at the top while keeping the bottom private."]],
+    objections:[["Why is this one more than the others?","Because it does more &mdash; it insulates the window. Comfort now, lower bills over time. The one blind that earns its keep."],["Does it really make a difference?","The window is the weak point in the room &mdash; the air-cell puts a buffer over it. That&rsquo;s why we recommend it for rooms that are always too hot or too cold."]],
+    tip:"Sell <b>comfort, not fabric</b>: &lsquo;warm in winter, cool in summer&rsquo;. Show the honeycomb <b>cross-section</b> &mdash; the visible air pocket anchors the premium as an investment, not a cost. Don&rsquo;t discount it.",
+    xsell:"Honeycomb in bedrooms and any problem room, rollers or panel glides through the living areas &mdash; premium where it counts.",
+    honeycomb:true, rangeKey:"honeycomb" }
+};
+const ORDER = ["roller","roman","panel","vertical","honeycomb"];
+const AVAIL_LABEL = {roller:"Roller",roman:"Roman",panel:"Panel",vertical:"Vertical"};
+
+/* ============ RENDER HELPERS ============ */
+function el(html){const t=document.createElement('template');t.innerHTML=html.trim();return t.content.firstElementChild;}
+function specRows(specs){return specs.map(([l,v])=>`<div class="sr"><span class="lab">${l}</span><span class="val">${v}</span></div>`).join('');}
+function winRows(w){return w.map(([b,s])=>`<div class="w"><div><b>${b}</b><span>${s}</span></div></div>`).join('');}
+function personaRows(p){return p.map(([t,who,d])=>`<div class="persona"><div class="pt">${t}<span class="who">${who}</span></div><div class="pd">${d}</div></div>`).join('');}
+function faqRows(f){return f.map(([q,a])=>`<details><summary>${q}</summary><div class="a">${a}</div></details>`).join('');}
+function objRows(o){return o.map(([q,a])=>`<div class="o"><div class="q">${q}</div><div class="aa">${a}</div></div>`).join('');}
+function knowledgeFor(id){
+  const rows=KNOWLEDGE.filter(k=>k[0]===id);
+  if(!rows.length) return '';
+  const sections=[];
+  rows.forEach(([,s,k,d])=>{let g=sections.find(x=>x.s===s);if(!g){g={s,items:[]};sections.push(g);}g.items.push([k,d]);});
+  const blocks=sections.map((g,i)=>`<details${i===0?' open':''}><summary>${g.s}</summary>
+    <div class="a"><ul class="kn">${g.items.map(([k,d])=>`<li><b>${k}</b><span>${d}</span></li>`).join('')}</ul></div></details>`).join('');
+  return `<div class="sectlead" style="margin-top:34px"><h3 class="display">Product knowledge</h3><div class="rule"></div></div>
+    <p class="small muted" style="margin:12px 0 0;max-width:72ch">The depth behind the pitch &mdash; from the product-knowledge session. Use it to answer what the customer actually asks, and to hold the value line against DIY and cut-price competitors.</p>
+    <div class="faq" style="margin-top:16px">${blocks}</div>`;
+}
+
+/* A colour is either "name" (available) or ["name", 0] (unavailable). Sorted A-Z. */
+function normColours(list){
+  return list.map(c=>Array.isArray(c)?{n:String(c[0]),ok:c[1]!==0&&c[1]!=='0'}:{n:String(c),ok:true})
+             .sort((a,b)=>a.n.localeCompare(b.n,undefined,{sensitivity:'base'}));
+}
+function colourRow(name, cols){
+  const list=normColours(cols);
+  if(!list.length) return `<tr class="colrow" hidden><td colspan="5"><div class="swatches empty">No colours listed for ${name} yet &mdash; add them to the <b>Colours</b> tab of the sheet.</div></td></tr>`;
+  const off=list.filter(c=>!c.ok).length;
+  return `<tr class="colrow" hidden><td colspan="5">
+    <div class="swhead">${list.length} colours${off?` <span class="offnote">&middot; ${off} unavailable</span>`:''}</div>
+    <ul class="swlist">${list.map(c=>`<li class="sw${c.ok?'':' off'}"><span>${c.n}</span>${c.ok?'':'<em>unavailable</em>'}</li>`).join('')}</ul>
+  </td></tr>`;
+}
+function rangeGridFor(key){
+  if(key==='honeycomb'){
+    let rows='', tier='';
+    HONEYCOMB.forEach(h=>{
+      if(h.tier!==tier){tier=h.tier;const cap={'Single cell':'Single cell &middot; everyday insulation','Double cell':'Double cell &middot; better insulation','Cell-in-cell':'Cell-in-cell &middot; top insulation'}[tier];rows+=`<tr class="grouprow"><td colspan="5">${cap}</td></tr>`;}
+      const hoff = h.avail===0;
+      rows+=`<tr class="rrow${hoff?' off':''}" data-range="${h.name}" role="button" tabindex="0" aria-expanded="false">
+        <td>${h.name}${hoff?'<span class="rpill">Unavailable</span>':''}</td><td class="opt">${h.size}</td><td class="styl opt">${h.opacity}</td><td class="c">${h.shades}</td><td class="c chev">+</td></tr>`;
+      rows+=colourRow(h.name, coloursFor(h.name));
+    });
+    return `<div class="table-scroll"><table class="matrix num"><thead><tr><th>Range</th><th class="opt">Cell size</th><th class="opt">Opacity</th><th class="c">Shades</th><th class="c">Colours</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+  }
+  const list = RANGES.filter(r=>r[key]===1);
+  const rows = list.sort((a,b)=>(b.roller+b.roman+b.panel+b.vertical)-(a.roller+a.roman+a.panel+a.vertical)||b.shades-a.shades).map(r=>{
+    const others = ['roller','roman','panel','vertical'].filter(k=>k!==key && r[k]===1).map(k=>`<span>${AVAIL_LABEL[k]}</span>`).join('');
+    const tbc = (r.roman===-1)?' <span class="flag">?</span>':'';
+    const off = r.avail===0;
+    return `<tr class="rrow${off?' off':''}" data-range="${r.name}" role="button" tabindex="0" aria-expanded="false">
+      <td>${r.name}${tbc}${off?'<span class="rpill">Unavailable</span>':''}</td><td class="styl opt">${r.type} &middot; ${r.style}</td><td class="c">${r.shades}</td>
+      <td class="opt"><div class="avail">${others||'<span style="background:none;border:none;color:var(--muted)">this product only</span>'}</div></td>
+      <td class="c chev">+</td></tr>` + colourRow(r.name, coloursFor(r.name));
+  }).join('');
+  return `<div class="table-scroll"><table class="matrix num"><thead><tr><th>Range</th><th class="opt">Type &middot; style</th><th class="c">Shades</th><th class="opt">Also available as</th><th class="c">Colours</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+}
+
+function buildProductPanel(id){
+  const p=PRODUCTS[id];
+  const rangeTitle = p.honeycomb ? '10 ranges &middot; the insulation ladder' : 'Available ranges (shared across the roller family)';
+  return `
+  <section class="panel" id="panel-${id}" role="tabpanel" aria-labelledby="tab-${id}" tabindex="0">
+    <div class="phead">
+      <div class="idx">${p.idx}</div>
+      <h2 class="display">${p.name}</h2>
+      <div class="pos">${p.pos}</div>
+      <div class="bestfor">${p.bestFor.map(b=>`<b>${b}</b>`).join('')}</div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h4 class="mini">Specs</h4>${specRows(p.specs)}</div>
+      <div class="card">
+        <h4 class="mini">Three things that win this sale</h4>
+        <div class="win">${winRows(p.wins)}</div>
+        <h4 class="mini" style="margin-top:22px">Match the fabric to the person</h4>
+        ${personaRows(p.personas)}
+      </div>
+    </div>
+
+    <div class="sectlead"><h3 class="display">${rangeTitle}</h3><div class="rule"></div></div>
+    ${rangeGridFor(p.rangeKey)}
+
+    <div class="grid2" style="grid-template-columns:1fr 1fr">
+      <div>
+        <div class="sectlead" style="margin-top:34px"><h3 class="display">FAQ</h3><div class="rule"></div></div>
+        <div class="faq" style="margin-top:16px">${faqRows(p.faqs)}</div>
+      </div>
+      <div>
+        <div class="sectlead" style="margin-top:34px"><h3 class="display">How to sell it</h3><div class="rule"></div></div>
+        <div class="obj" style="margin-top:16px">${objRows(p.objections)}</div>
+        <div class="tip"><span class="th">Consultant tip</span>${p.tip}</div>
+        <div class="xsell"><b>Cross-sell &rarr;</b> ${p.xsell}</div>
+      </div>
+    </div>
+
+    ${knowledgeFor(id)}
+  </section>`;
+}
+
+/* ============ LEADERBOARD ============ */
+/* SALES rows: [Date, Rep, State, Product, Range, Units, Value] */
+let SALES_IS_SAMPLE = true;
+let SALES = [
+ ["2026-07-02","Sarah M.","VIC","roller","Rationale",7,5320],["2026-07-09","Sarah M.","VIC","roller","Altitude 5%",4,2960],
+ ["2026-06-24","Sarah M.","VIC","panel","Rationale",2,3100],["2026-07-11","Sarah M.","VIC","honeycomb","Core DC",3,4210],
+ ["2026-07-05","James T.","VIC","roller","Voyage",6,4180],["2026-06-28","James T.","VIC","roller","Rationale",5,3900],
+ ["2026-07-12","James T.","VIC","vertical","Voyage",3,2050],["2026-06-19","Priya K.","VIC","roller","Porto Rico",4,3010],
+ ["2026-07-08","Priya K.","VIC","roman","Madison Two",2,2680],["2026-07-01","Priya K.","VIC","roller","Eton",3,2240],
+ ["2026-06-30","Daniel R.","VIC","roller","Altitude 10%",5,3620],["2026-07-10","Daniel R.","VIC","panel","Altitude 5%",2,3300],
+ ["2026-07-03","Emma L.","QLD","roller","Altitude 5%",8,5910],["2026-07-07","Emma L.","QLD","roller","Rationale",6,4600],
+ ["2026-06-26","Emma L.","QLD","panel","Altitude 10%",3,4450],["2026-07-13","Emma L.","QLD","honeycomb","Core",2,2380],
+ ["2026-07-04","Nathan B.","QLD","roller","Dover",4,2870],["2026-06-22","Nathan B.","QLD","roller","Voyage",5,3510],
+ ["2026-07-09","Nathan B.","QLD","vertical","Fleet",2,1420],["2026-06-29","Chloe W.","QLD","roller","Eton",3,2280],
+ ["2026-07-06","Chloe W.","QLD","roman","Porto Rico",2,2740],["2026-07-12","Chloe W.","QLD","honeycomb","Core DC",4,5600],
+ ["2026-07-01","Michael D.","SA","roller","Rationale",5,3820],["2026-06-25","Michael D.","SA","roller","Altitude 10%",3,2210],
+ ["2026-07-11","Michael D.","SA","panel","Rationale",2,3050],["2026-07-08","Amy F.","SA","roller","Voyage",4,2790],
+ ["2026-06-27","Amy F.","SA","roller","Rationale",4,3060],["2026-07-10","Amy F.","SA","honeycomb","Core DC",2,2840],
+ ["2026-07-02","Tom H.","SA","roller","Eton",3,2190],["2026-06-30","Tom H.","SA","vertical","Voyage",2,1380],
+ ["2026-07-13","Grace P.","SA","roller","Altitude 5%",5,3680],["2026-07-05","Grace P.","SA","roman","Madison Two",1,1340]
+];
+const lbState = {product:"All", state:"All", period:"All", open:null};
+const lbl = o => PRODUCTS[o] ? PRODUCTS[o].label : o;
+function lbOptions(i){return ["All",...[...new Set(SALES.map(r=>r[i]))].filter(Boolean).sort()];}
+function lbFiltered(){
+  const now=new Date();
+  return SALES.filter(r=>{
+    if(lbState.product!=="All" && r[3]!==lbState.product) return false;
+    if(lbState.state!=="All" && r[2]!==lbState.state) return false;
+    if(lbState.period!=="All"){
+      const days=lbState.period==="30 days"?30:90, dt=new Date(r[0]);
+      if(isNaN(dt.getTime()) || (now-dt)/86400000 > days) return false;
+    }
+    return true;
+  });
+}
+function byRep(rows){
+  const m={};
+  rows.forEach(r=>{const rep=r[1];if(!m[rep])m[rep]={rep,state:r[2],units:0};m[rep].units+=Number(r[5])||0;});
+  return Object.values(m).sort((a,b)=>b.units-a.units||a.rep.localeCompare(b.rep));
+}
+function tally(rows,i){
+  const m={}; rows.forEach(r=>{m[r[i]]=(m[r[i]]||0)+(Number(r[5])||0);});
+  return Object.entries(m).sort((a,b)=>b[1]-a[1]);
+}
+/* The prize: most units across the new ranges combined - never affected by the filters. */
+function prizeBoard(){ return byRep(SALES); }
+function repBreakdown(rep){
+  const rows=lbFiltered().filter(r=>r[1]===rep);
+  const P=tally(rows,3), F=tally(rows,4);
+  const mP=P.length?P[0][1]:1, mF=F.length?F[0][1]:1;
+  const line=(name,v,max)=>`<div class="lbd"><span>${name}</span><div class="lbbar sm"><i style="width:${Math.round(v/max*100)}%"></i></div><b class="num">${v}</b></div>`;
+  return `<div class="lbdetail">
+    <div><h5>By product</h5>${P.map(([k,v])=>line(lbl(k),v,mP)).join('')}</div>
+    <div><h5>By fabric range</h5>${F.map(([k,v])=>line(k,v,mF)).join('')}</div>
+  </div>`;
+}
+function renderLeaderboard(){
+  const box=document.getElementById('lbResult'); if(!box) return;
+  const rows=lbFiltered();
+  if(!rows.length){box.innerHTML='<div class="repnotes">No sales match these filters.</div>';return;}
+  const list=byRep(rows), max=list[0].units||1, total=list.reduce((s,x)=>s+x.units,0);
+  box.innerHTML=`
+    <div class="lbtotals">
+      <div><span class="lbnum">${total}</span><span class="lblab">units in view</span></div>
+      <div><span class="lbnum">${list.length}</span><span class="lblab">reps selling</span></div>
+    </div>
+    <p class="small muted" style="margin:0 0 14px">Click a name for their fabric and product breakdown.</p>
+    <div class="lbtable">${list.map((x,i)=>{
+      const open=lbState.open===x.rep;
+      return `<div class="lbrow${i<3?' top':''}${open?' open':''}" data-rep="${x.rep}" role="button" tabindex="0" aria-expanded="${open}">
+        <div class="lbrank">${i+1}</div>
+        <div class="lbrep"><b>${x.rep}</b><span>${x.state}</span></div>
+        <div class="lbbar"><i style="width:${Math.round(x.units/max*100)}%"></i></div>
+        <div class="lbunits num">${x.units}</div>
+        <div class="lbchev">${open?'&minus;':'+'}</div>
+      </div>${open?repBreakdown(x.rep):''}`;}).join('')}</div>`;
+}
+function buildLeaderboardPanel(){
+  const grp=(label,key,opts)=>`<div class="q"><div class="ql">${label}</div><div class="chips" data-lb="${key}">${
+    opts.map(o=>`<button type="button" data-v="${o}" aria-pressed="${String(lbState[key]===o)}">${lbl(o)}</button>`).join('')}</div></div>`;
+  const podium=prizeBoard().slice(0,3).map((p,i)=>
+    `<div class="pz${i===0?' win':''}"><span class="pzr">${i+1}</span><div class="pzn"><b>${p.rep}</b><span>${p.state}</span></div><span class="pzu num">${p.units}</span></div>`).join('');
+  const notice = SALES_IS_SAMPLE
+    ? `<div class="repnotes" style="margin-top:20px"><span class="th">Sample data</span>These numbers are invented so you can see the board working. Add a <b>Sales</b> tab to the Google Sheet &mdash; columns <b>Date, Rep, State, Product, Range, Units, Value</b> &mdash; and it will show the real thing.</div>` : '';
+  return `<section class="panel" id="panel-leaderboard" role="tabpanel" aria-labelledby="tab-leaderboard" tabindex="0">
+    <div class="phead"><div class="idx">Launch tracker</div><h2 class="display">Rep leaderboard</h2>
+      <div class="pos">The prize goes to whoever sells the most units across the new ranges combined. Slice the board by product, state or period &mdash; and click a name for their breakdown.</div></div>
+    <div class="prize">
+      <div class="prizehead"><span class="label">Prize standing</span>
+        <span class="small muted">Most units across the new ranges combined &mdash; all products, all states, all time</span></div>
+      <div class="podium">${podium}</div>
+    </div>
+    ${notice}
+    <div class="qs" style="margin-top:26px">
+      ${grp('Product','product',lbOptions(3))}
+      ${grp('State','state',lbOptions(2))}
+      ${grp('Period','period',['All','30 days','90 days'])}
+    </div>
+    <div id="lbResult" style="margin-top:28px"></div>
+  </section>`;
+}
+function buildVizPanel(){
+  const embed = VISUALISER_URL
+    ? `<iframe class="viz-frame" src="${VISUALISER_URL}" title="Victory Room Visualiser" allow="camera"></iframe>`
+    : `<div class="viz-fallback"><h3 class="display" style="font-size:24px">Room Visualiser</h3>
+        <p class="muted" style="max-width:56ch;margin:12px auto 0">Upload a photo of the room, pick a style and colour, and see Victory furnishings rendered in place. Deploy the visualiser app, then set <code>VISUALISER_URL</code> at the top of this file to embed it right here.</p>
+        <p class="muted small" style="margin-top:14px">(The live embed won&rsquo;t load inside a preview sandbox &mdash; it works once this file is self-hosted.)</p></div>`;
+  return `<section class="panel" id="panel-visualiser" role="tabpanel" aria-labelledby="tab-visualiser" tabindex="0">
+    <div class="phead"><div class="idx">Show, don&rsquo;t tell</div><h2 class="display">Room Visualiser</h2>
+      <div class="pos">Let the customer see it on their own window before they commit &mdash; the fastest way from &ldquo;maybe&rdquo; to &ldquo;yes&rdquo;.</div></div>
+    <div style="margin-top:22px">${embed}</div>
+  </section>`;
+}
+
+/* ============ LIVE DATA (Google Sheet) ============ */
+function parseCSV(text){
+  const rows=[]; let row=[], cur='', q=false;
+  for(let i=0;i<text.length;i++){const c=text[i];
+    if(q){ if(c==='"'){ if(text[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=c; }
+    else if(c==='"') q=true;
+    else if(c===',') { row.push(cur); cur=''; }
+    else if(c==='\n'){ row.push(cur); rows.push(row); row=[]; cur=''; }
+    else if(c!=='\r') cur+=c;
+  }
+  if(cur!==''||row.length){ row.push(cur); rows.push(row); }
+  return rows;
+}
+function asObjects(rows){
+  if(!rows.length) return [];
+  const H=rows[0].map(h=>h.trim());
+  return rows.slice(1).filter(r=>r.some(c=>c.trim()!=='')).map(r=>{const o={};H.forEach((h,i)=>o[h]=(r[i]||'').trim());return o;});
+}
+function g(o,key){key=key.toLowerCase();for(const k in o){if(k.toLowerCase().startsWith(key))return o[k];}return '';}
+const yn=s=>{s=(s||'').trim().toLowerCase();return s.startsWith('y')?1:(s.startsWith('?')?-1:0);};
+/* Availability: blank means available. Only an explicit "N" marks something as unavailable. */
+const availOf=s=>String(s||'').trim().toLowerCase().startsWith('n')?0:1;
+function lightKeys(type){const t=(type||'').toLowerCase(),l=[];if(t.includes('sunscreen'))l.push('sunscreen');if(t.includes('blockout'))l.push('blockout');if(t.includes('light'))l.push('lightfilter');return l.length?l:['blockout'];}
+
+function applyProducts(o){const id=g(o,'product id');const P=PRODUCTS[id];if(!P)return;
+  P.name=g(o,'display name')||P.name; P.idx=g(o,'section label')||P.idx; P.pos=g(o,'positioning')||P.pos;
+  const bf=g(o,'best for'); if(bf)P.bestFor=bf.split('|').map(s=>s.trim()).filter(Boolean);
+  const tip=g(o,'consultant tip'); if(tip)P.tip=tip;
+  const xs=g(o,'cross'); if(xs)P.xsell=xs;}
+function grouped(objs,reset,push){const seen={};objs.forEach(o=>{const id=g(o,'product id');if(!PRODUCTS[id])return;if(!seen[id]){reset(id);seen[id]=1;}push(id,o);});}
+function applyData(sheets){
+  if(sheets.Products) asObjects(sheets.Products).forEach(applyProducts);
+  if(sheets.Specs) grouped(asObjects(sheets.Specs),id=>PRODUCTS[id].specs=[],(id,o)=>{
+    let v=g(o,'value'); const hl=g(o,'highlight').toUpperCase().startsWith('Y');
+    if(/insyte|tbc|\u27E8/i.test(v)) v='<span class="fill">'+v+'</span>'; else if(hl) v='<span class="on">'+v+'</span>';
+    PRODUCTS[id].specs.push([g(o,'spec'),v]);});
+  if(sheets.FAQ) grouped(asObjects(sheets.FAQ),id=>PRODUCTS[id].faqs=[],(id,o)=>PRODUCTS[id].faqs.push([g(o,'question'),g(o,'answer')]));
+  if(sheets.Wins) grouped(asObjects(sheets.Wins),id=>PRODUCTS[id].wins=[],(id,o)=>PRODUCTS[id].wins.push([g(o,'headline'),g(o,'detail')]));
+  if(sheets.Personas) grouped(asObjects(sheets.Personas),id=>PRODUCTS[id].personas=[],(id,o)=>PRODUCTS[id].personas.push([g(o,'fabric'),g(o,'best for'),g(o,'description')]));
+  if(sheets.Objections) grouped(asObjects(sheets.Objections),id=>PRODUCTS[id].objections=[],(id,o)=>PRODUCTS[id].objections.push([g(o,'objection'),g(o,'response')]));
+  if(sheets.Colours){const out={};
+    asObjects(sheets.Colours).forEach(o=>{const r=g(o,'range'),c=g(o,'colour')||g(o,'color');
+      if(!r||!c)return; (out[r]=out[r]||[]).push([c, availOf(g(o,'available'))]);});
+    if(Object.keys(out).length){COLOURS=out;COLOUR_INDEX=null;}}
+  if(sheets.Sales){const out=asObjects(sheets.Sales)
+    .filter(o=>g(o,'rep'))
+    .map(o=>[g(o,'date'),g(o,'rep'),g(o,'state'),g(o,'product').toLowerCase(),g(o,'range'),Number(g(o,'units'))||0,Number(String(g(o,'value')).replace(/[^0-9.]/g,''))||0]);
+    if(out.length){SALES=out;SALES_IS_SAMPLE=false;lbState.range="All";lbState.product="All";lbState.state="All";lbState.period="All";}}
+  if(sheets.Knowledge){const out=asObjects(sheets.Knowledge)
+    .filter(o=>g(o,'product id')&&g(o,'point'))
+    .map(o=>[g(o,'product id'),g(o,'section'),g(o,'point'),g(o,'detail')]);
+    if(out.length)KNOWLEDGE=out;}
+  if(sheets.RollerFabrics){const out=asObjects(sheets.RollerFabrics).filter(o=>g(o,'range')).map(o=>({
+    name:g(o,'range'),type:g(o,'type'),style:g(o,'style'),roller:yn(g(o,'roller')),roman:yn(g(o,'roman')),
+    panel:yn(g(o,'panel')),vertical:yn(g(o,'vertical')),shades:Number(g(o,'shades'))||g(o,'shades'),light:lightKeys(g(o,'type')),note:g(o,'note'),
+    avail:availOf(g(o,'available'))}));
+    if(out.length)RANGES=out;}
+  if(sheets.Honeycomb){const out=asObjects(sheets.Honeycomb).filter(o=>g(o,'range')).map(o=>({
+    tier:g(o,'cell type'),name:g(o,'range'),size:g(o,'cell size'),opacity:g(o,'opacity'),shades:Number(g(o,'shades'))||g(o,'shades'),note:g(o,'note'),
+    avail:availOf(g(o,'available'))}));
+    if(out.length)HONEYCOMB=out;}
+}
+async function loadFromSheet(){
+  if(!SHEET_ID) return false;
+  const base=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=`;
+  const sheets={};
+  await Promise.all(SHEET_TABS.map(async name=>{
+    try{const r=await fetch(base+encodeURIComponent(name));if(r.ok)sheets[name]=parseCSV(await r.text());}catch(e){}
+  }));
+  if(!Object.keys(sheets).length) return false;
+  applyData(sheets);
+  return true;
+}
+function setStatus(ok){
+  const s=document.getElementById('dataStatus'); if(!s)return;
+  if(ok){s.textContent='\u25CF Live data \u2014 connected to the Google Sheet';s.style.color='var(--sage-deep)';}
+  else if(SHEET_ID){s.textContent='\u25CB Sheet unreachable \u2014 showing built-in data';s.style.color='var(--muted)';}
+  else {s.textContent='\u25CB Using built-in data (no sheet connected yet)';s.style.color='var(--muted)';}
+}
+
+/* ============ TABS / RENDER ============ */
+let activeTab='roller';
+const TABS=[...ORDER.map(id=>({id,label:PRODUCTS[id].label})),{id:"leaderboard",label:"Leaderboard",accent:true},{id:"visualiser",label:"Visualiser",accent:true}];
+function selectTab(id){
+  activeTab=id;
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.id===id)));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id==='panel-'+id));
+  window.scrollTo({top:0,behavior:'smooth'});
+  try{history.replaceState(null,'','#'+id);}catch(e){}
+}
+function renderAll(){
+  const nav=document.getElementById('tabs'), main=document.getElementById('main');
+  nav.innerHTML=TABS.map(t=>`<button role="tab" id="tab-${t.id}" data-id="${t.id}" aria-selected="false" class="${t.accent?'accent':''}">${t.label}</button>`).join('');
+  main.innerHTML='';
+  ORDER.forEach(id=>main.appendChild(el(buildProductPanel(id))));
+  main.appendChild(el(buildLeaderboardPanel()));
+  main.appendChild(el(buildVizPanel()));
+  renderLeaderboard();
+  selectTab(activeTab);
+}
+/* Delegated handlers are bound ONCE. renderAll() can run again (e.g. after the sheet
+   loads) without stacking duplicate listeners on #tabs / #main. */
+function bindOnce(){
+  const nav=document.getElementById('tabs'), main=document.getElementById('main');
+  nav.addEventListener('click',e=>{const b=e.target.closest('button');if(b)selectTab(b.dataset.id);});
+
+  const toggleRange=row=>{
+    const next=row.nextElementSibling;
+    if(!next||!next.classList.contains('colrow')) return;
+    const open=next.hidden;
+    next.hidden=!open;
+    row.setAttribute('aria-expanded',String(open));
+    row.classList.toggle('open',open);
+    const ch=row.querySelector('.chev'); if(ch) ch.innerHTML=open?'&minus;':'+';
+  };
+  const toggleRep=row=>{
+    lbState.open = (lbState.open===row.dataset.rep) ? null : row.dataset.rep;
+    renderLeaderboard();
+  };
+
+  main.addEventListener('click',e=>{
+    const chip=e.target.closest('.chips[data-lb] button');
+    if(chip){
+      const group=chip.closest('.chips');
+      group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===chip)));
+      lbState[group.dataset.lb]=chip.dataset.v;
+      lbState.open=null;
+      renderLeaderboard();
+      return;
+    }
+    const rrow=e.target.closest('.rrow');  if(rrow){ toggleRange(rrow); return; }
+    const lbrow=e.target.closest('.lbrow'); if(lbrow){ toggleRep(lbrow); return; }
+  });
+  main.addEventListener('keydown',e=>{
+    if(e.key!=='Enter' && e.key!==' ') return;
+    const rrow=e.target.closest('.rrow');
+    if(rrow){ e.preventDefault(); toggleRange(rrow); return; }
+    const lbrow=e.target.closest('.lbrow');
+    if(lbrow){ e.preventDefault(); toggleRep(lbrow); return; }
+  });
+}
+function boot(){
+  const start=(location.hash||'').replace('#','');
+  if(TABS.some(t=>t.id===start)) activeTab=start;
+  bindOnce();
+  renderAll();
+  loadFromSheet().then(ok=>{ setStatus(ok); if(ok) renderAll(); })
+    .catch(()=>setStatus(false));
+}
+boot();
+</script>
+
+</body>
+</html>
