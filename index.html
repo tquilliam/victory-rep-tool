@@ -175,6 +175,15 @@
   .faq summary:after{content:"+";color:var(--bronze);font-weight:400;font-size:20px;transition:transform .2s}
   .faq details[open] summary:after{transform:rotate(45deg)}
   .faq .a{padding:0 18px 16px;font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+  /* measure it right */
+  .measure-cols{columns:2;column-gap:44px;margin-top:20px}
+  @media(max-width:860px){.measure-cols{columns:1}}
+  .mgroup{break-inside:avoid;page-break-inside:avoid;margin-bottom:20px}
+  .mgroup .sgrp{margin-top:0;padding-top:0;border-top:none;margin-bottom:10px}
+  .measure-empty{margin-top:16px;background:var(--bronze-tint);border:1px dashed var(--bronze);
+    border-radius:8px;padding:18px 20px;font-size:13.5px;color:var(--ink-soft);line-height:1.6}
+  .measure-empty b{color:var(--ink)}
+
   .kncount{font-size:10.5px;font-weight:700;color:var(--bronze-deep);background:var(--bronze-tint);
     border-radius:999px;padding:2px 8px;margin-left:10px;font-variant-numeric:tabular-nums}
   ul.kn{margin:0;padding:0;list-style:none;display:grid;gap:12px}
@@ -568,8 +577,34 @@ function winRows(w){return w.map(([b,s])=>`<div class="w"><div><b>${b}</b><span>
 function personaRows(p){return p.map(([t,who,d])=>`<div class="persona"><div class="pt">${t}<span class="who">${who}</span></div><div class="pd">${d}</div></div>`).join('');}
 function faqRows(f){return f.map(([q,a])=>`<details><summary>${q}</summary><div class="a">${a}</div></details>`).join('');}
 function objRows(o){return o.map(([q,a])=>`<div class="o"><div class="q">${q}</div><div class="aa">${a}</div></div>`).join('');}
+/* Measuring lives in the Knowledge tab under sections named "Measuring · <group>",
+   but renders as its own always-visible module — a rep runs it at the window, so it
+   must not be hidden behind an accordion. */
+const isMeasuring = sec => /^measuring/i.test(String(sec).trim());
+function measuringFor(id){
+  const head=`<div class="sectlead" style="margin-top:34px"><h3 class="display">Measure it right</h3><div class="rule"></div></div>`;
+  const rows=KNOWLEDGE.filter(k=>k[0]===id && isMeasuring(k[1]));
+  if(!rows.length){
+    return head+`<div class="measure-empty"><b>Not documented yet.</b> Measuring guidance for ${PRODUCTS[id].name}
+      needs its spec sheet before it goes in here &mdash; it has been left blank rather than guessed at, because a wrong
+      measuring rule causes the re-makes it is meant to prevent. Follow the official measuring process for now.</div>`;
+  }
+  const groups=[];
+  rows.forEach(r=>{
+    const name=String(r[1]).split(/\s*(?:&middot;|·)\s*/).slice(1).join(' ')||'General';
+    let grp=groups.find(o=>o.name===name);
+    if(!grp){ grp={name,items:[]}; groups.push(grp); }
+    grp.items.push([r[2],r[3]]);
+  });
+  return head+
+    `<p class="small muted" style="margin:12px 0 0;max-width:74ch">Run this at the window. Most measuring failures are
+      clerical, not technical &mdash; and a re-make costs the margin on the job and the customer&rsquo;s patience.</p>
+     <div class="measure-cols">${groups.map(grp=>
+       `<div class="mgroup"><div class="sgrp">${grp.name}</div>
+        <ul class="kn">${grp.items.map(([k,d])=>`<li><b>${k}</b><span>${d}</span></li>`).join('')}</ul></div>`).join('')}</div>`;
+}
 function knowledgeFor(id){
-  const rows=KNOWLEDGE.filter(k=>k[0]===id);
+  const rows=KNOWLEDGE.filter(k=>k[0]===id && !isMeasuring(k[1]));
   if(!rows.length) return '';
   const sections=[];
   rows.forEach(([,s,k,d])=>{let g=sections.find(x=>x.s===s);if(!g){g={s,items:[]};sections.push(g);}g.items.push([k,d]);});
@@ -661,6 +696,7 @@ function buildProductPanel(id){
       </div>
     </div>
 
+    ${measuringFor(id)}
     ${knowledgeFor(id)}
   </section>`;
 }
