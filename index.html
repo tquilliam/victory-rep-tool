@@ -184,6 +184,8 @@
   @media(max-width:700px){.mcgrid{grid-template-columns:repeat(2,1fr)}}
   .mcgrid label{display:flex;flex-direction:column;gap:6px;font-size:10px;letter-spacing:.12em;
     text-transform:uppercase;color:var(--muted);font-weight:800}
+  /* display:flex above beats the UA [hidden]{display:none}, so restate it with higher specificity */
+  .mcgrid label[hidden]{display:none}
   /* 16px stops iOS zooming the page when a rep taps a field */
   .mcgrid input{font-family:inherit;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;
     padding:10px 12px;border:1.5px solid var(--line);border-radius:6px;background:var(--paper);
