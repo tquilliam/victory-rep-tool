@@ -67,6 +67,12 @@
   @media(prefers-reduced-motion:reduce){.panel,.panel.active{animation:none}}
 
   /* generic blocks */
+  .phead.has-hero{display:grid;grid-template-columns:1fr 400px;gap:34px;align-items:center}
+  @media(max-width:820px){.phead.has-hero{grid-template-columns:1fr;gap:20px}
+    .phead.has-hero .phero-img{order:-1}}
+  .phero-img{border-radius:10px;overflow:hidden;background:var(--paper2);border:1px solid var(--line);
+    box-shadow:0 1px 2px rgba(35,31,32,.04),0 12px 30px rgba(35,31,32,.08)}
+  .phero-img img{display:block;width:100%;height:100%;aspect-ratio:4/3;object-fit:cover}
   .phead .idx{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--bronze)}
   .phead h2{font-size:clamp(28px,5vw,40px);margin:6px 0 10px}
   .phead .pos{font-size:15.5px;color:var(--ink-soft);max-width:66ch;line-height:1.6}
@@ -556,7 +562,7 @@ let PRODUCTS = {
     objections:[["I can get a roller online for half that.","Those are stock sizes. Day one every roller looks the same &mdash; by year one to five the quality shows: our controls are tested to 10,000 cycles, the fabric holds straight without fraying or bowing, and a weighted bottom rail keeps it flat. Measured, fitted, installed, 5-year guaranteed &mdash; and we&rsquo;re a 35-year name that&rsquo;s still here to honour it."],["Do I really need blockout in here?","In a bedroom, yes &mdash; it&rsquo;s the difference in your sleep. In living, a translucent is usually the smarter pick."]],
     tip:"Layer a roller with a <b>sheer or blockout curtain</b> for warmth and privacy &mdash; the brochure&rsquo;s own styling cue, and an easy lift into curtains.",
     xsell:"Sunscreen in living, blockout in the bedrooms, and a <b>panel glide</b> on the sliding door for one look across the home.",
-    rangeKey:"roller" },
+    rangeKey:"roller", img:"img/roller.jpg" },
 
   roman:{ label:"Roman", name:"Roman Blinds", idx:"The soft one",
     pos:"The warmth and texture of a curtain with the neatness of a blind. Soft fabric that folds into clean pleats &mdash; the design-led choice for a room that should feel finished, not just fitted.",
@@ -568,7 +574,7 @@ let PRODUCTS = {
     objections:[["Aren&rsquo;t these a lot dearer than a roller?","They&rsquo;re a step up &mdash; you&rsquo;re getting a soft-furnishing look, not just light control. In the rooms people relax in, that finish is the whole point."],["Will it actually go dark?","With a blockout lining, yes &mdash; the soft look and full darkness together."]],
     tip:"A roman is an <b>emotional buy</b> &mdash; style it against their sofa or bedding and talk &lsquo;finished&rsquo;, not millimetres. Lead with a <b>blockout lining</b> and the darkness objection disappears.",
     xsell:"Romans in bedrooms and formal living, <b>sunscreen rollers</b> in the everyday spaces &mdash; a mix that feels designed.",
-    rangeKey:"roman" },
+    rangeKey:"roman", img:"img/roman.jpg" },
 
   panel:{ label:"Panel Glide", name:"Panel Glides", idx:"The wide-span specialist",
     pos:"Clean, architectural style for wide glass spaces. Large fabric panels glide smoothly and stack neatly aside &mdash; perfect for sliding doors and oversized windows.",
@@ -580,7 +586,7 @@ let PRODUCTS = {
     objections:[["Aren&rsquo;t these just fancy verticals?","Same idea, better execution &mdash; wide flat panels, not thin swaying vanes. Cleaner line, quieter, far more modern."],["Will it block the doorway?","No &mdash; it stacks right off to the side, or splits both ways, so the door opens completely clear."]],
     tip:"Match the panel fabric to the <b>rollers</b> through the home &mdash; one seamless look closes the whole-house sale. Check there&rsquo;s <b>wall to stack onto</b>, or split the stack both ways.",
     xsell:"Panel glide on the main slider, matching rollers through the home, honeycomb in the bedrooms for the energy story.",
-    rangeKey:"panel" },
+    rangeKey:"panel", img:"img/panel.jpg" },
 
   vertical:{ label:"Vertical", name:"Vertical Blinds", idx:"The practical all-rounder",
     pos:"Flexible day-to-day control for big windows and patio doors. Adjustable vanes fine-tune light, privacy and airflow &mdash; durable, understated and unbeatable value.",
@@ -592,7 +598,7 @@ let PRODUCTS = {
     objections:[["Aren&rsquo;t verticals a bit dated?","Today&rsquo;s fabrics and headrails look nothing like the old ones &mdash; and nothing gives you this much light-angle control for the price."],["Don&rsquo;t the vanes rattle?","Quality vanes with a chain-weighted base sit stable. For a really breezy doorway I&rsquo;d point you to a panel glide."]],
     tip:"If they picture the rattly &rsquo;90s blind, get ahead of it &mdash; show a <b>current fabric first</b>. Perception is the whole objection. In a breezy doorway, offer a <b>panel glide</b> as the premium alternative.",
     xsell:"Verticals on the big doors, rollers on bedrooms and wet areas &mdash; or step up to a panel glide for a premium finish.",
-    rangeKey:"vertical" },
+    rangeKey:"vertical", img:"img/vertical.jpg" },
 
   honeycomb:{ label:"Honeycomb", name:"Honeycomb Blinds", idx:"The premium / energy hero",
     pos:"An innovative cellular design that makes honeycomb blinds leaders in energy-efficient window solutions. The cells trap the outside conditions when closed, regulating the room&rsquo;s temperature and keeping cold or hot air out.",
@@ -604,7 +610,7 @@ let PRODUCTS = {
     objections:[["Why is this one more than the others?","Because it does more &mdash; it insulates the window. Comfort now, lower bills over time. The one blind that earns its keep."],["Does it really make a difference?","The window is the weak point in the room &mdash; the air-cell puts a buffer over it. That&rsquo;s why we recommend it for rooms that are always too hot or too cold."]],
     tip:"Sell <b>comfort, not fabric</b>: &lsquo;warm in winter, cool in summer&rsquo;. Show the honeycomb <b>cross-section</b> &mdash; the visible air pocket anchors the premium as an investment, not a cost. Don&rsquo;t discount it.",
     xsell:"Honeycomb in bedrooms and any problem room, rollers or panel glides through the living areas &mdash; premium where it counts.",
-    honeycomb:true, rangeKey:"honeycomb" }
+    honeycomb:true, rangeKey:"honeycomb", img:"img/honeycomb.jpg" }
 };
 const ORDER = ["roller","roman","panel","vertical","honeycomb"];
 const AVAIL_LABEL = {roller:"Roller",roman:"Roman",panel:"Panel",vertical:"Vertical"};
@@ -841,13 +847,19 @@ function rangeGridFor(key){
 function buildProductPanel(id){
   const p=PRODUCTS[id];
   const rangeTitle = p.honeycomb ? '10 ranges &middot; the insulation ladder' : 'Available ranges (shared across the roller family)';
+  const hero = p.img
+    ? `<div class="phero-img"><img src="${p.img}" alt="${p.name} in a room" decoding="async"></div>`
+    : '';
   return `
   <section class="panel" id="panel-${id}" role="tabpanel" aria-labelledby="tab-${id}" tabindex="0">
-    <div class="phead">
-      <div class="idx">${p.idx}</div>
-      <h2 class="display">${p.name}</h2>
-      <div class="pos">${p.pos}</div>
-      <div class="bestfor">${p.bestFor.map(b=>`<b>${b}</b>`).join('')}</div>
+    <div class="phead${p.img?' has-hero':''}">
+      <div class="phero-txt">
+        <div class="idx">${p.idx}</div>
+        <h2 class="display">${p.name}</h2>
+        <div class="pos">${p.pos}</div>
+        <div class="bestfor">${p.bestFor.map(b=>`<b>${b}</b>`).join('')}</div>
+      </div>
+      ${hero}
     </div>
     <div class="card" style="margin-top:26px">
       <h4 class="mini">Specifications</h4>
@@ -1044,7 +1056,8 @@ function applyProducts(o){const id=g(o,'product id');const P=PRODUCTS[id];if(!P)
   P.name=g(o,'display name')||P.name; P.idx=g(o,'section label')||P.idx; P.pos=g(o,'positioning')||P.pos;
   const bf=g(o,'best for'); if(bf)P.bestFor=bf.split('|').map(s=>s.trim()).filter(Boolean);
   const tip=g(o,'consultant tip'); if(tip)P.tip=tip;
-  const xs=g(o,'cross'); if(xs)P.xsell=xs;}
+  const xs=g(o,'cross'); if(xs)P.xsell=xs;
+  const im=g(o,'image'); if(im!=='') P.img=im;}
 function grouped(objs,reset,push){const seen={};objs.forEach(o=>{const id=g(o,'product id');if(!PRODUCTS[id])return;if(!seen[id]){reset(id);seen[id]=1;}push(id,o);});}
 function applyData(sheets){
   if(sheets.Products) asObjects(sheets.Products).forEach(applyProducts);
