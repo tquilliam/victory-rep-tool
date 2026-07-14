@@ -267,9 +267,12 @@
   @media(max-width:640px){.lbrow{grid-template-columns:28px 1fr auto auto}.lbbar:not(.sm){display:none}}
 
   /* visualiser */
-  .viz-frame{width:100%;height:74vh;min-height:520px;border:1px solid var(--line);border-radius:8px;background:var(--card)}
-  .viz-fallback{border:1px dashed var(--bronze);border-radius:8px;padding:40px;text-align:center;background:var(--paper2)}
-  .viz-fallback code{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:2px 7px;font-size:13px}
+  .viz-card{border:1px solid var(--line);border-radius:10px;padding:44px 32px;text-align:center;
+    background:var(--paper2);box-shadow:var(--shadow)}
+  .viz-card code{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:2px 7px;font-size:13px}
+  .viz-ico{width:60px;height:60px;border-radius:50%;background:var(--bronze);color:#fff;
+    display:grid;place-items:center;margin:0 auto 18px}
+  .viz-card a.btn{display:inline-block;text-decoration:none}
 
   footer{max-width:1120px;margin:40px auto 0;padding:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
 </style>
@@ -685,16 +688,32 @@ function buildLeaderboardPanel(){
     <div id="lbResult" style="margin-top:28px"></div>
   </section>`;
 }
+/* The visualiser has its own passcode, and passcodes rely on a cookie. Embedding it in an
+   iframe makes it a third-party context, where browsers (iOS Safari especially) block that
+   cookie -- the unlock silently fails. So we launch it in its own tab instead. */
 function buildVizPanel(){
-  const embed = VISUALISER_URL
-    ? `<iframe class="viz-frame" src="${VISUALISER_URL}" title="Victory Room Visualiser" allow="camera"></iframe>`
-    : `<div class="viz-fallback"><h3 class="display" style="font-size:24px">Room Visualiser</h3>
-        <p class="muted" style="max-width:56ch;margin:12px auto 0">Upload a photo of the room, pick a style and colour, and see Victory furnishings rendered in place. Deploy the visualiser app, then set <code>VISUALISER_URL</code> at the top of this file to embed it right here.</p>
-        <p class="muted small" style="margin-top:14px">(The live embed won&rsquo;t load inside a preview sandbox &mdash; it works once this file is self-hosted.)</p></div>`;
+  const body = VISUALISER_URL
+    ? `<div class="viz-card">
+        <div class="viz-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" width="30" height="30">
+            <rect x="3" y="4" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+            <path d="M3 14l4.5-4.5 3.5 3.5 3-3L21 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="15.5" cy="8.5" r="1.5" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <h3 class="display" style="font-size:26px;margin-bottom:8px">See it on their window</h3>
+        <p class="muted" style="max-width:52ch;margin:0 auto 22px">Snap or upload a photo of the room, pick the style and colour,
+          and the visualiser renders it in place &mdash; the fastest way from &ldquo;maybe&rdquo; to &ldquo;yes&rdquo;.</p>
+        <a class="btn" href="${VISUALISER_URL}" target="_blank" rel="noopener">Open Room Visualiser &nearr;</a>
+        <p class="small muted" style="margin-top:18px">Opens in a new tab. You&rsquo;ll enter the team passcode the first time &mdash;
+          it has to run in its own tab for the passcode to stick.</p>
+      </div>`
+    : `<div class="viz-card"><h3 class="display" style="font-size:24px">Room Visualiser</h3>
+        <p class="muted" style="max-width:56ch;margin:12px auto 0">Set <code>VISUALISER_URL</code> at the top of this file to link it up.</p></div>`;
   return `<section class="panel" id="panel-visualiser" role="tabpanel" aria-labelledby="tab-visualiser" tabindex="0">
     <div class="phead"><div class="idx">Show, don&rsquo;t tell</div><h2 class="display">Room Visualiser</h2>
-      <div class="pos">Let the customer see it on their own window before they commit &mdash; the fastest way from &ldquo;maybe&rdquo; to &ldquo;yes&rdquo;.</div></div>
-    <div style="margin-top:22px">${embed}</div>
+      <div class="pos">Let the customer see it on their own window before they commit.</div></div>
+    <div style="margin-top:22px">${body}</div>
   </section>`;
 }
 
