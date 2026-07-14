@@ -596,12 +596,12 @@ function measuringFor(id){
     if(!grp){ grp={name,items:[]}; groups.push(grp); }
     grp.items.push([r[2],r[3]]);
   });
+  const blocks=groups.map((grp,i)=>`<details${i===0?' open':''}><summary>${grp.name}</summary>
+    <div class="a"><ul class="kn">${grp.items.map(([k,d])=>`<li><b>${k}</b><span>${d}</span></li>`).join('')}</ul></div></details>`).join('');
   return head+
     `<p class="small muted" style="margin:12px 0 0;max-width:74ch">Run this at the window. Most measuring failures are
       clerical, not technical &mdash; and a re-make costs the margin on the job and the customer&rsquo;s patience.</p>
-     <div class="measure-cols">${groups.map(grp=>
-       `<div class="mgroup"><div class="sgrp">${grp.name}</div>
-        <ul class="kn">${grp.items.map(([k,d])=>`<li><b>${k}</b><span>${d}</span></li>`).join('')}</ul></div>`).join('')}</div>`;
+     <div class="faq" style="margin-top:16px">${blocks}</div>`;
 }
 function knowledgeFor(id){
   const rows=KNOWLEDGE.filter(k=>k[0]===id && !isMeasuring(k[1]));
@@ -696,8 +696,8 @@ function buildProductPanel(id){
       </div>
     </div>
 
-    ${measuringFor(id)}
     ${knowledgeFor(id)}
+    ${measuringFor(id)}
   </section>`;
 }
 
