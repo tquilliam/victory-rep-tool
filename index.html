@@ -397,6 +397,27 @@
   .glightbox img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:8px;background:var(--card)}
   .glightbox figcaption{color:#F3EFE3;font-size:14px;text-align:center}
 
+  /* fabrics */
+  .fabctrl{display:flex;flex-wrap:wrap;gap:14px 22px;align-items:center;margin-top:24px}
+  .fabtype{gap:7px}
+  .fabtime{gap:6px;margin-left:auto}
+  .fabtime button[aria-pressed="true"]{background:var(--olive);border-color:var(--olive);color:var(--olive-ink)}
+  @media(max-width:520px){.fabtime{margin-left:0}}
+  .fabcards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px}
+  @media(max-width:720px){.fabcards{grid-template-columns:1fr}}
+  .fabcard{margin:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card);box-shadow:var(--shadow)}
+  .fabcard figcaption{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--bronze);padding:12px 14px 0}
+  .fabsvg{display:block;width:100%;height:auto}
+  .fabwarn{margin-top:16px;background:#f6e7cf;border:1px solid #e2c896;color:#6a5326;border-radius:6px;padding:11px 14px;font-size:13px;font-weight:600}
+  .fabverdict{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+  @media(max-width:640px){.fabverdict{grid-template-columns:repeat(2,1fr)}}
+  .fabtile{border:1px solid var(--line);border-radius:6px;padding:12px 14px;background:var(--paper2)}
+  .fabtile span{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bronze);font-weight:700}
+  .fabtile b{display:block;font-size:14px;margin-top:4px;color:var(--ink)}
+  .fabtile.bad{border-color:#e2c896;background:#f8efe0}
+  .fabtile.bad b{color:#8a5a1c}
+  .fabnote{margin:18px 0 0;font-size:14px;color:var(--ink-soft);max-width:72ch;line-height:1.6}
+
   footer{max-width:1120px;margin:40px auto 0;padding:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
 </style>
 
@@ -713,7 +734,7 @@ function specRows(specs){
     const rows=grp.rows.map(([l,v])=>`<div class="sr"><span class="lab">${l}</span>${specValue(v)}</div>`).join('');
     // ungrouped specs (a product whose sheet rows have no Group yet) just render flat
     if(!grp.g) return `<div class="a"><div class="sgrid">${rows}</div></div>`;
-    return `<details${i===0?' open':''}><summary>${grp.g}</summary>
+    return `<details><summary>${grp.g}</summary>
       <div class="a"><div class="sgrid">${rows}</div></div></details>`;
   }).join('');
   return `<div class="faq specs-faq">${body}</div>`;
@@ -860,7 +881,7 @@ function measuringFor(id){
     if(!grp){ grp={name,items:[]}; groups.push(grp); }
     grp.items.push([r[2],r[3]]);
   });
-  const blocks=groups.map((grp,i)=>`<details${i===0?' open':''}><summary>${grp.name}</summary>
+  const blocks=groups.map((grp,i)=>`<details><summary>${grp.name}</summary>
     <div class="a"><ul class="kn">${grp.items.map(([k,d])=>`<li><b>${k}</b><span>${d}</span></li>`).join('')}</ul>
     ${diagramsFor(grp.name)}</div></details>`).join('');
   return head+
@@ -874,7 +895,7 @@ function knowledgeFor(id){
   if(!rows.length) return '';
   const sections=[];
   rows.forEach(([,s,k,d])=>{let g=sections.find(x=>x.s===s);if(!g){g={s,items:[]};sections.push(g);}g.items.push([k,d]);});
-  const blocks=sections.map((g,i)=>`<details${i===0?' open':''}><summary>${g.s}</summary>
+  const blocks=sections.map((g,i)=>`<details><summary>${g.s}</summary>
     <div class="a"><ul class="kn">${g.items.map(([k,d])=>`<li><b>${k}</b><span>${d}</span></li>`).join('')}</ul>
     ${diagramsFor(g.s)}</div></details>`).join('');
   return `<div class="sectlead" style="margin-top:34px"><h3 class="display">Product knowledge</h3><div class="rule"></div></div>
@@ -1105,6 +1126,113 @@ function buildVizPanel(){
 }
 
 /* ============ GALLERY ============ */
+/* ============ FABRIC & LIGHT EXPLAINER ============ */
+const FABRICS = {
+  blockout:{ name:"Blockout", fabric:"#c7c0aa", see:{day:0.0,night:0.0}, glow:0, priv:{day:1,night:1},
+    verdict:{light:"Blocks all light", viewOut:"None", privDay:"Full", privNight:"Full"},
+    note:"The dark-room, total-privacy choice — bedrooms, media rooms and west-facing glare." },
+  lightfilter:{ name:"Light-filter", fabric:"#e7e0ce", see:{day:0.05,night:0.06}, glow:0.6, priv:{day:0.85,night:0.55},
+    verdict:{light:"Soft, diffused", viewOut:"Diffused only", privDay:"Silhouette", privNight:"Silhouette"},
+    note:"Keeps the room bright and private by day; at night the outside sees a soft silhouette only, not detail." },
+  sunscreen:{ name:"Sunscreen", fabric:"#8d8d86", see:{day:0.58,night:0.12}, glow:0.08, mesh:true, priv:{day:0.8,night:0.12},
+    verdict:{light:"Filtered, glare cut", viewOut:"Kept", privDay:"Good by day", privNight:"None — see-through"},
+    note:"The view-keeper: glare and UV down while you keep the outlook. But it is see-through at night with the lights on — always pair it with a blockout.", warnNight:true },
+  sheer:{ name:"Sheer", fabric:"#f1ecdf", see:{day:0.5,night:0.42}, glow:0.42, priv:{day:0.35,night:0.06},
+    verdict:{light:"Bright & airy", viewOut:"Soft view", privDay:"Low", privNight:"None"},
+    note:"Decorative softness and light — minimal privacy on its own. Layer it over a blockout or sunscreen for real control.", warnNight:true }
+};
+const FAB_ORDER=["blockout","lightfilter","sunscreen","sheer"];
+const fabState={type:"sunscreen", time:"day"};
+function fabDefs(){
+  return `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <linearGradient id="fbSkyD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe0f0"/><stop offset="1" stop-color="#eaf4f7"/></linearGradient>
+    <linearGradient id="fbSkyN" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#24344f"/><stop offset="1" stop-color="#0f1722"/></linearGradient>
+    <pattern id="fbMesh" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.6" fill="#000" opacity="0.18"/></pattern>
+  </defs></svg>`;
+}
+function fabWindowFrame(){
+  return `<rect x="34" y="28" width="232" height="132" fill="none" stroke="#fbfaf7" stroke-width="12"/>
+    <rect x="146" y="34" width="4" height="120" fill="#fbfaf7" opacity=".9"/>
+    <rect x="40" y="150" width="220" height="6" fill="#efece2"/>`;
+}
+function fabSceneInside(f){
+  const day=fabState.time==='day', see=f.see[fabState.time];
+  const sky = day
+    ? `<rect x="40" y="34" width="220" height="120" fill="url(#fbSkyD)"/><circle cx="214" cy="64" r="15" fill="#f7d979"/>`
+    : `<rect x="40" y="34" width="220" height="120" fill="url(#fbSkyN)"/><circle cx="216" cy="62" r="12" fill="#e2e7ef"/><g fill="#c9d1dd"><circle cx="70" cy="56" r="1.3"/><circle cx="104" cy="46" r="1.1"/><circle cx="150" cy="58" r="1.2"/><circle cx="186" cy="50" r="1"/></g>`;
+  const scene = sky
+    + `<circle cx="92" cy="118" r="23" fill="${day?'#61784f':'#26301d'}"/><rect x="89" y="120" width="6" height="34" fill="${day?'#7c6c4b':'#1e1a12'}"/>`
+    + `<rect x="40" y="122" width="220" height="32" fill="${day?'#6d8460':'#2a3426'}"/>`;
+  const fabOp=(1-see).toFixed(2);
+  const glow = f.glow? `<rect x="40" y="34" width="220" height="120" fill="#fbf7ec" opacity="${(f.glow*(day?0.8:0.28)).toFixed(2)}"/>`:'';
+  const mesh = f.mesh? `<rect x="40" y="34" width="220" height="120" fill="url(#fbMesh)"/>`:'';
+  const bright = day ? Math.min(0.5, see*0.5 + f.glow*0.3) : 0.03;
+  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="${f.name} seen from inside, ${fabState.time}">
+    <rect width="300" height="210" fill="${day?'#f3efe6':'#20242b'}"/>
+    <polygon points="40,156 260,156 222,205 78,205" fill="#f6e6b8" opacity="${bright.toFixed(2)}"/>
+    ${scene}
+    <rect x="40" y="34" width="220" height="120" fill="${f.fabric}" opacity="${fabOp}"/>
+    ${glow}${mesh}
+    ${fabWindowFrame()}
+  </svg>`;
+}
+function fabSceneOutside(f){
+  const day=fabState.time==='day';
+  const visIn = day? (1-f.priv.day) : (1-f.priv.night);
+  const facade = day?'#d9d3c5':'#2f3038';
+  const interior = `<rect x="40" y="34" width="220" height="120" fill="${day?'#2b2a28':'#3a2f1c'}"/>`
+    + (day? '' : `<circle cx="204" cy="82" r="32" fill="#f7cf7a" opacity=".7"/><rect x="199" y="78" width="9" height="52" fill="#caa24f"/>`)
+    + `<g fill="#000" opacity=".55"><ellipse cx="98" cy="106" rx="15" ry="28"/><circle cx="98" cy="74" r="10"/></g>`;
+  const fabOverInterior=(1-visIn).toFixed(2);
+  const sheen = day? `<polygon points="40,34 118,34 58,154 40,154" fill="#ffffff" opacity=".16"/>`:'';
+  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="${f.name} seen from outside, ${fabState.time}">
+    <rect width="300" height="210" fill="${facade}"/>
+    <rect x="40" y="34" width="220" height="120" fill="#111"/>
+    ${interior}
+    <rect x="40" y="34" width="220" height="120" fill="${f.fabric}" opacity="${fabOverInterior}"/>
+    ${sheen}
+    ${fabWindowFrame()}
+  </svg>`;
+}
+function fabTypeChips(){
+  return `<div class="fabtype chips">${FAB_ORDER.map(k=>`<button type="button" data-k="${k}" aria-pressed="${String(fabState.type===k)}">${FABRICS[k].name}</button>`).join('')}</div>`;
+}
+function fabTimeToggle(){
+  return `<div class="fabtime chips" role="group" aria-label="Time of day">
+    <button type="button" data-k="day" aria-pressed="${String(fabState.time==='day')}">☀ Day</button>
+    <button type="button" data-k="night" aria-pressed="${String(fabState.time==='night')}">☾ Night</button></div>`;
+}
+function fabBody(f){
+  const v=f.verdict, warnNow=(fabState.time==='night' && f.warnNight);
+  const warn = warnNow ? `<div class="fabwarn">&#9888; At night with the lights on, people outside can see straight in &mdash; pair it with a blockout.</div>`:'';
+  const tile=(l,val,bad)=>`<div class="fabtile${bad?' bad':''}"><span>${l}</span><b>${val}</b></div>`;
+  return `<div class="fabcards">
+      <figure class="fabcard"><figcaption>Looking out &mdash; from inside</figcaption>${fabSceneInside(f)}</figure>
+      <figure class="fabcard"><figcaption>Looking in &mdash; from outside</figcaption>${fabSceneOutside(f)}</figure>
+    </div>
+    ${warn}
+    <div class="fabverdict">
+      ${tile('Light in',v.light)}
+      ${tile('View out',v.viewOut)}
+      ${tile('Privacy — day',v.privDay)}
+      ${tile('Privacy — night',v.privNight,warnNow)}
+    </div>
+    <p class="fabnote">${f.note}</p>`;
+}
+function buildFabricsPanel(){
+  return `<section class="panel" id="panel-fabrics" role="tabpanel" aria-labelledby="tab-fabrics" tabindex="0">
+    <div class="phead"><div class="idx">See the difference</div><h2 class="display">Fabric &amp; light</h2>
+      <div class="pos">How each fabric looks from inside and out, by day and by night &mdash; so the customer can see the difference and pick the right one for the room.</div></div>
+    ${fabDefs()}
+    <div id="fabControls" class="fabctrl"></div>
+    <div id="fabBody"></div>
+  </section>`;
+}
+function renderFabrics(){
+  const c=document.getElementById('fabControls'); if(!c) return;
+  c.innerHTML=fabTypeChips()+fabTimeToggle();
+  document.getElementById('fabBody').innerHTML=fabBody(FABRICS[fabState.type]);
+}
 function buildGalleryPanel(){
   return `<section class="panel" id="panel-gallery" role="tabpanel" aria-labelledby="tab-gallery" tabindex="0">
     <div class="phead"><div class="idx">Real installs</div><h2 class="display">Gallery</h2>
@@ -1255,7 +1383,7 @@ function setStatus(ok){
 
 /* ============ TABS / RENDER ============ */
 let activeTab='roller';
-const TABS=[...ORDER.map(id=>({id,label:PRODUCTS[id].label})),{id:"gallery",label:"Gallery",accent:true},{id:"leaderboard",label:"Leaderboard",accent:true},{id:"visualiser",label:"Visualiser",accent:true}];
+const TABS=[...ORDER.map(id=>({id,label:PRODUCTS[id].label})),{id:"fabrics",label:"Fabrics",accent:true},{id:"gallery",label:"Gallery",accent:true},{id:"leaderboard",label:"Leaderboard",accent:true},{id:"visualiser",label:"Visualiser",accent:true}];
 function selectTab(id){
   activeTab=id;
   document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.id===id)));
@@ -1268,11 +1396,13 @@ function renderAll(){
   nav.innerHTML=TABS.map(t=>`<button role="tab" id="tab-${t.id}" data-id="${t.id}" aria-selected="false" class="${t.accent?'accent':''}">${t.label}</button>`).join('');
   main.innerHTML='';
   ORDER.forEach(id=>main.appendChild(el(buildProductPanel(id))));
+  main.appendChild(el(buildFabricsPanel()));
   main.appendChild(el(buildGalleryPanel()));
   main.appendChild(el(buildLeaderboardPanel()));
   main.appendChild(el(buildVizPanel()));
   renderLeaderboard();
   renderGallery();
+  renderFabrics();
   selectTab(activeTab);
 }
 /* Delegated handlers are bound ONCE. renderAll() can run again (e.g. after the sheet
@@ -1305,6 +1435,10 @@ function bindOnce(){
       renderLeaderboard();
       return;
     }
+    const ftype=e.target.closest('.fabtype button');
+    if(ftype){ fabState.type=ftype.dataset.k; renderFabrics(); return; }
+    const ftime=e.target.closest('.fabtime button');
+    if(ftime){ fabState.time=ftime.dataset.k; renderFabrics(); return; }
     const gtoggle=e.target.closest('.gl-toggle');
     if(gtoggle){ galExpand[gtoggle.dataset.key]=!galExpand[gtoggle.dataset.key]; renderGallery(); return; }
     const gclear=e.target.closest('.gl-clear');
