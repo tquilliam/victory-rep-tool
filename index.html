@@ -868,11 +868,14 @@ function buildProductPanel(id){
       </div>
       ${hero}
     </div>
-    <div class="card" style="margin-top:26px">
-      <h4 class="mini">Specifications</h4>
-      ${specRows(p.specs)}
-    </div>
-    <div class="grid2">
+    <div class="sectlead" style="margin-top:30px"><h3 class="display">Specifications</h3><div class="rule"></div></div>
+    <div class="card" style="margin-top:16px">${specRows(p.specs)}</div>
+
+    <div class="sectlead" style="margin-top:34px"><h3 class="display">${rangeTitle}</h3><div class="rule"></div></div>
+    ${rangeGridFor(p.rangeKey)}
+
+    <div class="sectlead" style="margin-top:34px"><h3 class="display">How to sell it</h3><div class="rule"></div></div>
+    <div class="grid2" style="grid-template-columns:1fr 1fr;margin-top:18px">
       <div class="card">
         <h4 class="mini">Three things that win this sale</h4>
         <div class="win">${winRows(p.wins)}</div>
@@ -882,18 +885,14 @@ function buildProductPanel(id){
         ${personaRows(p.personas)}
       </div>
     </div>
-
-    <div class="sectlead"><h3 class="display">${rangeTitle}</h3><div class="rule"></div></div>
-    ${rangeGridFor(p.rangeKey)}
-
-    <div class="grid2">
+    <div class="grid2" style="grid-template-columns:1fr 1fr;margin-top:24px">
       <div>
-        <div class="sectlead" style="margin-top:34px"><h3 class="display">FAQ</h3><div class="rule"></div></div>
-        <div class="faq" style="margin-top:16px">${faqRows(p.faqs)}</div>
+        <h4 class="mini">Common questions</h4>
+        <div class="faq" style="margin-top:12px">${faqRows(p.faqs)}</div>
       </div>
       <div>
-        <div class="sectlead" style="margin-top:34px"><h3 class="display">How to sell it</h3><div class="rule"></div></div>
-        <div class="obj" style="margin-top:16px">${objRows(p.objections)}</div>
+        <h4 class="mini">Objection handling</h4>
+        <div class="obj" style="margin-top:12px">${objRows(p.objections)}</div>
         <div class="tip"><span class="th">Consultant tip</span>${p.tip}</div>
         <div class="xsell"><b>Cross-sell &rarr;</b> ${p.xsell}</div>
       </div>
