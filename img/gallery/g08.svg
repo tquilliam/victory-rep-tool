@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Roller Blinds placeholder">
+  <rect width="800" height="600" fill="#657153"/>
+  <rect x="120" y="150" width="560" height="300" fill="#71805F" stroke="#F3EFE3" stroke-opacity=".25" stroke-width="3"/>
+  <rect x="150" y="176" width="500" height="248" fill="#586048"/>
+  <line x1="150" y1="200" x2="650" y2="200" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/><line x1="150" y1="226" x2="650" y2="226" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/><line x1="150" y1="252" x2="650" y2="252" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/><line x1="150" y1="278" x2="650" y2="278" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/><line x1="150" y1="304" x2="650" y2="304" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/><line x1="150" y1="330" x2="650" y2="330" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/><line x1="150" y1="356" x2="650" y2="356" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/><line x1="150" y1="382" x2="650" y2="382" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/><line x1="150" y1="408" x2="650" y2="408" stroke="#F3EFE3" stroke-opacity=".28" stroke-width="2"/>
+  <rect x="150" y="176" width="500" height="14" fill="#F3EFE3" fill-opacity=".35"/>
+  <text x="60" y="520" font-family="Georgia,serif" font-size="46" font-weight="600" fill="#F3EFE3">Roller Blinds</text>
+  <text x="62" y="556" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="21" fill="#F3EFE3" fill-opacity=".82">Large window &#183; Sunscreen &#183; Altitude 10%</text>
+  <g transform="translate(628,40) rotate(0)">
+    <rect x="0" y="0" width="112" height="26" rx="4" fill="#F3EFE3" fill-opacity=".9"/>
+    <text x="56" y="18" text-anchor="middle" font-family="-apple-system,Helvetica,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="2" fill="#657153">SAMPLE</text>
+  </g>
+</svg>

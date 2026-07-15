@@ -360,6 +360,26 @@
     display:grid;place-items:center;margin:0 auto 18px}
   .viz-card a.btn{display:inline-block;text-decoration:none}
 
+  /* gallery */
+  .galfilters{margin-top:10px;display:grid;gap:16px}
+  .galfilters .q .ql{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);margin-bottom:9px}
+  .galcount{margin:18px 0 0}
+  .galgrid{margin-top:8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+  @media(max-width:520px){.galgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}}
+  .gtile{appearance:none;font-family:inherit;text-align:left;cursor:zoom-in;padding:0;border:1px solid var(--line);
+    border-radius:8px;overflow:hidden;background:var(--card);box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .gtile:hover{border-color:var(--bronze-deep)}
+  .gtile:focus-visible{outline:2px solid var(--bronze);outline-offset:2px}
+  .gtile img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--paper2)}
+  .gtile .gmeta{padding:10px 12px;display:flex;flex-direction:column;gap:1px}
+  .gtile .gmeta b{font-size:13.5px;font-weight:600}
+  .gtile .gmeta span{font-size:11.5px;color:var(--muted)}
+  .glightbox{position:fixed;inset:0;z-index:50;background:rgba(35,31,32,.84);display:grid;place-items:center;padding:28px;cursor:zoom-out}
+  .glightbox[hidden]{display:none}
+  .glightbox figure{margin:0;max-width:1000px;max-height:90vh;display:flex;flex-direction:column;gap:12px}
+  .glightbox img{max-width:100%;max-height:80vh;object-fit:contain;border-radius:8px;background:var(--card)}
+  .glightbox figcaption{color:#F3EFE3;font-size:14px;text-align:center}
+
   footer{max-width:1120px;margin:40px auto 0;padding:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
 </style>
 
@@ -394,7 +414,27 @@ const VISUALISER_URL = "https://victory-visualiser.onrender.com";
    The sheet must be shared "Anyone with the link - Viewer". Leave "" to use the built-in data below.
    Tab names must stay: Products, Specs, FAQ, Wins, Personas, Objections, RollerFabrics, Honeycomb. */
 const SHEET_ID = "1k62s1ejq6KIgHn0YqMyq6B7-UPBfM0vn31fp3MtZ8V8";
-const SHEET_TABS = ["Products","Specs","FAQ","Wins","Personas","Objections","Knowledge","RollerFabrics","Honeycomb","Colours","Sales"];
+const SHEET_TABS = ["Products","Specs","FAQ","Wins","Personas","Objections","Knowledge","RollerFabrics","Honeycomb","Colours","Sales","Images"];
+
+/* ============ DATA: gallery images ============
+   PLACEHOLDER installs so the Gallery works out of the box. Swap for real photos in the
+   "Images" sheet tab (columns: Image URL, Product, Window, Type, Range, Caption) and drop the
+   files in img/gallery/. Product must be a lowercase id: roller/roman/panel/vertical/honeycomb. */
+let IMAGES = [
+ {src:"img/gallery/g01.svg", product:"panel",     window:"Sliding door", type:"Blockout",     range:"Rationale",    caption:"Panel glide across a sliding door &mdash; blockout Rationale"},
+ {src:"img/gallery/g02.svg", product:"panel",     window:"Large window", type:"Sunscreen",    range:"Altitude 5%",  caption:"Panel glide on a wide window &mdash; sunscreen Altitude 5%"},
+ {src:"img/gallery/g03.svg", product:"panel",     window:"Doorway",      type:"Light-filter", range:"Harlow",       caption:"Panel glide over a doorway &mdash; light-filter Harlow"},
+ {src:"img/gallery/g04.svg", product:"vertical",  window:"Sliding door", type:"Blockout",     range:"Voyage",       caption:"Vertical blind on a patio door &mdash; blockout Voyage"},
+ {src:"img/gallery/g05.svg", product:"vertical",  window:"Large window", type:"Translucent",  range:"Fleet",        caption:"Vertical blind on a wide window &mdash; translucent Fleet"},
+ {src:"img/gallery/g06.svg", product:"vertical",  window:"Stairwell",    type:"Blockout",     range:"Eton",         caption:"Vertical blind on a stairwell window &mdash; blockout Eton"},
+ {src:"img/gallery/g07.svg", product:"roller",    window:"Standard",     type:"Blockout",     range:"Voyage",       caption:"Roller blind, standard window &mdash; blockout Voyage"},
+ {src:"img/gallery/g08.svg", product:"roller",    window:"Large window", type:"Sunscreen",    range:"Altitude 10%", caption:"Roller blind on a large window &mdash; sunscreen Altitude 10%"},
+ {src:"img/gallery/g09.svg", product:"roller",    window:"Bay",          type:"Translucent",  range:"Porto Rico",   caption:"Roller blinds in a bay &mdash; translucent Porto Rico"},
+ {src:"img/gallery/g10.svg", product:"roman",     window:"Standard",     type:"Blockout",     range:"Madison Two",  caption:"Roman blind, standard window &mdash; blockout Madison Two"},
+ {src:"img/gallery/g11.svg", product:"honeycomb", window:"Standard",     type:"Blockout",     range:"Core DC",      caption:"Honeycomb, standard window &mdash; blockout Core DC"},
+ {src:"img/gallery/g12.svg", product:"honeycomb", window:"Bay",          type:"Light-filter", range:"Core",         caption:"Honeycomb in a bay &mdash; light-filter Core"}
+];
+const galState = {product:"All", window:"All", type:"All"};
 
 /* ============ DATA: roller-family fabric ranges (from the sheet) ============ */
 const FILL = '<span class="fill">&#x27E8;Insyte&#x27E9;</span>';
@@ -1034,6 +1074,52 @@ function buildVizPanel(){
   </section>`;
 }
 
+/* ============ GALLERY ============ */
+function buildGalleryPanel(){
+  return `<section class="panel" id="panel-gallery" role="tabpanel" aria-labelledby="tab-gallery" tabindex="0">
+    <div class="phead"><div class="idx">Real installs</div><h2 class="display">Gallery</h2>
+      <div class="pos">Show the customer a finished job like theirs. Filter to their product, window and light level, then tap any photo to enlarge.</div></div>
+    <div id="galFilters" class="galfilters"></div>
+    <p class="small muted galcount" id="galCount"></p>
+    <div id="galGrid" class="galgrid"></div>
+    <div class="glightbox" hidden aria-hidden="true"><figure><img alt=""><figcaption></figcaption></figure></div>
+  </section>`;
+}
+function galOptions(key){return ["All",...[...new Set(IMAGES.map(i=>i[key]))].filter(Boolean)];}
+function galLabel(key,v){return key==='product' && PRODUCTS[v] ? PRODUCTS[v].label : v;}
+function galChips(){
+  const grp=(label,key)=>`<div class="q"><div class="ql">${label}</div><div class="chips" data-gl="${key}">${
+    galOptions(key).map(o=>`<button type="button" data-v="${o}" aria-pressed="${String(galState[key]===o)}">${galLabel(key,o)}</button>`).join('')}</div></div>`;
+  return grp('Product','product')+grp('Window','window')+grp('Light type','type');
+}
+function galFiltered(){
+  return IMAGES.filter(i=>
+    (galState.product==='All'||i.product===galState.product) &&
+    (galState.window ==='All'||i.window ===galState.window ) &&
+    (galState.type   ==='All'||i.type   ===galState.type   ));
+}
+function renderGallery(){
+  const f=document.getElementById('galFilters'); if(f) f.innerHTML=galChips();
+  const grid=document.getElementById('galGrid'); if(!grid) return;
+  const list=galFiltered();
+  const cnt=document.getElementById('galCount'); if(cnt) cnt.textContent=`${list.length} of ${IMAGES.length} shown`;
+  if(!list.length){ grid.innerHTML='<div class="repnotes">No photos match these filters yet. Add rows to the <b>Images</b> tab of the sheet.</div>'; return; }
+  grid.innerHTML=list.map(i=>`<button type="button" class="gtile" data-src="${i.src}" data-cap="${(i.caption||'').replace(/"/g,'&quot;')}">
+      <img src="${i.src}" alt="${i.caption||''}" loading="lazy">
+      <span class="gmeta"><b>${galLabel('product',i.product)}</b><span>${[i.window,i.type,i.range].filter(Boolean).join(' &middot; ')}</span></span>
+    </button>`).join('');
+}
+function openLightbox(src,cap){
+  const lb=document.querySelector('#panel-gallery .glightbox'); if(!lb) return;
+  const im=lb.querySelector('img'); im.src=src; im.alt=cap||'';
+  lb.querySelector('figcaption').innerHTML=cap||'';
+  lb.hidden=false; lb.setAttribute('aria-hidden','false');
+}
+function closeLightbox(){
+  const lb=document.querySelector('#panel-gallery .glightbox'); if(!lb||lb.hidden) return;
+  lb.hidden=true; lb.setAttribute('aria-hidden','true');
+}
+
 /* ============ LIVE DATA (Google Sheet) ============ */
 function parseCSV(text){
   const rows=[]; let row=[], cur='', q=false;
@@ -1097,6 +1183,11 @@ function applyData(sheets){
     tier:g(o,'cell type'),name:g(o,'range'),size:g(o,'cell size'),opacity:g(o,'opacity'),shades:Number(g(o,'shades'))||g(o,'shades'),note:g(o,'note'),
     avail:availOf(g(o,'available'))}));
     if(out.length)HONEYCOMB=out;}
+  if(sheets.Images){const out=asObjects(sheets.Images)
+    .filter(o=>g(o,'image')||g(o,'src'))
+    .map(o=>({src:g(o,'image')||g(o,'src'),product:g(o,'product').toLowerCase(),window:g(o,'window'),
+      type:g(o,'type')||g(o,'light'),range:g(o,'range'),caption:g(o,'caption')}));
+    if(out.length)IMAGES=out;}
 }
 async function loadFromSheet(){
   if(!SHEET_ID) return false;
@@ -1118,7 +1209,7 @@ function setStatus(ok){
 
 /* ============ TABS / RENDER ============ */
 let activeTab='roller';
-const TABS=[...ORDER.map(id=>({id,label:PRODUCTS[id].label})),{id:"leaderboard",label:"Leaderboard",accent:true},{id:"visualiser",label:"Visualiser",accent:true}];
+const TABS=[...ORDER.map(id=>({id,label:PRODUCTS[id].label})),{id:"gallery",label:"Gallery",accent:true},{id:"leaderboard",label:"Leaderboard",accent:true},{id:"visualiser",label:"Visualiser",accent:true}];
 function selectTab(id){
   activeTab=id;
   document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.id===id)));
@@ -1131,9 +1222,11 @@ function renderAll(){
   nav.innerHTML=TABS.map(t=>`<button role="tab" id="tab-${t.id}" data-id="${t.id}" aria-selected="false" class="${t.accent?'accent':''}">${t.label}</button>`).join('');
   main.innerHTML='';
   ORDER.forEach(id=>main.appendChild(el(buildProductPanel(id))));
+  main.appendChild(el(buildGalleryPanel()));
   main.appendChild(el(buildLeaderboardPanel()));
   main.appendChild(el(buildVizPanel()));
   renderLeaderboard();
+  renderGallery();
   selectTab(activeTab);
 }
 /* Delegated handlers are bound ONCE. renderAll() can run again (e.g. after the sheet
@@ -1166,6 +1259,17 @@ function bindOnce(){
       renderLeaderboard();
       return;
     }
+    const gchip=e.target.closest('.chips[data-gl] button');
+    if(gchip){
+      const group=gchip.closest('.chips');
+      group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===gchip)));
+      galState[group.dataset.gl]=gchip.dataset.v;
+      renderGallery();
+      return;
+    }
+    const gtile=e.target.closest('.gtile');
+    if(gtile){ openLightbox(gtile.dataset.src, gtile.dataset.cap); return; }
+    if(e.target.closest('.glightbox')){ closeLightbox(); return; }
     const fit=e.target.closest('.mcfit button');
     if(fit){
       const b=fit.closest('.mcheck');
@@ -1190,6 +1294,7 @@ function bindOnce(){
     if(mc && (e.target.classList.contains('mc-w')||e.target.classList.contains('mc-d'))) updateMeasureHint(mc);
   });
   main.addEventListener('keydown',e=>{
+    if(e.key==='Escape'){ closeLightbox(); }
     // Enter inside the measure check runs it
     if(e.key==='Enter'){
       const mc=e.target.closest('.mcheck');
