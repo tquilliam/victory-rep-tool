@@ -417,6 +417,9 @@
   .fabtile.bad{border-color:#e2c896;background:#f8efe0}
   .fabtile.bad b{color:#8a5a1c}
   .fabnote{margin:18px 0 0;font-size:14px;color:var(--ink-soft);max-width:72ch;line-height:1.6}
+  .fitbadge{padding:11px 14px;font-size:12.5px;font-weight:700;border-top:1px solid var(--line)}
+  .fitbadge.bad{background:#f8efe0;color:#8a5a1c}
+  .fitbadge.good{background:var(--sage-tint);color:var(--sage-deep)}
 
   footer{max-width:1120px;margin:40px auto 0;padding:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
 </style>
@@ -1219,6 +1222,37 @@ function fabBody(f){
     </div>
     <p class="fabnote">${f.note}</p>`;
 }
+function fitSceneReveal(){
+  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="Reveal fit leaves light gaps down the sides">
+    <rect width="300" height="210" fill="#23272e"/>
+    <rect x="58" y="36" width="184" height="140" fill="url(#fbSkyD)"/>
+    <rect x="58" y="36" width="184" height="140" fill="#f6df8a" opacity="0.5"/>
+    <rect x="76" y="36" width="148" height="140" fill="#2a2620"/>
+    <polygon points="58,176 76,176 66,206 38,206" fill="#f6e6b0" opacity="0.45"/>
+    <polygon points="224,176 242,176 262,206 234,206" fill="#f6e6b0" opacity="0.45"/>
+    <rect x="52" y="30" width="196" height="152" fill="none" stroke="#fbfaf7" stroke-width="10"/>
+    <g stroke="#e0a83a" stroke-width="2"><path d="M67 18 V32"/><path d="M233 18 V32"/></g>
+    <g fill="#e0a83a" font-family="-apple-system,Arial,sans-serif" font-size="9" font-weight="700" text-anchor="middle"><text x="67" y="14">gap</text><text x="233" y="14">gap</text></g>
+  </svg>`;
+}
+function fitSceneFace(){
+  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="Face fit overlaps the opening with no light gaps">
+    <rect width="300" height="210" fill="#23272e"/>
+    <rect x="70" y="44" width="160" height="124" fill="#f6df8a" opacity="0.45"/>
+    <rect x="48" y="30" width="204" height="150" fill="#2a2620"/>
+    <rect x="46" y="26" width="208" height="6" fill="#39342b"/>
+    <g stroke="#8a9a72" stroke-width="2"><path d="M48 190 H70"/><path d="M230 190 H252"/></g>
+    <g fill="#9fb083" font-family="-apple-system,Arial,sans-serif" font-size="9" font-weight="700" text-anchor="middle"><text x="59" y="203">overlap</text><text x="241" y="203">overlap</text></g>
+  </svg>`;
+}
+function fitCompare(){
+  return `<div class="sectlead" style="margin-top:42px"><h3 class="display">Reveal fit vs face fit</h3><div class="rule"></div></div>
+    <p class="small muted" style="margin:12px 0 0;max-width:74ch">Same blockout blind, two ways to mount it. Reveal fit sits neatly inside the window recess &mdash; but always leaves light gaps down the sides. Face fit mounts over the opening and overlaps the edges: the choice when the room needs true darkness.</p>
+    <div class="fabcards" style="margin-top:18px">
+      <figure class="fabcard"><figcaption>Reveal fit &mdash; inside the recess</figcaption>${fitSceneReveal()}<div class="fitbadge bad">&#9888; Light gaps down the sides</div></figure>
+      <figure class="fabcard"><figcaption>Face fit &mdash; over the opening</figcaption>${fitSceneFace()}<div class="fitbadge good">&#10003; No gaps &mdash; true darkness</div></figure>
+    </div>`;
+}
 function buildFabricsPanel(){
   return `<section class="panel" id="panel-fabrics" role="tabpanel" aria-labelledby="tab-fabrics" tabindex="0">
     <div class="phead"><div class="idx">See the difference</div><h2 class="display">Fabric &amp; light</h2>
@@ -1226,6 +1260,7 @@ function buildFabricsPanel(){
     ${fabDefs()}
     <div id="fabControls" class="fabctrl"></div>
     <div id="fabBody"></div>
+    ${fitCompare()}
   </section>`;
 }
 function renderFabrics(){
