@@ -364,6 +364,20 @@
   .galfilters{margin-top:10px;display:grid;gap:16px}
   .galfilters .q .ql{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);margin-bottom:9px}
   .galcount{margin:18px 0 0}
+  .galfilters .q .ql .ql-n{display:inline-grid;place-items:center;min-width:16px;height:16px;padding:0 4px;margin-left:7px;
+    border-radius:999px;background:var(--bronze);color:#fff;font-size:9.5px;font-weight:800;vertical-align:middle}
+  .galfilters .gl-toggle{border:none;background:none;font-family:inherit;cursor:pointer;font-size:12.5px;font-weight:700;
+    color:var(--bronze-deep);padding:8px 6px;text-decoration:underline;text-underline-offset:2px}
+  .galfilters .gl-toggle:hover{color:var(--ink)}
+  .gl-clear{border:none;background:none;font-family:inherit;cursor:pointer;font:inherit;color:var(--bronze-deep);
+    font-weight:700;text-decoration:underline;text-underline-offset:2px;padding:0}
+  .gl-clear:hover{color:var(--ink)}
+  @media(max-width:640px){
+    .galfilters{gap:11px}
+    .galfilters .q .ql{margin-bottom:7px}
+    .galfilters .chips{gap:6px}
+    .galfilters .chips button{font-size:12px;padding:6px 11px}
+  }
   .galgrid{margin-top:8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
   @media(max-width:520px){.galgrid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}}
   .gtile{appearance:none;font-family:inherit;text-align:left;cursor:zoom-in;padding:0;border:1px solid var(--line);
@@ -448,6 +462,9 @@ let IMAGES = [
 /* Each filter row holds a Set of selected values. Empty Set = "All" (no filter on that row).
    Within a row the selected values are OR'd; the rows are AND'd together. */
 const galState = {product:new Set(), window:new Set(), type:new Set(), tag:new Set()};
+/* Long rows (mainly Tag) collapse to a handful of chips with a "+N more" toggle. */
+const galExpand = {product:false, window:false, type:false, tag:false};
+const GAL_CHIP_LIMIT = 8;
 
 /* ============ DATA: roller-family fabric ranges (from the sheet) ============ */
 const FILL = '<span class="fill">&#x27E8;Insyte&#x27E9;</span>';
@@ -928,7 +945,7 @@ function buildProductPanel(id){
     ${rangeGridFor(p.rangeKey)}
 
     <div class="sectlead" style="margin-top:34px"><h3 class="display">How to sell it</h3><div class="rule"></div></div>
-    <div class="grid2" style="grid-template-columns:1fr 1fr;margin-top:18px">
+    <div class="grid2" style="margin-top:18px">
       <div class="card">
         <h4 class="mini">Three things that win this sale</h4>
         <div class="win">${winRows(p.wins)}</div>
@@ -938,7 +955,7 @@ function buildProductPanel(id){
         ${personaRows(p.personas)}
       </div>
     </div>
-    <div class="grid2" style="grid-template-columns:1fr 1fr;margin-top:24px">
+    <div class="grid2" style="margin-top:24px">
       <div>
         <h4 class="mini">Common questions</h4>
         <div class="faq" style="margin-top:12px">${faqRows(p.faqs)}</div>
@@ -1104,9 +1121,17 @@ function galOptions(key){
 }
 function galLabel(key,v){return key==='product' && PRODUCTS[v] ? PRODUCTS[v].label : v;}
 function galChips(){
-  const grp=(label,key)=>{const set=galState[key];
-    return `<div class="q"><div class="ql">${label}</div><div class="chips" data-gl="${key}">${
-    galOptions(key).map(o=>`<button type="button" data-v="${o}" aria-pressed="${o==='All'?String(set.size===0):String(set.has(o))}">${galLabel(key,o)}</button>`).join('')}</div></div>`;};
+  const grp=(label,key)=>{
+    const set=galState[key];
+    const vals=galOptions(key).filter(o=>o!=='All');
+    const over=vals.length>GAL_CHIP_LIMIT;
+    const shown=(over && !galExpand[key]) ? vals.slice(0,GAL_CHIP_LIMIT) : vals;
+    const chip=(o,pressed)=>`<button type="button" data-v="${o}" aria-pressed="${pressed}">${galLabel(key,o)}</button>`;
+    const active=set.size?`<span class="ql-n">${set.size}</span>`:'';
+    let html=chip('All',String(set.size===0))+shown.map(o=>chip(o,String(set.has(o)))).join('');
+    if(over) html+=`<button type="button" class="gl-toggle" data-key="${key}">${galExpand[key]?'Show less':'+'+(vals.length-GAL_CHIP_LIMIT)+' more'}</button>`;
+    return `<div class="q"><div class="ql">${label}${active}</div><div class="chips" data-gl="${key}">${html}</div></div>`;
+  };
   return grp('Product','product')+grp('Window','window')+grp('Light type','type')+grp('Tag','tag');
 }
 function galFiltered(){
@@ -1121,7 +1146,8 @@ function renderGallery(){
   const f=document.getElementById('galFilters'); if(f) f.innerHTML=galChips();
   const grid=document.getElementById('galGrid'); if(!grid) return;
   const list=galFiltered();
-  const cnt=document.getElementById('galCount'); if(cnt) cnt.textContent=`${list.length} of ${IMAGES.length} shown`;
+  const anyActive=['product','window','type','tag'].some(k=>galState[k].size>0);
+  const cnt=document.getElementById('galCount'); if(cnt) cnt.innerHTML=`${list.length} of ${IMAGES.length} shown`+(anyActive?` &middot; <button type="button" class="gl-clear">Clear all</button>`:'');
   if(!list.length){ grid.innerHTML='<div class="repnotes">No photos match these filters yet. Add rows to the <b>Images</b> tab of the sheet.</div>'; return; }
   grid.innerHTML=list.map(i=>`<button type="button" class="gtile" data-src="${i.src}" data-cap="${(i.caption||'').replace(/"/g,'&quot;')}">
       <img src="${i.src}" alt="${i.caption||''}" loading="lazy">
@@ -1279,6 +1305,10 @@ function bindOnce(){
       renderLeaderboard();
       return;
     }
+    const gtoggle=e.target.closest('.gl-toggle');
+    if(gtoggle){ galExpand[gtoggle.dataset.key]=!galExpand[gtoggle.dataset.key]; renderGallery(); return; }
+    const gclear=e.target.closest('.gl-clear');
+    if(gclear){ ['product','window','type','tag'].forEach(k=>galState[k].clear()); renderGallery(); return; }
     const gchip=e.target.closest('.chips[data-gl] button');
     if(gchip){
       const key=gchip.closest('.chips').dataset.gl, v=gchip.dataset.v, set=galState[key];
