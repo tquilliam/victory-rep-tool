@@ -437,7 +437,9 @@ let IMAGES = [
  {src:"img/gallery/g11.svg", product:"honeycomb", window:"Standard",     type:"Blockout",     range:"Core DC",      tags:["energy","child safety"],           caption:"Honeycomb, standard window &mdash; blockout Core DC"},
  {src:"img/gallery/g12.svg", product:"honeycomb", window:"Bay",          type:"Light-filter", range:"Core",         tags:["bay solution","energy"],           caption:"Honeycomb in a bay &mdash; light-filter Core"}
 ];
-const galState = {product:"All", window:"All", type:"All", tag:"All"};
+/* Each filter row holds a Set of selected values. Empty Set = "All" (no filter on that row).
+   Within a row the selected values are OR'd; the rows are AND'd together. */
+const galState = {product:new Set(), window:new Set(), type:new Set(), tag:new Set()};
 
 /* ============ DATA: roller-family fabric ranges (from the sheet) ============ */
 const FILL = '<span class="fill">&#x27E8;Insyte&#x27E9;</span>';
@@ -1081,7 +1083,7 @@ function buildVizPanel(){
 function buildGalleryPanel(){
   return `<section class="panel" id="panel-gallery" role="tabpanel" aria-labelledby="tab-gallery" tabindex="0">
     <div class="phead"><div class="idx">Real installs</div><h2 class="display">Gallery</h2>
-      <div class="pos">Show the customer a finished job like theirs. Filter to their product, window and light level, then tap any photo to enlarge.</div></div>
+      <div class="pos">Show the customer a finished job like theirs. Tap any chips to filter &mdash; pick more than one in a row to widen it &mdash; then tap a photo to enlarge.</div></div>
     <div id="galFilters" class="galfilters"></div>
     <p class="small muted galcount" id="galCount"></p>
     <div id="galGrid" class="galgrid"></div>
@@ -1094,16 +1096,18 @@ function galOptions(key){
 }
 function galLabel(key,v){return key==='product' && PRODUCTS[v] ? PRODUCTS[v].label : v;}
 function galChips(){
-  const grp=(label,key)=>`<div class="q"><div class="ql">${label}</div><div class="chips" data-gl="${key}">${
-    galOptions(key).map(o=>`<button type="button" data-v="${o}" aria-pressed="${String(galState[key]===o)}">${galLabel(key,o)}</button>`).join('')}</div></div>`;
+  const grp=(label,key)=>{const set=galState[key];
+    return `<div class="q"><div class="ql">${label}</div><div class="chips" data-gl="${key}">${
+    galOptions(key).map(o=>`<button type="button" data-v="${o}" aria-pressed="${o==='All'?String(set.size===0):String(set.has(o))}">${galLabel(key,o)}</button>`).join('')}</div></div>`;};
   return grp('Product','product')+grp('Window','window')+grp('Light type','type')+grp('Tag','tag');
 }
 function galFiltered(){
+  const inRow=(set,v)=>set.size===0||set.has(v);
   return IMAGES.filter(i=>
-    (galState.product==='All'||i.product===galState.product) &&
-    (galState.window ==='All'||i.window ===galState.window ) &&
-    (galState.type   ==='All'||i.type   ===galState.type   ) &&
-    (galState.tag    ==='All'||(i.tags||[]).includes(galState.tag)));
+    inRow(galState.product,i.product) &&
+    inRow(galState.window ,i.window ) &&
+    inRow(galState.type   ,i.type   ) &&
+    (galState.tag.size===0||(i.tags||[]).some(t=>galState.tag.has(t))));
 }
 function renderGallery(){
   const f=document.getElementById('galFilters'); if(f) f.innerHTML=galChips();
@@ -1269,9 +1273,10 @@ function bindOnce(){
     }
     const gchip=e.target.closest('.chips[data-gl] button');
     if(gchip){
-      const group=gchip.closest('.chips');
-      group.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===gchip)));
-      galState[group.dataset.gl]=gchip.dataset.v;
+      const key=gchip.closest('.chips').dataset.gl, v=gchip.dataset.v, set=galState[key];
+      if(v==='All') set.clear();
+      else if(set.has(v)) set.delete(v);
+      else set.add(v);
       renderGallery();
       return;
     }
