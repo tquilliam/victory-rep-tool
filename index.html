@@ -417,8 +417,15 @@
   .fabtile.bad{border-color:#e2c896;background:#f8efe0}
   .fabtile.bad b{color:#8a5a1c}
   .fabnote{margin:18px 0 0;font-size:14px;color:var(--ink-soft);max-width:72ch;line-height:1.6}
-  .fitbadge{padding:11px 14px;font-size:12.5px;font-weight:700;border-top:1px solid var(--line)}
-  .fitbadge.bad{background:#f8efe0;color:#8a5a1c}
+  .fitcards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+  @media(max-width:760px){.fitcards{grid-template-columns:1fr}}
+  .fitcard{margin:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card);box-shadow:var(--shadow);display:flex;flex-direction:column}
+  .fitcard figcaption{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--bronze);padding:12px 14px 4px}
+  .rollglyph{display:block;width:150px;height:auto;margin:12px 14px 0}
+  .fitcap{margin:0;padding:10px 14px 14px;font-size:12.5px;color:var(--ink-soft);line-height:1.5}
+  .fitbadge{padding:9px 14px;font-size:12px;font-weight:700;border-top:1px solid var(--line)}
+  .fitbadge.bad{background:#f6e2da;color:#9a4626}
+  .fitbadge.mid{background:#f8efe0;color:#8a5a1c}
   .fitbadge.good{background:var(--sage-tint);color:var(--sage-deep)}
 
   footer{max-width:1120px;margin:40px auto 0;padding:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
@@ -1223,34 +1230,73 @@ function fabBody(f){
     <p class="fabnote">${f.note}</p>`;
 }
 function fitSceneReveal(){
-  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="Reveal fit leaves light gaps down the sides">
+  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="Reveal fit — large light gaps down both sides">
     <rect width="300" height="210" fill="#23272e"/>
     <rect x="58" y="36" width="184" height="140" fill="url(#fbSkyD)"/>
     <rect x="58" y="36" width="184" height="140" fill="#f6df8a" opacity="0.5"/>
-    <rect x="76" y="36" width="148" height="140" fill="#2a2620"/>
-    <polygon points="58,176 76,176 66,206 38,206" fill="#f6e6b0" opacity="0.45"/>
-    <polygon points="224,176 242,176 262,206 234,206" fill="#f6e6b0" opacity="0.45"/>
+    <rect x="80" y="36" width="140" height="140" fill="#2a2620"/>
+    <polygon points="58,176 80,176 70,206 34,206" fill="#f6e6b0" opacity="0.5"/>
+    <polygon points="220,176 242,176 264,206 232,206" fill="#f6e6b0" opacity="0.5"/>
     <rect x="52" y="30" width="196" height="152" fill="none" stroke="#fbfaf7" stroke-width="10"/>
-    <g stroke="#e0a83a" stroke-width="2"><path d="M67 18 V32"/><path d="M233 18 V32"/></g>
-    <g fill="#e0a83a" font-family="-apple-system,Arial,sans-serif" font-size="9" font-weight="700" text-anchor="middle"><text x="67" y="14">gap</text><text x="233" y="14">gap</text></g>
   </svg>`;
 }
-function fitSceneFace(){
-  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="Face fit overlaps the opening with no light gaps">
+function fitSceneFaceStd(){
+  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="Face fit standard roll — small gap, fabric sits off the wall">
     <rect width="300" height="210" fill="#23272e"/>
-    <rect x="70" y="44" width="160" height="124" fill="#f6df8a" opacity="0.45"/>
-    <rect x="48" y="30" width="204" height="150" fill="#2a2620"/>
-    <rect x="46" y="26" width="208" height="6" fill="#39342b"/>
-    <g stroke="#8a9a72" stroke-width="2"><path d="M48 190 H70"/><path d="M230 190 H252"/></g>
-    <g fill="#9fb083" font-family="-apple-system,Arial,sans-serif" font-size="9" font-weight="700" text-anchor="middle"><text x="59" y="203">overlap</text><text x="241" y="203">overlap</text></g>
+    <rect x="66" y="42" width="168" height="128" fill="#f6df8a" opacity="0.5"/>
+    <rect x="50" y="34" width="200" height="146" fill="#2a2620"/>
+    <rect x="46" y="30" width="208" height="6" fill="#39342b"/>
+    <rect x="50" y="34" width="200" height="3.5" fill="#f6df8a" opacity="0.5"/>
+    <rect x="50" y="34" width="3" height="146" fill="#f6df8a" opacity="0.3"/>
+    <rect x="247" y="34" width="3" height="146" fill="#f6df8a" opacity="0.3"/>
+  </svg>`;
+}
+function fitSceneFaceRev(){
+  return `<svg viewBox="0 0 300 210" class="fabsvg" role="img" aria-label="Face fit reverse roll — smallest gap, fabric against the wall">
+    <rect width="300" height="210" fill="#23272e"/>
+    <rect x="66" y="42" width="168" height="128" fill="#f6df8a" opacity="0.5"/>
+    <rect x="50" y="34" width="200" height="146" fill="#2a2620"/>
+    <rect x="46" y="30" width="208" height="6" fill="#39342b"/>
+    <rect x="50" y="34" width="200" height="2" fill="#f6df8a" opacity="0.26"/>
+  </svg>`;
+}
+function rollGlyph(mode){
+  const fabX = mode==='wall' ? 25 : 47;
+  const label = mode==='wall' ? 'against the wall' : 'off the front';
+  return `<svg viewBox="0 0 150 58" class="rollglyph" aria-hidden="true">
+    <line x1="13" y1="6" x2="13" y2="52" stroke="#b8b1a0" stroke-width="3"/>
+    <circle cx="36" cy="19" r="11" fill="none" stroke="#8a7a52" stroke-width="2.4"/><circle cx="36" cy="19" r="2.3" fill="#8a7a52"/>
+    <line x1="${fabX}" y1="19" x2="${fabX}" y2="50" stroke="#2a2620" stroke-width="4"/>
+    <line x1="13" y1="50" x2="${fabX}" y2="50" stroke="#e0a83a" stroke-width="1.4"/>
+    <text x="${(13+fabX)/2}" y="47" text-anchor="middle" font-size="7.5" font-weight="700" fill="#b07d22">gap</text>
+    <text x="60" y="17" font-size="9" fill="#7c776e">Fabric drops</text>
+    <text x="60" y="30" font-size="9" font-weight="700" fill="#48453e">${label}</text>
   </svg>`;
 }
 function fitCompare(){
-  return `<div class="sectlead" style="margin-top:42px"><h3 class="display">Reveal fit vs face fit</h3><div class="rule"></div></div>
-    <p class="small muted" style="margin:12px 0 0;max-width:74ch">Same blockout blind, two ways to mount it. Reveal fit sits neatly inside the window recess &mdash; but always leaves light gaps down the sides. Face fit mounts over the opening and overlaps the edges: the choice when the room needs true darkness.</p>
-    <div class="fabcards" style="margin-top:18px">
-      <figure class="fabcard"><figcaption>Reveal fit &mdash; inside the recess</figcaption>${fitSceneReveal()}<div class="fitbadge bad">&#9888; Light gaps down the sides</div></figure>
-      <figure class="fabcard"><figcaption>Face fit &mdash; over the opening</figcaption>${fitSceneFace()}<div class="fitbadge good">&#10003; No gaps &mdash; true darkness</div></figure>
+  return `<div class="sectlead" style="margin-top:42px"><h3 class="display">Light gaps: reveal vs face fit</h3><div class="rule"></div></div>
+    <p class="small muted" style="margin:12px 0 0;max-width:78ch">A face fit still leaves a small gap &mdash; the fabric always stands a little off the wall. For roller blinds it&rsquo;s a spectrum: from the recess fit (most light) down to a reverse-roll face fit that drops the fabric hard against the wall (least). Match it to how dark the room needs to be.</p>
+    <div class="fitcards">
+      <figure class="fitcard">
+        <figcaption>Reveal / recess fit</figcaption>
+        ${fitSceneReveal()}
+        <div class="fitbadge bad">Largest light gap</div>
+        <p class="fitcap">Sits inside the recess &mdash; neat, but light spills down both sides.</p>
+      </figure>
+      <figure class="fitcard">
+        <figcaption>Face fit &middot; standard roll</figcaption>
+        ${fitSceneFaceStd()}
+        <div class="fitbadge mid">Smaller gap</div>
+        ${rollGlyph('front')}
+        <p class="fitcap">Covers the opening, but the fabric rolls off the front, so it sits a little off the wall.</p>
+      </figure>
+      <figure class="fitcard">
+        <figcaption>Face fit &middot; reverse roll</figcaption>
+        ${fitSceneFaceRev()}
+        <div class="fitbadge good">Smallest gap</div>
+        ${rollGlyph('wall')}
+        <p class="fitcap">Reverse roll drops the fabric against the wall &mdash; the tightest seal for a dark room.</p>
+      </figure>
     </div>`;
 }
 function buildFabricsPanel(){
