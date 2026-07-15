@@ -373,7 +373,10 @@
   .gtile img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--paper2)}
   .gtile .gmeta{padding:10px 12px;display:flex;flex-direction:column;gap:1px}
   .gtile .gmeta b{font-size:13.5px;font-weight:600}
-  .gtile .gmeta span{font-size:11.5px;color:var(--muted)}
+  .gtile .gmeta > span{font-size:11.5px;color:var(--muted)}
+  .gtile .gtags{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
+  .gtile .gtags em{font-style:normal;font-size:9px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--sage-deep);background:var(--sage-tint);border:1px solid var(--sage-mid);border-radius:3px;padding:2px 6px}
   .glightbox{position:fixed;inset:0;z-index:50;background:rgba(35,31,32,.84);display:grid;place-items:center;padding:28px;cursor:zoom-out}
   .glightbox[hidden]{display:none}
   .glightbox figure{margin:0;max-width:1000px;max-height:90vh;display:flex;flex-direction:column;gap:12px}
@@ -421,20 +424,20 @@ const SHEET_TABS = ["Products","Specs","FAQ","Wins","Personas","Objections","Kno
    "Images" sheet tab (columns: Image URL, Product, Window, Type, Range, Caption) and drop the
    files in img/gallery/. Product must be a lowercase id: roller/roman/panel/vertical/honeycomb. */
 let IMAGES = [
- {src:"img/gallery/g01.svg", product:"panel",     window:"Sliding door", type:"Blockout",     range:"Rationale",    caption:"Panel glide across a sliding door &mdash; blockout Rationale"},
- {src:"img/gallery/g02.svg", product:"panel",     window:"Large window", type:"Sunscreen",    range:"Altitude 5%",  caption:"Panel glide on a wide window &mdash; sunscreen Altitude 5%"},
- {src:"img/gallery/g03.svg", product:"panel",     window:"Doorway",      type:"Light-filter", range:"Harlow",       caption:"Panel glide over a doorway &mdash; light-filter Harlow"},
- {src:"img/gallery/g04.svg", product:"vertical",  window:"Sliding door", type:"Blockout",     range:"Voyage",       caption:"Vertical blind on a patio door &mdash; blockout Voyage"},
- {src:"img/gallery/g05.svg", product:"vertical",  window:"Large window", type:"Translucent",  range:"Fleet",        caption:"Vertical blind on a wide window &mdash; translucent Fleet"},
- {src:"img/gallery/g06.svg", product:"vertical",  window:"Stairwell",    type:"Blockout",     range:"Eton",         caption:"Vertical blind on a stairwell window &mdash; blockout Eton"},
- {src:"img/gallery/g07.svg", product:"roller",    window:"Standard",     type:"Blockout",     range:"Voyage",       caption:"Roller blind, standard window &mdash; blockout Voyage"},
- {src:"img/gallery/g08.svg", product:"roller",    window:"Large window", type:"Sunscreen",    range:"Altitude 10%", caption:"Roller blind on a large window &mdash; sunscreen Altitude 10%"},
- {src:"img/gallery/g09.svg", product:"roller",    window:"Bay",          type:"Translucent",  range:"Porto Rico",   caption:"Roller blinds in a bay &mdash; translucent Porto Rico"},
- {src:"img/gallery/g10.svg", product:"roman",     window:"Standard",     type:"Blockout",     range:"Madison Two",  caption:"Roman blind, standard window &mdash; blockout Madison Two"},
- {src:"img/gallery/g11.svg", product:"honeycomb", window:"Standard",     type:"Blockout",     range:"Core DC",      caption:"Honeycomb, standard window &mdash; blockout Core DC"},
- {src:"img/gallery/g12.svg", product:"honeycomb", window:"Bay",          type:"Light-filter", range:"Core",         caption:"Honeycomb in a bay &mdash; light-filter Core"}
+ {src:"img/gallery/g01.svg", product:"panel",     window:"Sliding door", type:"Blockout",     range:"Rationale",    tags:["matched to rollers","wide span"], caption:"Panel glide across a sliding door &mdash; blockout Rationale"},
+ {src:"img/gallery/g02.svg", product:"panel",     window:"Large window", type:"Sunscreen",    range:"Altitude 5%",  tags:["wide span","glare control"],       caption:"Panel glide on a wide window &mdash; sunscreen Altitude 5%"},
+ {src:"img/gallery/g03.svg", product:"panel",     window:"Doorway",      type:"Light-filter", range:"Harlow",       tags:["room divider"],                    caption:"Panel glide over a doorway &mdash; light-filter Harlow"},
+ {src:"img/gallery/g04.svg", product:"vertical",  window:"Sliding door", type:"Blockout",     range:"Voyage",       tags:["wide span","child safety"],        caption:"Vertical blind on a patio door &mdash; blockout Voyage"},
+ {src:"img/gallery/g05.svg", product:"vertical",  window:"Large window", type:"Translucent",  range:"Fleet",        tags:["light gap"],                       caption:"Vertical blind on a wide window &mdash; translucent Fleet"},
+ {src:"img/gallery/g06.svg", product:"vertical",  window:"Stairwell",    type:"Blockout",     range:"Eton",         tags:["stairwell","hard access"],         caption:"Vertical blind on a stairwell window &mdash; blockout Eton"},
+ {src:"img/gallery/g07.svg", product:"roller",    window:"Standard",     type:"Blockout",     range:"Voyage",       tags:["reveal fit","light gap"],          caption:"Roller blind, standard window &mdash; blockout Voyage"},
+ {src:"img/gallery/g08.svg", product:"roller",    window:"Large window", type:"Sunscreen",    range:"Altitude 10%", tags:["glare control","pelmet"],          caption:"Roller blind on a large window &mdash; sunscreen Altitude 10%"},
+ {src:"img/gallery/g09.svg", product:"roller",    window:"Bay",          type:"Translucent",  range:"Porto Rico",   tags:["bay solution","light gap"],        caption:"Roller blinds in a bay &mdash; translucent Porto Rico"},
+ {src:"img/gallery/g10.svg", product:"roman",     window:"Standard",     type:"Blockout",     range:"Madison Two",  tags:["blockout lining"],                 caption:"Roman blind, standard window &mdash; blockout Madison Two"},
+ {src:"img/gallery/g11.svg", product:"honeycomb", window:"Standard",     type:"Blockout",     range:"Core DC",      tags:["energy","child safety"],           caption:"Honeycomb, standard window &mdash; blockout Core DC"},
+ {src:"img/gallery/g12.svg", product:"honeycomb", window:"Bay",          type:"Light-filter", range:"Core",         tags:["bay solution","energy"],           caption:"Honeycomb in a bay &mdash; light-filter Core"}
 ];
-const galState = {product:"All", window:"All", type:"All"};
+const galState = {product:"All", window:"All", type:"All", tag:"All"};
 
 /* ============ DATA: roller-family fabric ranges (from the sheet) ============ */
 const FILL = '<span class="fill">&#x27E8;Insyte&#x27E9;</span>';
@@ -1085,18 +1088,22 @@ function buildGalleryPanel(){
     <div class="glightbox" hidden aria-hidden="true"><figure><img alt=""><figcaption></figcaption></figure></div>
   </section>`;
 }
-function galOptions(key){return ["All",...[...new Set(IMAGES.map(i=>i[key]))].filter(Boolean)];}
+function galOptions(key){
+  const vals = key==='tag' ? IMAGES.flatMap(i=>i.tags||[]) : IMAGES.map(i=>i[key]);
+  return ["All",...[...new Set(vals)].filter(Boolean)];
+}
 function galLabel(key,v){return key==='product' && PRODUCTS[v] ? PRODUCTS[v].label : v;}
 function galChips(){
   const grp=(label,key)=>`<div class="q"><div class="ql">${label}</div><div class="chips" data-gl="${key}">${
     galOptions(key).map(o=>`<button type="button" data-v="${o}" aria-pressed="${String(galState[key]===o)}">${galLabel(key,o)}</button>`).join('')}</div></div>`;
-  return grp('Product','product')+grp('Window','window')+grp('Light type','type');
+  return grp('Product','product')+grp('Window','window')+grp('Light type','type')+grp('Tag','tag');
 }
 function galFiltered(){
   return IMAGES.filter(i=>
     (galState.product==='All'||i.product===galState.product) &&
     (galState.window ==='All'||i.window ===galState.window ) &&
-    (galState.type   ==='All'||i.type   ===galState.type   ));
+    (galState.type   ==='All'||i.type   ===galState.type   ) &&
+    (galState.tag    ==='All'||(i.tags||[]).includes(galState.tag)));
 }
 function renderGallery(){
   const f=document.getElementById('galFilters'); if(f) f.innerHTML=galChips();
@@ -1106,7 +1113,7 @@ function renderGallery(){
   if(!list.length){ grid.innerHTML='<div class="repnotes">No photos match these filters yet. Add rows to the <b>Images</b> tab of the sheet.</div>'; return; }
   grid.innerHTML=list.map(i=>`<button type="button" class="gtile" data-src="${i.src}" data-cap="${(i.caption||'').replace(/"/g,'&quot;')}">
       <img src="${i.src}" alt="${i.caption||''}" loading="lazy">
-      <span class="gmeta"><b>${galLabel('product',i.product)}</b><span>${[i.window,i.type,i.range].filter(Boolean).join(' &middot; ')}</span></span>
+      <span class="gmeta"><b>${galLabel('product',i.product)}</b><span>${[i.window,i.type,i.range].filter(Boolean).join(' &middot; ')}</span>${(i.tags&&i.tags.length)?`<span class="gtags">${i.tags.map(t=>`<em>${t}</em>`).join('')}</span>`:''}</span>
     </button>`).join('');
 }
 function openLightbox(src,cap){
@@ -1186,7 +1193,8 @@ function applyData(sheets){
   if(sheets.Images){const out=asObjects(sheets.Images)
     .filter(o=>g(o,'image')||g(o,'src'))
     .map(o=>({src:g(o,'image')||g(o,'src'),product:g(o,'product').toLowerCase(),window:g(o,'window'),
-      type:g(o,'type')||g(o,'light'),range:g(o,'range'),caption:g(o,'caption')}));
+      type:g(o,'type')||g(o,'light'),range:g(o,'range'),
+      tags:g(o,'tag').split('|').map(s=>s.trim()).filter(Boolean),caption:g(o,'caption')}));
     if(out.length)IMAGES=out;}
 }
 async function loadFromSheet(){
