@@ -448,8 +448,8 @@
   .ww-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .ww-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
   .ww-card.on{border-color:var(--bronze);box-shadow:0 0 0 1.5px var(--bronze),var(--shadow)}
-  .ww-art{background:var(--paper2);border-bottom:1px solid var(--line);aspect-ratio:6/5;display:block;width:100%}
-  .ww-art img{width:100%;height:100%;object-fit:cover;display:block}
+  .ww-art{background:#fff;border-bottom:1px solid var(--line);aspect-ratio:1/1;display:block;width:100%}
+  .ww-art img{width:100%;height:100%;object-fit:contain;background:#fff;padding:10px;display:block}
   .ww-body{padding:14px 15px 15px;display:flex;flex-direction:column;gap:10px;flex:1}
   .ww-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
   .ww-nm{font-weight:700;font-size:14.5px;line-height:1.25}
@@ -1561,36 +1561,36 @@ function setStatus(ok){
    columns Category | Name | Code | Price | Sizes | Colours | Pocket | Shape | Popular | Hi-Vis | Image
    (Sizes/Colours separated by | or , ; Shape one of polo/shirtL/shirtS/hoodie/vest/jacket/cardigan). */
 let WORKWEAR = [
-  {cat:"Polos & everyday", name:"Sportec Aero Polo", code:"SPAERO", price:35.50, shape:"polo",
+  {cat:"Polos & everyday", name:"Sportec Aero Polo", code:"SPAERO", img:"img/workwear/spaero.jpg", price:35.50, shape:"polo",
    sizes:["XS","S","M","L","XL","2XL","3XL","5XL"], colours:["Black","White"], pocket:6, popular:true},
-  {cat:"Polos & everyday", name:"Neptune Cotton Polo", code:"JH200", price:35.50, shape:"polo",
+  {cat:"Polos & everyday", name:"Neptune Cotton Polo", code:"JH200", img:"img/workwear/jh200.jpg", price:35.50, shape:"polo",
    sizes:["S","M","L","XL","2XL","3XL","5XL"], colours:["Black","White"], pocket:6.5},
-  {cat:"Polos & everyday", name:"Ladies Sydney Top", code:"RT065LS", price:55.50, shape:"polo",
+  {cat:"Polos & everyday", name:"Ladies Sydney Top", code:"RT065LS", img:"img/workwear/rt065ls.jpg", price:55.50, shape:"polo",
    sizes:["4","6","8","10","12","14","16","18","20","22","24","26"], colours:["Black"], popular:true},
-  {cat:"Polos & everyday", name:"JB's Street Spider Polo", code:"6HSSP", price:31.50, shape:"polo",
+  {cat:"Polos & everyday", name:"JB's Street Spider Polo", code:"6HSSP", img:"img/workwear/6hssp.jpg", price:31.50, shape:"polo",
    sizes:["2XS","S","M","L","XL","2XL","3XL","4XL","5XL"], colours:["Black / Orange"]},
 
-  {cat:"Layers & outerwear", name:"Hard Yakka Hoodie", code:"Y19326", price:52.50, shape:"hoodie",
+  {cat:"Layers & outerwear", name:"Hard Yakka Hoodie", code:"Y19326", img:"img/workwear/y19326.jpg", price:52.50, shape:"hoodie",
    sizes:["XS","S","M","L","XL","2XL","3XL","4XL","5XL","6XL"], colours:["Black"]},
-  {cat:"Layers & outerwear", name:"Softshell Vest", code:"JK25", price:54.50, shape:"vest",
+  {cat:"Layers & outerwear", name:"Softshell Vest", code:"JK25", img:"img/workwear/jk25.jpg", price:54.50, shape:"vest",
    sizes:["S","M","L","XL","2XL","3XL"], colours:["Black"]},
-  {cat:"Layers & outerwear", name:"Softshell Jacket", code:"JK23", price:78.50, shape:"jacket",
+  {cat:"Layers & outerwear", name:"Softshell Jacket", code:"JK23", img:"img/workwear/jk23.jpg", price:78.50, shape:"jacket",
    sizes:["S","M","L","XL","2XL","3XL","4XL","5XL"], colours:["Black"]},
-  {cat:"Layers & outerwear", name:"Ladies Button Cardigan", code:"CAT5BR", price:69.50, shape:"cardigan",
+  {cat:"Layers & outerwear", name:"Ladies Button Cardigan", code:"CAT5BR", img:"img/workwear/cat5br.jpg", price:69.50, shape:"cardigan",
    sizes:["XS","S","M","L","XL","2XL","3XL","4XL"], colours:["Black"]},
 
-  {cat:"Shirts", name:"FXD L/S Work Shirt", code:"LSH1", price:64.50, shape:"shirtL",
+  {cat:"Shirts", name:"FXD L/S Work Shirt", code:"LSH1", img:"img/workwear/lsh1.jpg", price:64.50, shape:"shirtL",
    sizes:["S","M","L","XL","2XL","3XL"], colours:["Black"]},
-  {cat:"Shirts", name:"FXD S/S Work Shirt", code:"SSH1", price:54.50, shape:"shirtS",
+  {cat:"Shirts", name:"FXD S/S Work Shirt", code:"SSH1", img:"img/workwear/ssh1.jpg", price:54.50, shape:"shirtS",
    sizes:["S","M","L","XL","2XL","3XL"], colours:["Black"]},
-  {cat:"Shirts", name:"Gloweave Nicholson L/S", code:"1272L", price:54.50, shape:"shirtL",
+  {cat:"Shirts", name:"Gloweave Nicholson L/S", code:"1272L", img:"img/workwear/1272l.jpg", price:54.50, shape:"shirtL",
    sizes:["37","38","39","40","41","42","43","44","46","47","49","50","52","54","56","58","60"], colours:["Black","White"]},
-  {cat:"Shirts", name:"Gloweave Nicholson S/S", code:"1272S", price:52.50, shape:"shirtS",
+  {cat:"Shirts", name:"Gloweave Nicholson S/S", code:"1272S", img:"img/workwear/1272s.jpg", price:52.50, shape:"shirtS",
    sizes:["37","38","39","40","41","42","43","44","46","47","49","50","52","54"], colours:["Black","White"]},
 
-  {cat:"Hi-vis & safety", name:"D/N Safety Vest", code:"6DNSV", price:13.50, shape:"vest",
+  {cat:"Hi-vis & safety", name:"D/N Safety Vest", code:"6DNSV", img:"img/workwear/6dnsv.jpg", price:13.50, shape:"vest",
    sizes:["2XS","XS","S","M","L","XL","2XL","3XL","4XL","5XL","6/7XL"], colours:["Lime"], hv:true, best:true},
-  {cat:"Hi-vis & safety", name:"FXD Hi-Vis Hoodie", code:"WF.1", price:100.50, shape:"hoodie",
+  {cat:"Hi-vis & safety", name:"FXD Hi-Vis Hoodie", code:"WF.1", img:"img/workwear/wf1.jpg", price:100.50, shape:"hoodie",
    sizes:["S","M","L","XL","2XL","3XL"], colours:["Orange"], hv:true}
 ];
 
