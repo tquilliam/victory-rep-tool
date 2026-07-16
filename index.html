@@ -429,6 +429,69 @@
   .fitbadge.good{background:var(--sage-tint);color:var(--sage-deep)}
 
   footer{max-width:1120px;margin:40px auto 0;padding:20px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;text-align:center}
+
+  /* ============ TEAM KIT (workwear) ============ */
+  .ww-offer{display:grid;grid-template-columns:auto 1fr;gap:26px;align-items:center;background:var(--olive);color:var(--olive-ink);border-radius:8px;padding:22px 26px;margin:20px 0 10px}
+  .ww-offer .credit{font-family:var(--serif);font-size:64px;line-height:.86;font-weight:600}
+  .ww-offer .credit small{font-size:.4em;vertical-align:top;font-weight:600}
+  .ww-offer .lead{font-size:14.5px;max-width:42ch;opacity:.92;margin-bottom:10px}
+  .ww-offer .steps{display:grid;gap:6px}
+  .ww-offer .steps div{font-size:13px;display:flex;gap:9px;opacity:.9}
+  .ww-offer .steps b{color:var(--sage-mid);font-weight:700}
+  .ww-repcard{margin:22px 0 4px}
+  .ww-fields{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .ww-field{display:flex;flex-direction:column;gap:5px}
+  .ww-field label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--bronze);font-weight:700}
+  .ww-field input,.ww-card select{font-family:inherit;font-size:14px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink);width:100%}
+  .ww-field input:focus,.ww-card select:focus{outline:2px solid var(--bronze);outline-offset:-1px;border-color:var(--bronze)}
+  .ww-grouplabel{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze);font-weight:800;margin:28px 0 12px;padding-top:14px;border-top:1px solid var(--line)}
+  .ww-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .ww-card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;transition:border-color .15s,box-shadow .15s}
+  .ww-card.on{border-color:var(--bronze);box-shadow:0 0 0 1.5px var(--bronze),var(--shadow)}
+  .ww-art{background:var(--paper2);border-bottom:1px solid var(--line);aspect-ratio:6/5;display:block;width:100%}
+  .ww-art img{width:100%;height:100%;object-fit:cover;display:block}
+  .ww-body{padding:14px 15px 15px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .ww-top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+  .ww-nm{font-weight:700;font-size:14.5px;line-height:1.25}
+  .ww-code{font-size:10px;letter-spacing:.04em;color:var(--muted);background:var(--paper2);border:1px solid var(--line);padding:2px 6px;border-radius:5px;white-space:nowrap;font-variant-numeric:tabular-nums;margin-top:1px}
+  .ww-price{font-weight:800;font-size:16px}
+  .ww-price small{font-size:11px;font-weight:600;color:var(--muted)}
+  .ww-selects{display:flex;gap:8px}
+  .ww-selects select{flex:1;min-width:0}
+  .ww-opts{display:flex;flex-direction:column;gap:6px;font-size:12.5px;color:var(--ink-soft)}
+  .ww-opts label{display:flex;gap:7px;align-items:flex-start;cursor:pointer;line-height:1.35}
+  .ww-opts input{margin-top:2px}
+  .ww-qtyrow{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:11px;border-top:1px dashed var(--line)}
+  .ww-qtyrow .ql{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .ww-stepper{display:flex;align-items:center;gap:3px}
+  .ww-stepper button{width:30px;height:30px;border:1px solid var(--line);background:var(--card);border-radius:6px;font-size:17px;cursor:pointer;color:var(--ink);line-height:1;display:grid;place-items:center}
+  .ww-stepper button:hover{border-color:var(--bronze);color:var(--bronze-deep)}
+  .ww-stepper input{width:34px;text-align:center;border:none;background:none;font-size:15px;font-weight:700;font-family:inherit;color:var(--ink);font-variant-numeric:tabular-nums;-moz-appearance:textfield}
+  .ww-flag{position:absolute;top:10px;left:10px;z-index:1;font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;background:var(--bronze);color:#fff;padding:3px 8px;border-radius:999px}
+  .ww-flag.hv{background:var(--sage-deep)}
+  .ww-summary{position:sticky;bottom:14px;margin-top:26px;z-index:5}
+  .ww-sumcard{background:var(--card);border:1px solid var(--bronze);border-radius:8px;box-shadow:0 6px 26px rgba(35,31,32,.14);padding:18px 20px}
+  .ww-lines{display:flex;flex-direction:column;gap:6px;font-size:13px;margin:4px 0 12px}
+  .ww-lines .l{display:flex;justify-content:space-between;gap:14px;color:var(--ink-soft)}
+  .ww-lines .l .amt{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+  .ww-empty{color:var(--muted);font-size:13px;padding:2px 0 6px}
+  .ww-tot{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;padding:2px 0}
+  .ww-tot.credit span:last-child{color:var(--sage-deep);font-weight:700}
+  .ww-tot.pay{font-size:17px;font-weight:800;color:var(--ink);border-top:1px solid var(--line);margin-top:6px;padding-top:9px}
+  .ww-tot.pay .amt{color:var(--sage-deep)}
+  .ww-actions{display:flex;gap:10px;margin-top:15px;flex-wrap:wrap;align-items:center}
+  .ww-submit{background:var(--olive);color:var(--olive-ink);border:none;border-radius:6px;padding:12px 24px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+  .ww-submit:hover{background:var(--bronze-deep)}
+  .ww-submit:disabled{opacity:.45;cursor:not-allowed}
+  .ww-ghost{background:none;border:1px solid var(--line);border-radius:6px;padding:11px 18px;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-soft)}
+  .ww-ghost:hover{border-color:var(--bronze);color:var(--bronze-deep)}
+  .ww-note{font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.5}
+  .ww-msg{margin-top:12px;font-size:13.5px;font-weight:600;padding:11px 14px;border-radius:6px;display:none}
+  .ww-msg.show{display:block}
+  .ww-msg.ok{background:var(--sage-tint);color:var(--sage-deep);border:1px solid var(--sage-mid)}
+  .ww-msg.err{background:#F7ECE7;color:#9A4B2E;border:1px solid #E3B9A6}
+  @media(max-width:900px){.ww-grid{grid-template-columns:repeat(2,1fr)}.ww-fields{grid-template-columns:repeat(2,1fr)}.ww-offer{grid-template-columns:1fr}}
+  @media(max-width:560px){.ww-grid{grid-template-columns:1fr}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -462,7 +525,15 @@ const VISUALISER_URL = "https://victory-visualiser.onrender.com";
    The sheet must be shared "Anyone with the link - Viewer". Leave "" to use the built-in data below.
    Tab names must stay: Products, Specs, FAQ, Wins, Personas, Objections, RollerFabrics, Honeycomb. */
 const SHEET_ID = "1k62s1ejq6KIgHn0YqMyq6B7-UPBfM0vn31fp3MtZ8V8";
-const SHEET_TABS = ["Products","Specs","FAQ","Wins","Personas","Objections","Knowledge","RollerFabrics","Honeycomb","Colours","Sales","Images"];
+const SHEET_TABS = ["Products","Specs","FAQ","Wins","Personas","Objections","Knowledge","RollerFabrics","Honeycomb","Colours","Sales","Images","Workwear"];
+
+/* ---- Team Kit (workwear) config ----
+   ORDER_ENDPOINT: paste a Google Apps Script Web-App URL to capture orders straight into a Sheet
+   (+ email the coordinator). Leave "" and orders open a pre-filled email to ORDER_EMAIL instead. */
+const ORDER_ENDPOINT = ""; /* paste the Apps Script Web-App URL here to switch to Sheet+email capture */
+const ORDER_EMAIL = "thomquilliam1@gmail.com"; /* INTERIM fallback inbox — change to the workwear coordinator once confirmed */
+const WORKWEAR_CREDIT = 100;          // $ credit per rep
+const WORKWEAR_LAUNCH_FREE_NAME = true; // name embroidery free during the launch
 
 /* ============ DATA: gallery images ============
    PLACEHOLDER installs so the Gallery works out of the box. Swap for real photos in the
@@ -1454,6 +1525,18 @@ function applyData(sheets){
       type:g(o,'type')||g(o,'light'),range:g(o,'range'),
       tags:g(o,'tag').split('|').map(s=>s.trim()).filter(Boolean),caption:g(o,'caption')}));
     if(out.length)IMAGES=out;}
+  if(sheets.Workwear){const out=asObjects(sheets.Workwear)
+    .filter(o=>g(o,'code')&&g(o,'name'))
+    .map(o=>({cat:g(o,'category')||'Team Kit',name:g(o,'name'),code:g(o,'code'),
+      price:Number(String(g(o,'price')).replace(/[^0-9.]/g,''))||0,
+      sizes:(g(o,'sizes')||'').split(/[|,]/).map(s=>s.trim()).filter(Boolean),
+      colours:((g(o,'colours')||g(o,'colour')||'Black').split(/[|,]/).map(s=>s.trim()).filter(Boolean)),
+      pocket:Number(String(g(o,'pocket')).replace(/[^0-9.]/g,''))||0,
+      shape:(g(o,'shape')||'polo').trim(),
+      popular:/^y/i.test(g(o,'popular')),hv:/^y/i.test(g(o,'hi-vis')||g(o,'hivis')),
+      best:/^y/i.test(g(o,'best')),img:g(o,'image')||''}))
+    .filter(w=>w.sizes.length);
+    if(out.length)WORKWEAR=out;}
 }
 async function loadFromSheet(){
   if(!SHEET_ID) return false;
@@ -1473,9 +1556,241 @@ function setStatus(ok){
   else {s.textContent='\u25CB Using built-in data (no sheet connected yet)';s.style.color='var(--muted)';}
 }
 
+/* ============ TEAM KIT (workwear) ============ */
+/* Built-in catalogue (fallback + offline). A "Workwear" sheet tab can override this live:
+   columns Category | Name | Code | Price | Sizes | Colours | Pocket | Shape | Popular | Hi-Vis | Image
+   (Sizes/Colours separated by | or , ; Shape one of polo/shirtL/shirtS/hoodie/vest/jacket/cardigan). */
+let WORKWEAR = [
+  {cat:"Polos & everyday", name:"Sportec Aero Polo", code:"SPAERO", price:35.50, shape:"polo",
+   sizes:["XS","S","M","L","XL","2XL","3XL","5XL"], colours:["Black","White"], pocket:6, popular:true},
+  {cat:"Polos & everyday", name:"Neptune Cotton Polo", code:"JH200", price:35.50, shape:"polo",
+   sizes:["S","M","L","XL","2XL","3XL","5XL"], colours:["Black","White"], pocket:6.5},
+  {cat:"Polos & everyday", name:"Ladies Sydney Top", code:"RT065LS", price:55.50, shape:"polo",
+   sizes:["4","6","8","10","12","14","16","18","20","22","24","26"], colours:["Black"], popular:true},
+  {cat:"Polos & everyday", name:"JB's Street Spider Polo", code:"6HSSP", price:31.50, shape:"polo",
+   sizes:["2XS","S","M","L","XL","2XL","3XL","4XL","5XL"], colours:["Black / Orange"]},
+
+  {cat:"Layers & outerwear", name:"Hard Yakka Hoodie", code:"Y19326", price:52.50, shape:"hoodie",
+   sizes:["XS","S","M","L","XL","2XL","3XL","4XL","5XL","6XL"], colours:["Black"]},
+  {cat:"Layers & outerwear", name:"Softshell Vest", code:"JK25", price:54.50, shape:"vest",
+   sizes:["S","M","L","XL","2XL","3XL"], colours:["Black"]},
+  {cat:"Layers & outerwear", name:"Softshell Jacket", code:"JK23", price:78.50, shape:"jacket",
+   sizes:["S","M","L","XL","2XL","3XL","4XL","5XL"], colours:["Black"]},
+  {cat:"Layers & outerwear", name:"Ladies Button Cardigan", code:"CAT5BR", price:69.50, shape:"cardigan",
+   sizes:["XS","S","M","L","XL","2XL","3XL","4XL"], colours:["Black"]},
+
+  {cat:"Shirts", name:"FXD L/S Work Shirt", code:"LSH1", price:64.50, shape:"shirtL",
+   sizes:["S","M","L","XL","2XL","3XL"], colours:["Black"]},
+  {cat:"Shirts", name:"FXD S/S Work Shirt", code:"SSH1", price:54.50, shape:"shirtS",
+   sizes:["S","M","L","XL","2XL","3XL"], colours:["Black"]},
+  {cat:"Shirts", name:"Gloweave Nicholson L/S", code:"1272L", price:54.50, shape:"shirtL",
+   sizes:["37","38","39","40","41","42","43","44","46","47","49","50","52","54","56","58","60"], colours:["Black","White"]},
+  {cat:"Shirts", name:"Gloweave Nicholson S/S", code:"1272S", price:52.50, shape:"shirtS",
+   sizes:["37","38","39","40","41","42","43","44","46","47","49","50","52","54"], colours:["Black","White"]},
+
+  {cat:"Hi-vis & safety", name:"D/N Safety Vest", code:"6DNSV", price:13.50, shape:"vest",
+   sizes:["2XS","XS","S","M","L","XL","2XL","3XL","4XL","5XL","6/7XL"], colours:["Lime"], hv:true, best:true},
+  {cat:"Hi-vis & safety", name:"FXD Hi-Vis Hoodie", code:"WF.1", price:100.50, shape:"hoodie",
+   sizes:["S","M","L","XL","2XL","3XL"], colours:["Orange"], hv:true}
+];
+
+function wwMoney(n){return '$'+(Math.round(n*100)/100).toFixed(2);}
+function wwColour(c){
+  c=(c||'').toLowerCase();
+  if(c.includes('white')) return {body:'#F2EFE6',line:'#CBC5B4',accent:'#8A7A52',trim:'#E4E0D3'};
+  if(c.includes('lime'))  return {body:'#C7DB1A',line:'#9BAA16',accent:'#3B3829',trim:'#D7E85E'};
+  if(c.includes('orange')&&c.includes('black')) return {body:'#302E2B',line:'#191817',accent:'#E4611D',trim:'#E4611D'};
+  if(c.includes('orange'))return {body:'#E4611D',line:'#B44B14',accent:'#3B3829',trim:'#F2884A'};
+  return {body:'#302E2B',line:'#191817',accent:'#8A7A52',trim:'#403D39'};
+}
+function wwArt(it,colour){
+  const c=wwColour(colour||it.colours[0]), s=it.shape, p=[];
+  const longS=(s==='hoodie'||s==='jacket'||s==='cardigan'||s==='shirtL'), shortS=(s==='polo'||s==='shirtS');
+  if(longS){
+    p.push(`<path d="M88,64 L54,74 L40,150 L62,158 L90,98 Z" fill="${c.body}" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+    p.push(`<path d="M152,64 L186,74 L200,150 L178,158 L150,98 Z" fill="${c.body}" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+  } else if(shortS){
+    p.push(`<path d="M88,64 L56,72 L62,104 L90,94 Z" fill="${c.body}" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+    p.push(`<path d="M152,64 L184,72 L178,104 L150,94 Z" fill="${c.body}" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+  }
+  if(s==='vest'){
+    p.push(`<path d="M92,60 L148,60 L156,104 L150,184 L90,184 L84,104 Z" fill="${c.body}" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+    p.push(`<path d="M92,60 Q83,90 90,122" fill="none" stroke="${c.line}" stroke-width="2"/>`);
+    p.push(`<path d="M148,60 Q157,90 150,122" fill="none" stroke="${c.line}" stroke-width="2"/>`);
+  } else {
+    p.push(`<path d="M88,62 L152,62 L160,104 L152,184 L88,184 L80,104 Z" fill="${c.body}" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+  }
+  if(s==='polo'){
+    p.push(`<path d="M106,62 L120,80 L134,62 L128,56 Q120,62 112,56 Z" fill="${c.trim}" stroke="${c.line}" stroke-width="1.5" stroke-linejoin="round"/>`);
+    p.push(`<line x1="120" y1="80" x2="120" y2="104" stroke="${c.line}" stroke-width="1.5"/>`);
+  } else if(s==='shirtL'||s==='shirtS'){
+    p.push(`<path d="M108,62 L120,86 L132,62 L126,58 L120,64 L114,58 Z" fill="${c.trim}" stroke="${c.line}" stroke-width="1.5" stroke-linejoin="round"/>`);
+    p.push(`<line x1="120" y1="70" x2="120" y2="184" stroke="${c.line}" stroke-width="1.5"/>`);
+    p.push(`<circle cx="120" cy="118" r="2.3" fill="${c.line}"/><circle cx="120" cy="140" r="2.3" fill="${c.line}"/><circle cx="120" cy="162" r="2.3" fill="${c.line}"/>`);
+  } else if(s==='hoodie'){
+    p.push(`<path d="M96,66 Q120,40 144,66 Q120,58 96,66 Z" fill="${c.trim}" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+    p.push(`<line x1="114" y1="72" x2="112" y2="98" stroke="${c.line}" stroke-width="2"/><line x1="126" y1="72" x2="128" y2="98" stroke="${c.line}" stroke-width="2"/>`);
+    p.push(`<path d="M99,142 L141,142 L137,168 L103,168 Z" fill="none" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+  } else if(s==='jacket'){
+    p.push(`<path d="M108,62 L120,74 L132,62" fill="none" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+    p.push(`<line x1="120" y1="70" x2="120" y2="184" stroke="${c.line}" stroke-width="2"/>`);
+  } else if(s==='cardigan'){
+    p.push(`<path d="M110,62 L120,92 L130,62" fill="${c.trim}" stroke="${c.line}" stroke-width="1.5" stroke-linejoin="round"/>`);
+    p.push(`<line x1="120" y1="92" x2="120" y2="184" stroke="${c.line}" stroke-width="1.5"/>`);
+    p.push(`<circle cx="120" cy="112" r="2.2" fill="${c.line}"/><circle cx="120" cy="132" r="2.2" fill="${c.line}"/><circle cx="120" cy="152" r="2.2" fill="${c.line}"/>`);
+  } else if(s==='vest'){
+    p.push(`<path d="M108,60 L120,72 L132,60" fill="none" stroke="${c.line}" stroke-width="2" stroke-linejoin="round"/>`);
+    p.push(`<line x1="120" y1="60" x2="120" y2="184" stroke="${c.line}" stroke-width="2"/>`);
+  }
+  if(it.hv){
+    p.push(`<rect x="84" y="120" width="72" height="9" rx="2" fill="#EAEDE6" stroke="${c.line}" stroke-width="1" opacity="0.92"/>`);
+    p.push(`<rect x="84" y="150" width="72" height="9" rx="2" fill="#EAEDE6" stroke="${c.line}" stroke-width="1" opacity="0.92"/>`);
+  }
+  p.push(`<circle cx="103" cy="94" r="5" fill="${c.accent}"/>`);
+  return `<svg viewBox="0 0 240 200" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${it.name}">${p.join('')}</svg>`;
+}
+function wwCard(it){
+  const multi=it.colours.length>1;
+  const sizeOpts=it.sizes.map(s=>`<option>${s}</option>`).join('');
+  const colOpts=it.colours.map(c=>`<option>${c}</option>`).join('');
+  const flag=it.popular?`<span class="ww-flag">Most popular</span>`:(it.best?`<span class="ww-flag hv">Best value</span>`:'');
+  const nameLabel=WORKWEAR_LAUNCH_FREE_NAME?'<b>free at launch</b>':wwMoney(6.5);
+  return `<div class="ww-card" data-code="${it.code}" data-name="${it.name}" data-price="${it.price}" data-pocket="${it.pocket||0}">
+    ${flag}
+    <div class="ww-art">${it.img?`<img src="${it.img}" alt="${it.name}" loading="lazy">`:wwArt(it)}</div>
+    <div class="ww-body">
+      <div class="ww-top"><div class="ww-nm">${it.name}</div><span class="ww-code">${it.code}</span></div>
+      <div class="ww-price">${wwMoney(it.price)}<small> +gst</small></div>
+      <div class="ww-selects">
+        <select class="ww-size" aria-label="Size for ${it.name}">${sizeOpts}</select>
+        ${multi?`<select class="ww-colour" aria-label="Colour for ${it.name}">${colOpts}</select>`:`<input type="hidden" class="ww-colour" value="${it.colours[0]}">`}
+      </div>
+      <div class="ww-opts">
+        <label><input type="checkbox" class="ww-name"> Add my name &mdash; ${nameLabel}</label>
+        ${it.pocket?`<label><input type="checkbox" class="ww-pocket"> Add chest pocket &middot; +${wwMoney(it.pocket)}</label>`:''}
+      </div>
+      <div class="ww-qtyrow">
+        <span class="ql">Qty</span>
+        <div class="ww-stepper"><button type="button" class="ww-minus" aria-label="Decrease ${it.name}">&minus;</button><input class="ww-qty" value="0" readonly aria-label="Quantity of ${it.name}"><button type="button" class="ww-plus" aria-label="Increase ${it.name}">+</button></div>
+      </div>
+    </div>
+  </div>`;
+}
+function buildWorkwearPanel(){
+  const cats=[...new Set(WORKWEAR.map(w=>w.cat))];
+  const groups=cats.map(c=>`<div class="ww-grouplabel">${c}</div><div class="ww-grid">${WORKWEAR.filter(w=>w.cat===c).map(wwCard).join('')}</div>`).join('');
+  const nameStep=WORKWEAR_LAUNCH_FREE_NAME?' &mdash; free name embroidery when you sign up at the launch':'';
+  return `<section class="panel" id="panel-workwear" role="tabpanel" aria-labelledby="tab-workwear" tabindex="0">
+    <div class="phead"><div class="idx">New for launch</div><h2 class="display">Team Kit</h2>
+      <div class="pos">Kit yourself out in the new range. Every rep gets <b>$100 of credit</b> &mdash; pick your pieces, sizes and colours, add your name, and send it straight through to the workwear team.</div></div>
+    <div class="ww-offer">
+      <div class="credit"><small>$</small>100</div>
+      <div>
+        <div class="lead">Credit per rep, yours to spend across anything below. Most reps walk away fully kitted for just a few dollars.</div>
+        <div class="steps"><div><b>1.</b> Add your details</div><div><b>2.</b> Pick pieces, sizes &amp; colours</div><div><b>3.</b> Send your order${nameStep}</div></div>
+      </div>
+    </div>
+    <div class="card ww-repcard">
+      <h4 class="mini">Your details</h4>
+      <div class="ww-fields">
+        <div class="ww-field"><label>Your name</label><input id="ww-repname" autocomplete="name" placeholder="First &amp; last"></div>
+        <div class="ww-field"><label>Branch</label><input id="ww-branch" placeholder="e.g. Melbourne"></div>
+        <div class="ww-field"><label>Email</label><input id="ww-email" type="email" autocomplete="email" placeholder="you@victoryblinds.com.au"></div>
+        <div class="ww-field"><label>Name to embroider</label><input id="ww-embname" placeholder="As it should appear"></div>
+      </div>
+    </div>
+    ${groups}
+    <div class="ww-summary" id="ww-summary"></div>
+  </section>`;
+}
+function readWorkwearOrder(){
+  const lines=[]; let subtotal=0;
+  document.querySelectorAll('#panel-workwear .ww-card').forEach(card=>{
+    const qty=parseInt(card.querySelector('.ww-qty').value,10)||0;
+    card.classList.toggle('on',qty>0);
+    if(qty<=0) return;
+    const price=parseFloat(card.dataset.price)||0;
+    const pocketP=parseFloat(card.dataset.pocket)||0;
+    const size=card.querySelector('.ww-size').value;
+    const colour=card.querySelector('.ww-colour').value;
+    const addName=card.querySelector('.ww-name').checked;
+    const pk=card.querySelector('.ww-pocket');
+    const addPocket=pk?pk.checked:false;
+    const emb=addName?(WORKWEAR_LAUNCH_FREE_NAME?0:6.5):0;
+    const pocket=addPocket?pocketP:0;
+    const lineTotal=(price+emb+pocket)*qty;
+    subtotal+=lineTotal;
+    lines.push({code:card.dataset.code,label:card.dataset.name,size,colour,qty,addName,addPocket,unit:price,lineTotal});
+  });
+  const credit=Math.min(WORKWEAR_CREDIT,subtotal);
+  return {lines,subtotal,credit,pay:Math.max(0,subtotal-credit)};
+}
+function updateWorkwearSummary(){
+  const box=document.getElementById('ww-summary'); if(!box) return;
+  const o=readWorkwearOrder();
+  const lines=o.lines.length?o.lines.map(l=>{
+    const meta=[l.size,(l.colour&&l.colour!=='—')?l.colour:null,l.addName?'+name':null,l.addPocket?'+pocket':null].filter(Boolean).join(' &middot; ');
+    return `<div class="l"><span>${l.qty}&times; ${l.label} <span class="muted">${meta}</span></span><span class="amt">${wwMoney(l.lineTotal)}</span></div>`;
+  }).join(''):`<div class="ww-empty">No items yet &mdash; set a quantity on the pieces you want above.</div>`;
+  box.innerHTML=`<div class="card ww-sumcard">
+    <h4 class="mini">Your kit</h4>
+    <div class="ww-lines">${lines}</div>
+    <div class="ww-tot"><span>Subtotal</span><span>${wwMoney(o.subtotal)} +gst</span></div>
+    <div class="ww-tot credit"><span>Your $100 credit</span><span>&minus;${wwMoney(o.credit)}</span></div>
+    <div class="ww-tot pay"><span>You pay</span><span class="amt">${wwMoney(o.pay)} +gst</span></div>
+    <div class="ww-actions">
+      <button type="button" class="ww-submit"${o.lines.length?'':' disabled'}>Send my order</button>
+      <button type="button" class="ww-ghost ww-copy">Copy order</button>
+    </div>
+    <div class="ww-msg" id="ww-msg"></div>
+    <div class="ww-note">Every piece includes the company logo (left chest). Prices exclude GST. Your order goes to the workwear team and you&rsquo;ll get an email confirmation.</div>
+  </div>`;
+}
+function wwVal(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+function wwMsg(t,kind){const m=document.getElementById('ww-msg');if(!m)return;m.className='ww-msg show '+(kind||'ok');m.innerHTML=t;}
+function workwearRef(){return 'VCB-'+Date.now().toString(36).toUpperCase().slice(-6);}
+function workwearPayload(){
+  const o=readWorkwearOrder();
+  const rep={name:wwVal('ww-repname'),branch:wwVal('ww-branch'),email:wwVal('ww-email'),embName:wwVal('ww-embname')};
+  return {ref:workwearRef(),ts:new Date().toISOString(),rep,lines:o.lines,subtotal:o.subtotal,credit:o.credit,pay:o.pay};
+}
+function workwearText(p){
+  let s=`VICTORY TEAM KIT ORDER — ${p.ref}\n`;
+  s+=`Rep: ${p.rep.name||'-'}   Branch: ${p.rep.branch||'-'}\n`;
+  s+=`Email: ${p.rep.email||'-'}   Embroidery name: ${p.rep.embName||'-'}\n\n`;
+  p.lines.forEach(l=>{ s+=`${l.qty}x ${l.label} [${l.code}] — size ${l.size}, ${l.colour}${l.addName?', +name':''}${l.addPocket?', +pocket':''}  =  ${wwMoney(l.lineTotal)}\n`; });
+  s+=`\nSubtotal: ${wwMoney(p.subtotal)} +gst\nCredit:   -${wwMoney(p.credit)}\nYou pay:  ${wwMoney(p.pay)} +gst\n`;
+  return s;
+}
+function mailtoWorkwear(p){
+  const subj=`Team Kit order ${p.ref} — ${p.rep.name||'rep'}`;
+  window.location.href=`mailto:${encodeURIComponent(ORDER_EMAIL)}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(workwearText(p))}`;
+}
+function copyWorkwear(){
+  const p=workwearPayload();
+  if(!p.lines.length){ wwMsg('Add at least one item first.','err'); return; }
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(workwearText(p)).then(()=>wwMsg('Order details copied to your clipboard.','ok'),()=>wwMsg('Couldn’t copy — try the email option instead.','err'));
+  } else { mailtoWorkwear(p); }
+}
+function submitWorkwear(){
+  const p=workwearPayload();
+  if(!p.lines.length){ wwMsg('Add at least one item to your kit first.','err'); return; }
+  if(!p.rep.name){ wwMsg('Please add your name so we know whose kit this is.','err'); return; }
+  if(!/.+@.+\..+/.test(p.rep.email)){ wwMsg('Please add a valid email for your order confirmation.','err'); return; }
+  if(p.lines.some(l=>l.addName)&&!p.rep.embName){ wwMsg('You ticked “add my name” — type the name to embroider up top.','err'); return; }
+  const btn=document.querySelector('.ww-submit'); if(btn) btn.disabled=true;
+  const first=(p.rep.name.split(' ')[0]||'');
+  const ok=()=>wwMsg(`Order <b>${p.ref}</b> sent — thanks ${first}! A confirmation is on its way to ${p.rep.email}, with your $100 credit applied. You can close this or start another.`,'ok');
+  if(ORDER_ENDPOINT){
+    fetch(ORDER_ENDPOINT,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(p)})
+      .then(ok).catch(()=>{ mailtoWorkwear(p); ok(); });
+  } else { mailtoWorkwear(p); ok(); }
+}
+
 /* ============ TABS / RENDER ============ */
 let activeTab='roller';
-const TABS=[...ORDER.map(id=>({id,label:PRODUCTS[id].label})),{id:"fabrics",label:"Fabrics",accent:true},{id:"gallery",label:"Gallery",accent:true},{id:"leaderboard",label:"Leaderboard",accent:true},{id:"visualiser",label:"Visualiser",accent:true}];
+const TABS=[...ORDER.map(id=>({id,label:PRODUCTS[id].label})),{id:"workwear",label:"Team Kit",accent:true},{id:"fabrics",label:"Fabrics",accent:true},{id:"gallery",label:"Gallery",accent:true},{id:"leaderboard",label:"Leaderboard",accent:true},{id:"visualiser",label:"Visualiser",accent:true}];
 function selectTab(id){
   activeTab=id;
   document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.id===id)));
@@ -1488,6 +1803,7 @@ function renderAll(){
   nav.innerHTML=TABS.map(t=>`<button role="tab" id="tab-${t.id}" data-id="${t.id}" aria-selected="false" class="${t.accent?'accent':''}">${t.label}</button>`).join('');
   main.innerHTML='';
   ORDER.forEach(id=>main.appendChild(el(buildProductPanel(id))));
+  main.appendChild(el(buildWorkwearPanel()));
   main.appendChild(el(buildFabricsPanel()));
   main.appendChild(el(buildGalleryPanel()));
   main.appendChild(el(buildLeaderboardPanel()));
@@ -1495,6 +1811,7 @@ function renderAll(){
   renderLeaderboard();
   renderGallery();
   renderFabrics();
+  updateWorkwearSummary();
   selectTab(activeTab);
 }
 /* Delegated handlers are bound ONCE. renderAll() can run again (e.g. after the sheet
@@ -1518,6 +1835,14 @@ function bindOnce(){
   };
 
   main.addEventListener('click',e=>{
+    const wwStep=e.target.closest('#panel-workwear .ww-minus, #panel-workwear .ww-plus');
+    if(wwStep){
+      const inp=wwStep.parentElement.querySelector('.ww-qty');
+      let v=parseInt(inp.value,10)||0; v+=wwStep.classList.contains('ww-plus')?1:-1;
+      inp.value=Math.max(0,Math.min(99,v)); updateWorkwearSummary(); return;
+    }
+    if(e.target.closest('.ww-submit')){ submitWorkwear(); return; }
+    if(e.target.closest('.ww-copy')){ copyWorkwear(); return; }
     const chip=e.target.closest('.chips[data-lb] button');
     if(chip){
       const group=chip.closest('.chips');
@@ -1569,6 +1894,16 @@ function bindOnce(){
   main.addEventListener('input',e=>{
     const mc=e.target.closest('.mcheck');
     if(mc && (e.target.classList.contains('mc-w')||e.target.classList.contains('mc-d'))) updateMeasureHint(mc);
+    if(e.target.closest('#panel-workwear')) updateWorkwearSummary();
+  });
+  main.addEventListener('change',e=>{
+    if(!e.target.closest('#panel-workwear')) return;
+    if(e.target.classList.contains('ww-colour')){
+      const card=e.target.closest('.ww-card'), it=WORKWEAR.find(w=>w.code===card.dataset.code);
+      const art=card.querySelector('.ww-art');
+      if(it && !it.img && art) art.innerHTML=wwArt(it,e.target.value);
+    }
+    updateWorkwearSummary();
   });
   main.addEventListener('keydown',e=>{
     if(e.key==='Escape'){ closeLightbox(); }
